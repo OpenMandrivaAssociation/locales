@@ -24,7 +24,7 @@
 %define glibc_ver 2.4
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 4
+%define release   %mkrel 5
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -257,11 +257,11 @@ do
 	if [ -r $RPM_SOURCE_DIR/$i ]; then
 		DEF_LOCALE_FILE="$RPM_SOURCE_DIR/$i"
 	else
-		DEF_LOCALE_FILE="/usr/share/i18n/locales/$i"
+		DEF_LOCALE_FILE="/usr/share/i18n/locales/$LOCALENAME"
 	fi
-	if ! grep '^week\>' $i > /dev/null ; then
-		cat $i | sed 's/\(END LC_TIME\)/week 7;19971201;4\n\1/' > \
-		./`basename $i`
+	if ! grep '^week\>' $DEF_LOCALE_FILE > /dev/null ; then
+		cat $DEF_LOCALE_FILE | sed 's/\(END LC_TIME\)/week 7;19971201;4\n\1/' > \
+		./$LOCALENAME
 	fi
 done
 
@@ -628,6 +628,7 @@ localedef -c -f GB2312    -i zh_CN $LOCALEDIR/zh_CN || :
 localedef -c -f GB2312    -i zh_CN $LOCALEDIR/zh_CN.GB2312 || :
 localedef -c -f GBK       -i zh_CN $LOCALEDIR/zh_CN.GBK || :
 localedef -c -f GB18030   -i zh_CN $LOCALEDIR/zh_CN.GB18030 || :
+localedef -c -f UTF-8     -i zh_CN $LOCALEDIR/zh_CN.UTF-8 || :
 localedef -c -f BIG5HKSCS -i zh_HK $LOCALEDIR/zh_HK || :
 localedef -c -f GB18030   -i zh_HK $LOCALEDIR/zh_HK.GB18030 || :
 localedef -c -f BIG5      -i ./zh_TW $LOCALEDIR/zh_TW || :
@@ -1350,6 +1351,7 @@ fi
 Summary: Base files for localization (English)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
+Provides: locales-en_GB, locales-en_IE, locales-en_CA, locales-en_US
 
 %description -n locales-en
 These are the base files for English language localization.
@@ -3328,6 +3330,7 @@ Summary: Base files for localization (Portuguese)
 Summary(pt): Estes são os arquivos básicos para a localização (Português)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
+Provides: locales-pt_BR, locales-pt_PT
 
 %description -n locales-pt
 These are the base files for Portuguese language localization; you need
@@ -3647,7 +3650,7 @@ fi
 Summary: Base files for localization (Serbian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-sh
+Provides: locales-sh, locales-sr@Latn
 Summary(sr): Основне датотеке за локализацију (Српски) 
 Summary(sr@Latn): Osnovne datoteke za lokalizaciju (Srpski)
 Summary(sh): Osnovne datoteke za lokalizaciju (Srpski)
@@ -4088,6 +4091,7 @@ Summary: Base files for localization (Uzbek)
 Summary(uz): Lokallashtirishning asosiy fayllari (o'zbekcha)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
+Provides: locales-uz@Latn
 
 %description -n locales-uz
 These are the base files for Uzbek language localization; you need
@@ -4302,6 +4306,7 @@ fi
 Summary: Base files for localization (Chinese)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
+Provides: locales-zh_CN, locales-zh_TW, locales-zh_SG, locales-zh_HK
 Obsoletes: libwcsmbs wcsmbs-locale
 Summary(zh_CN): 中文地方化的基本档案
 Summary(zh_TW): 中文地方化的基本檔案
@@ -4359,5 +4364,3 @@ fi
 %files -n locales-zu
 %defattr(-,root,root)
 /usr/share/locale/zu*
-
-
