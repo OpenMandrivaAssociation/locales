@@ -24,7 +24,7 @@
 %define glibc_ver 2.4
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 5
+%define release   %mkrel 6
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -631,8 +631,8 @@ localedef -c -f GB18030   -i zh_CN $LOCALEDIR/zh_CN.GB18030 || :
 localedef -c -f UTF-8     -i zh_CN $LOCALEDIR/zh_CN.UTF-8 || :
 localedef -c -f BIG5HKSCS -i zh_HK $LOCALEDIR/zh_HK || :
 localedef -c -f GB18030   -i zh_HK $LOCALEDIR/zh_HK.GB18030 || :
-localedef -c -f BIG5      -i ./zh_TW $LOCALEDIR/zh_TW || :
-localedef -c -f BIG5      -i ./zh_TW $LOCALEDIR/zh_TW.Big5 || :
+localedef -c -f BIG5      -i zh_TW $LOCALEDIR/zh_TW || :
+localedef -c -f BIG5      -i zh_TW $LOCALEDIR/zh_TW.Big5 || :
 
 # Filipino -- for old compatibility (to remove in the future)
 localedef -c -f UTF-8       -i fil_PH $LOCALEDIR/ph || :
