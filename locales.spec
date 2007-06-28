@@ -21,10 +21,10 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.4
+%define glibc_ver 2.6
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 6
+%define release   %mkrel 1
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
