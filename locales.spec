@@ -21,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.6
+%define glibc_ver 2.6.1
 %define glibc_epoch 6
 %define version   %{glibc_ver}
 %define release   %mkrel 1
@@ -70,7 +70,6 @@ Source24: nds_DE
 Source25: nds_DE@traditional
 Source26: nds_NL
 Source27: pap_AN
-Source28: as_IN
 Source29: sc_IT
 Source30: li_NL
 Source31: li_BE
