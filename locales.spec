@@ -135,7 +135,6 @@ Source70: sz_ET
 # it is arch dependent in fact
 #BuildArchitectures: noarch
 # to build this package glibc = %{glibc_ver} is needed (for locales definitions)
-Prereq: glibc = %{glibc_epoch}:%{glibc_ver}
 # no need to check for dependencies when building, there is no executables here
 AutoReqProv: no
 BuildRoot: %{_tmppath}/locales-root
