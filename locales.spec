@@ -2992,7 +2992,7 @@ Il permet aux applications de savoir quels caractères sont affichables et
 donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates des nombres.
 
-description -n locales-nl -l nl
+%description -n locales-nl -l nl
 Dit zijn de basisbestanden nodig voor de Nederlandse taalmodule; ze zijn
 noodzakelijk om de 8bits Nederlandse karakters correct weer te geven en
 voor een juiste alfabetische sortering en weergave van data en nummers
