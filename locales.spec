@@ -1042,7 +1042,7 @@ fi
 Summary: Base files for localization (Breton)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(fr): Fichiers de base pour la localisation en langue brétonne.
+Summary(fr): Fichiers de base pour la localisation en langue bretonne.
 Summary(br): Kement-mañ a zo restroù diazez evit broelañ diouzh ar brezhoneg.
 
 %description -n locales-br
