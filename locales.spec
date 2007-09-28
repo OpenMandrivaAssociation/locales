@@ -24,7 +24,7 @@
 %define glibc_ver 2.6.1
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 3
+%define release   %mkrel 4
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -797,7 +797,13 @@ Summary(am): ለlocalization (አማርኛ) መሰረት ፋይሎች
 Group: System/Internationalization
 URL: http://www.ethiopic.org/
 Requires: locales = %{version}-%{release}
-Provides: locales-byn, locales-gez, locales-sid, locales-ti, locales-tig, locales-om, locales-wal
+Provides: locales-byn = %{version}-%{release}
+Provides: locales-gez = %{version}-%{release}
+Provides: locales-sid = %{version}-%{release}
+Provides: locales-ti = %{version}-%{release}
+Provides: locales-tig = %{version}-%{release}
+Provides: locales-om = %{version}-%{release}
+Provides: locales-wal = %{version}-%{release}
 
 %description -n locales-am
 These are the base files for Amharic language localization; you need
@@ -1316,7 +1322,7 @@ Summary: Base files for localization (Greek)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Obsoletes: locales-gr
-Provides: locales-gr
+Provides: locales-gr = %{version}-%{release}
 Summary(el): Βασικά αρχεία τοπικών ρυθμίσεων (Ελληνικά)
 
 %description -n locales-el
@@ -1349,7 +1355,10 @@ fi
 Summary: Base files for localization (English)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-en_GB, locales-en_IE, locales-en_CA, locales-en_US
+Provides: locales-en_GB = %{version}-%{release}
+Provides: locales-en_IE = %{version}-%{release}
+Provides: locales-en_CA = %{version}-%{release}
+Provides: locales-en_US = %{version}-%{release}
 
 %description -n locales-en
 These are the base files for English language localization.
@@ -1407,7 +1416,7 @@ Summary: Base files for localization (Spanish)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Summary(es): Ficheros de base para la localización (castellano)
-Provides: locales-an
+Provides: locales-an = %{version}-%{release}
 
 %description -n locales-es
 These are the base files for Spanish language localization; you need
@@ -2554,7 +2563,7 @@ fi
 Summary: Base files for localization (Luganda)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-lug
+Provides: locales-lug = %{version}-%{release}
 
 %description -n locales-lg
 These are the base files for Luganda (Ganda) language localization; you need
@@ -3018,7 +3027,8 @@ Summary: Base files for localization (Norwegian)
 Summary(nb): Dette er basisfilene for lokalisering til norsk språk
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-nn, locales-nb
+Provides: locales-nn = %{version}-%{release}
+Provides: locales-nb = %{version}-%{release}
 
 %description -n locales-no
 These are the base files for Norwegian language localization; you need
@@ -3188,8 +3198,8 @@ fi
 Summary: Base files for localization (Pilipino)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-ph
-Provides: locales-fil
+Provides: locales-ph = %{version}-%{release}
+Provides: locales-fil = %{version}-%{release}
 Obsoletes: locales-ph
 
 %description -n locales-tl
@@ -3301,7 +3311,7 @@ Summary: Base files for localization (Papiamento)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Obsoletes: locales-pp
-Provides: locales-pp
+Provides: locales-pp = %{version}-%{release}
 
 %description -n locales-pap
 These are the base files for Papiamento language localization; you need
@@ -3328,7 +3338,8 @@ Summary: Base files for localization (Portuguese)
 Summary(pt): Estes são os arquivos básicos para a localização (Português)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-pt_BR, locales-pt_PT
+Provides: locales-pt_BR = %{version}-%{release}
+Provides: locales-pt_PT = %{version}-%{release}
 
 %description -n locales-pt
 These are the base files for Portuguese language localization; you need
@@ -3648,7 +3659,8 @@ fi
 Summary: Base files for localization (Serbian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-sh, locales-sr@Latn
+Provides: locales-sh = %{version}-%{release}
+Provides: locales-sr@Latn = %{version}-%{release}
 Summary(sr): Основне датотеке за локализацију (Српски) 
 Summary(sr@Latn): Osnovne datoteke za lokalizaciju (Srpski)
 Summary(sh): Osnovne datoteke za lokalizaciju (Srpski)
@@ -4089,7 +4101,7 @@ Summary: Base files for localization (Uzbek)
 Summary(uz): Lokallashtirishning asosiy fayllari (o'zbekcha)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-uz@Latn
+Provides: locales-uz@Latn = %{version}-%{release}
 
 %description -n locales-uz
 These are the base files for Uzbek language localization; you need
@@ -4304,7 +4316,10 @@ fi
 Summary: Base files for localization (Chinese)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-zh_CN, locales-zh_TW, locales-zh_SG, locales-zh_HK
+Provides: locales-zh_CN = %{version}-%{release}
+Provides: locales-zh_TW = %{version}-%{release}
+Provides: locales-zh_SG = %{version}-%{release}
+Provides: locales-zh_HK = %{version}-%{release}
 Obsoletes: libwcsmbs wcsmbs-locale
 Summary(zh_CN): 中文地方化的基本档案
 Summary(zh_TW): 中文地方化的基本檔案
