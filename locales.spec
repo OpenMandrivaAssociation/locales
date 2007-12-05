@@ -24,7 +24,7 @@
 %define glibc_ver 2.6.1
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 4
+%define release   %mkrel 5
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -269,8 +269,6 @@ done
 # name for them; that makes the localization far easier
 #
 # Not yet build, to add later: pap_AN
-# uz_UZ is purposedly excluded (handled separately),
-# as we default to cyrillic now
 #
 for i in \
 	 af_ZA am_ET an_ES as_IN az_AZ be_BY bg_BG \
@@ -284,7 +282,7 @@ for i in \
 	 mt_MT nb_NO ne_NP nn_NO nr_ZA nso_ZA oc_FR om_ET om_KE \
 	 fil_PH pl_PL ro_RO rw_RW sc_IT se_NO si_LK sid_ET sk_SK sl_SI \
 	 sq_AL sr_CS ss_ZA st_ZA ta_IN te_IN tg_TJ th_TH ti_ER ti_ET \
-	 tig_ER tk_TM tl_PH tn_ZA ts_ZA tt_RU ug_CN uk_UA ur_PK \
+	 tig_ER tk_TM tl_PH tn_ZA ts_ZA tt_RU ug_CN uk_UA ur_PK uz_UZ uz_UZ@cyrillic \
 	 ve_ZA vi_VN wa_BE wal_ET xh_ZA \
 	 yi_US yo_NG zh_CN zh_HK zh_SG zh_TW zu_ZA
 do
@@ -330,12 +328,12 @@ do
 		fi
 	fi
 	# if some locale returns a non 0 return code it isn't important
-	[ "$DEF_LANG" != "${LOCALENAME}" -a ! -r "$LOCALEDIR/$DEF_LANG" ] && \
+	[ "$DEF_LANG" != "${LOCALENAME}" -a ! -r "$LOCALEDIR/$DEF_LANG${VARIANT}" ] && \
 	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LANG${VARIANT}  || :
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/${LOCALENAME}${VARIANT} || :
+	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}${VARIANT} || :
 	[ "$DEF_CHARSET" != "BIG5" -a "$DEF_CHARSET" != "UTF-8" ] && \
-	(localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/${LOCALENAME}.`basename ${DEF_CHARSET}`${VARIANT} || : )
-	localedef -c -f UTF-8 -i $DEF_LOCALE_FILE $LOCALEDIR/${LOCALENAME}.UTF-8${VARIANT} || :
+	(localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}.`basename ${DEF_CHARSET}`${VARIANT} || : )
+	localedef -c -f UTF-8 -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}.UTF-8${VARIANT} || :
 done
 
 # languages which have several locales
@@ -566,32 +564,6 @@ localedef -c -f ISO-8859-2 -i tk_TM $LOCALEDIR/tk_TM.ISO-8859-2 || :
 
 # Provide cp1251 for Ukrainian too...
 localedef -c -f CP1251     -i uk_UA $LOCALEDIR/uk_UA.CP1251 || :
-
-# Uzbek
-[ -r /usr/share/i18n/locales/uz_UZ ] && \
-	cp /usr/share/i18n/locales/uz_UZ uz_UZ@Latn
-[ -r /usr/share/i18n/locales/uz_UZ@Latn ] && \
-	cp -f /usr/share/i18n/locales/uz_UZ@Latn uz_UZ@Latn
-if [ -r "uz_UZ@Latn" ]; then
-localedef -c -f ISO-8859-1  -i ./uz_UZ@Latn $LOCALEDIR/uz_UZ.ISO-8859-1 || :
-localedef -c -f ISO-8859-9  -i ./uz_UZ@Latn $LOCALEDIR/uz_UZ.ISO-8859-9 || :
-localedef -c -f UTF-8       -i ./uz_UZ@Latn $LOCALEDIR/uz@Latn || :
-localedef -c -f UTF-8       -i ./uz_UZ@Latn $LOCALEDIR/uz_UZ@Latn || :
-localedef -c -f UTF-8       -i ./uz_UZ@Latn $LOCALEDIR/uz_UZ.UTF-8@Latn || :
-fi
-[ -r /usr/share/i18n/locales/uz_UZ@cyrillic ] && \
-	cp /usr/share/i18n/locales/uz_UZ@cyrillic uz_UZ@Cyrl
-[ -r /usr/share/i18n/locales/uz_UZ@Cyrl ] && \
-	cp /usr/share/i18n/locales/uz_UZ@Cyrl uz_UZ@Cyrl
-if [ -r "uz_UZ@Cyrl" ]; then
-localedef -c -f UTF-8 -i ./uz_UZ@Cyrl $LOCALEDIR/uz || :
-localedef -c -f UTF-8 -i ./uz_UZ@Cyrl $LOCALEDIR/uz_UZ || :
-localedef -c -f UTF-8 -i ./uz_UZ@Cyrl $LOCALEDIR/uz_UZ.UTF-8 || :
-# for compatibility
-localedef -c -f UTF-8 -i ./uz_UZ@Cyrl $LOCALEDIR/uz@Cyrl || :
-localedef -c -f UTF-8 -i ./uz_UZ@Cyrl $LOCALEDIR/uz_UZ@Cyrl || :
-localedef -c -f UTF-8 -i ./uz_UZ@Cyrl $LOCALEDIR/uz_UZ.UTF-8@Cyrl || :
-fi
 
 # Vietnamese -- for old compatibility
 localedef -c -f VISCII     -i vi_VN $LOCALEDIR/vi_VN.VISCII || :
@@ -4101,7 +4073,7 @@ Summary: Base files for localization (Uzbek)
 Summary(uz): Lokallashtirishning asosiy fayllari (o'zbekcha)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Provides: locales-uz@Latn = %{version}-%{release}
+Provides: locales-uz@cyrillic = %{version}-%{release}
 
 %description -n locales-uz
 These are the base files for Uzbek language localization; you need
@@ -4118,11 +4090,11 @@ belgilash qoidalari ham shu fayllarda joylashgan.
 
 %post -n locales-uz
 if [ "$1" = "1" ]; then
-	%{loc_add} uz uz@Latn
+	%{loc_add} uz uz@cyrillic
 fi
 %preun -n locales-uz
 if [ "$1" = "0" ]; then
-	%{loc_del} uz uz@Latn
+	%{loc_del} uz uz@cyrillic
 fi
 
 %files -n locales-uz
