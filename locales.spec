@@ -137,6 +137,7 @@ Source70: sz_ET
 # to build this package glibc = %{glibc_ver} is needed (for locales definitions)
 # no need to check for dependencies when building, there is no executables here
 AutoReqProv: no
+BuildRoot: %{_tmppath}/locales-root
 # locales are very dependent on glibc version
 Requires: glibc = %{glibc_epoch}:%{glibc_ver}
 # post scripts use grep, perl, etc.
