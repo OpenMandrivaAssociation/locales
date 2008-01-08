@@ -21,10 +21,10 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.6.1
+%define glibc_ver 2.7
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 5
+%define release   %mkrel 1
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -62,39 +62,15 @@ Source16: sw_XX
 Source17: ku_TR
 Source18: eo_XX
 Source19: ky_KG
-Source20: iu_CA
-Source21: fur_IT
 Source22: km_KH
-Source23: fil_PH
-Source24: nds_DE
 Source25: nds_DE@traditional
-Source26: nds_NL
-Source27: pap_AN
-Source29: sc_IT
-Source30: li_NL
-Source31: li_BE
-Source32: tk_TM
-Source33: fy_DE
-Source34: fy_NL
-Source35: ik_CA
-Source36: ber_MA
-Source37: ber_DZ
 Source38: dz_BT
-# provisional Uyghur locale
-Source39: ug_CN
-# provisional locales for Nigeria
-Source40: en_NG
-Source41: ha_NG
-Source42: ig_NG
-Source43: yo_NG
 # glibc no longer comes with Latn version...
 Source44: http://srpski.org/locale/sr_CS@Latn
 
 # Those exist in glibc >= 2.3.2 but the attached ones
 # are more correct/more complete
 
-# patched for the euro
-Source49: sl_SI
 # all ar_?? locales in glibc 2.3.5 are missing "Yy" and "Nn" in 
 # version in glibc 2.3.5 has wrong yexexpr/noexpr and wrong LC_COLLATE
 Source50: ar_SA
@@ -199,9 +175,8 @@ cat i18n | \
 
 		
 # copy various unhabitual charsets and other stuff
-# en_NG is needed for proper building of other *_NG locales
 for DEF_CHARSET in \
-	es@tradicional en_NG
+	es@tradicional
 do
 	cp $RPM_SOURCE_DIR/$DEF_CHARSET .
 done
@@ -268,8 +243,6 @@ done
 # languages which have only one locale; use the language name as locale
 # name for them; that makes the localization far easier
 #
-# Not yet build, to add later: pap_AN
-#
 for i in \
 	 af_ZA am_ET an_ES as_IN az_AZ be_BY bg_BG \
 	 br_FR bs_BA byn_ER cs_CZ cy_GB da_DK dz_BT \
@@ -280,7 +253,7 @@ for i in \
 	 ka_GE kk_KZ kl_GL km_KH kn_IN ko_KR ku_TR kw_GB ky_KG \
 	 lg_UG lo_LA lt_LT lv_LV mg_MG mi_NZ mk_MK ml_IN mn_MN mr_IN ms_MY \
 	 mt_MT nb_NO ne_NP nn_NO nr_ZA nso_ZA oc_FR om_ET om_KE \
-	 fil_PH pl_PL ro_RO rw_RW sc_IT se_NO si_LK sid_ET sk_SK sl_SI \
+	 fil_PH pap_AN pl_PL ro_RO rw_RW sc_IT se_NO si_LK sid_ET sk_SK sl_SI \
 	 sq_AL sr_CS ss_ZA st_ZA ta_IN te_IN tg_TJ th_TH ti_ER ti_ET \
 	 tig_ER tk_TM tl_PH tn_ZA ts_ZA tt_RU ug_CN uk_UA ur_PK uz_UZ uz_UZ@cyrillic \
 	 ve_ZA vi_VN wa_BE wal_ET xh_ZA \
@@ -338,15 +311,13 @@ done
 
 # languages which have several locales
 #
-# en_NG not yet on glibc
-#
-for i in $RPM_SOURCE_DIR/nds_??* $RPM_SOURCE_DIR/li_?? \
+for i in $RPM_SOURCE_DIR/nds_??* /usr/share/i18n/locales/li_?? \
 	 $RPM_SOURCE_DIR/fy_??   $RPM_SOURCE_DIR/sw_?? \
 	 /usr/share/i18n/locales/aa_??* /usr/share/i18n/locales/ar_?? \
-	 $RPM_SOURCE_DIR/ber_?? \
+	 /usr/share/i18n/locales/ber_?? \
 	 /usr/share/i18n/locales/bn_?? /usr/share/i18n/locales/ca_?? \
 	 /usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_?? \
-	 $RPM_SOURCE_DIR/en_NG \
+	 /usr/share/i18n/locales/en_NG \
 	 /usr/share/i18n/locales/en_?? /usr/share/i18n/locales/es_?? \
 	 /usr/share/i18n/locales/fr_?? /usr/share/i18n/locales/gez_??* \
 	 /usr/share/i18n/locales/it_?? /usr/share/i18n/locales/nl_?? \
@@ -419,7 +390,7 @@ done
 # locales using iso-8859-15 which are the default ones for their respective
 # languages
 for i in br_FR ca_ES da_DK de_DE es_ES eu_ES fi_FI fr_FR ga_IE \
-	 gl_ES is_IS it_IT li_NL nds_DE nl_NL pt_PT wa_BE
+	 gl_ES is_IS it_IT li_NL nds_DE nds_NL nl_NL pt_PT wa_BE
 do
 	if [ -r ./`basename $i` ]; then
 		DEF_LOCALE_FILE="./`basename $i`"
@@ -3293,16 +3264,16 @@ to Papiamento language conventions.
 
 %post -n locales-pap
 if [ "$1" = "1" ]; then
-	%{loc_add} pap
+	%{loc_add} pap pap_AN
 fi
 %preun -n locales-pap
 if [ "$1" = "0" ]; then
-	%{loc_del} pap
+	%{loc_del} pap pap_AN
 fi
 
-#%files -n locales-pap
-#%defattr(-,root,root)
-#/usr/share/locale/pap*
+%files -n locales-pap
+%defattr(-,root,root)
+/usr/share/locale/pap*
 
 ### pt
 %package -n locales-pt
