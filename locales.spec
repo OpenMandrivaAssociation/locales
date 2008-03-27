@@ -218,7 +218,7 @@ done
 # fix for locales using monday as first week day
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=3035
 for i in /usr/share/i18n/locales/be_BY /usr/share/i18n/locales/cy_GB \
-	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_?? \
+	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_GR \
 	/usr/share/i18n/locales/es_CL /usr/share/i18n/locales/es_ES@euro \
 	/usr/share/i18n/locales/es_MX /usr/share/i18n/locales/fr_?? \
 	/usr/share/i18n/locales/fy_NL /usr/share/i18n/locales/it_?? \
@@ -226,8 +226,7 @@ for i in /usr/share/i18n/locales/be_BY /usr/share/i18n/locales/cy_GB \
 	/usr/share/i18n/locales/nl_BE /usr/share/i18n/locales/nl_NL \
 	/usr/share/i18n/locales/pt_PT /usr/share/i18n/locales/ru_UA \
 	/usr/share/i18n/locales/se_NO /usr/share/i18n/locales/sv_FI \
-	/usr/share/i18n/locales/sv_FI@euro /usr/share/i18n/locales/tr_CY \
-	/usr/share/i18n/locales/*_ES vi_VN
+	/usr/share/i18n/locales/sv_FI@euro /usr/share/i18n/locales/*_ES vi_VN
 do
 	LOCALENAME=`basename $i`
 	if [ -r $RPM_SOURCE_DIR/$i ]; then
