@@ -24,7 +24,7 @@
 %define glibc_ver 2.7
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 2
+%define release   %mkrel 3
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -214,17 +214,20 @@ do
 		./`basename $i`
 	fi
 done
+
 # fix for locales using monday as first week day
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=3035
-for i in az_AZ be_BY bg_BG bs_BA cs_CZ cy_GB da_DK et_EE fi_FI \
-	lt_LT mi_NZ pl_PL pt_PT ro_RO sk_SK sr_CS uk_UA vi_VN zh_CN \
-	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/es_?? \
-	/usr/share/i18n/locales/el_?? /usr/share/i18n/locales/fr_?? \
-	/usr/share/i18n/locales/it_?? /usr/share/i18n/locales/ru_?? \
-	/usr/share/i18n/locales/sv_?? /usr/share/i18n/locales/tr_?? \
-	/usr/share/i18n/locales/*_BE /usr/share/i18n/locales/*_NL \
-	/usr/share/i18n/locales/*_CH /usr/share/i18n/locales/*_ES \
-	/usr/share/i18n/locales/*_NO
+for i in /usr/share/i18n/locales/be_BY /usr/share/i18n/locales/cy_GB \
+	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_?? \
+	/usr/share/i18n/locales/es_CL /usr/share/i18n/locales/es_ES@euro \
+	/usr/share/i18n/locales/es_MX /usr/share/i18n/locales/fr_?? \
+	/usr/share/i18n/locales/fy_NL /usr/share/i18n/locales/it_?? \
+	/usr/share/i18n/locales/lt_LT /usr/share/i18n/locales/mi_NZ \
+	/usr/share/i18n/locales/nl_BE /usr/share/i18n/locales/nl_NL \
+	/usr/share/i18n/locales/pt_PT /usr/share/i18n/locales/ru_UA \
+	/usr/share/i18n/locales/se_NO /usr/share/i18n/locales/sv_FI \
+	/usr/share/i18n/locales/sv_FI@euro /usr/share/i18n/locales/tr_CY \
+	/usr/share/i18n/locales/*_ES vi_VN
 do
 	LOCALENAME=`basename $i`
 	if [ -r $RPM_SOURCE_DIR/$i ]; then
@@ -232,13 +235,15 @@ do
 	else
 		DEF_LOCALE_FILE="/usr/share/i18n/locales/$LOCALENAME"
 	fi
-	if ! grep '^week\>' $DEF_LOCALE_FILE > /dev/null ; then
-		cat $DEF_LOCALE_FILE | sed 's/\(END LC_TIME\)/week 7;19971201;4\n\1/' > \
+	if ! grep '^week\>' $DEF_LOCALE_FILE > /dev/null && \
+	   ! grep '^first_weekday\>' $DEF_LOCALE_FILE > /dev/null && \
+	   ! grep '^first_workday\>' $DEF_LOCALE_FILE > /dev/null
+	then
+		cat $DEF_LOCALE_FILE | sed \
+			's/\(END LC_TIME\)/week 7;19971201;4\nfirst_weekday 1\nfirst_workday 1\n\1/' > \
 		./$LOCALENAME
 	fi
 done
-
-
 
 # languages which have only one locale; use the language name as locale
 # name for them; that makes the localization far easier
