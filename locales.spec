@@ -24,7 +24,7 @@
 %define glibc_ver 2.8
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 1
+%define release   %mkrel 2
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -278,9 +278,9 @@ do
 		af_*) DEF_CHARSET="ISO-8859-1" ;;
 		bs_*|cs_*|hr_*|hu_*|pl_*|ro_*|sk_*|sl_*) DEF_CHARSET="ISO-8859-2" ;;
 		lt_*|lv*) DEF_CHARSET="ISO-8859-13" ;;
-		br_*|da_*|et_*|eu_*) DEF_CHARSET="ISO-8859-15";;
-		fi_*|fo_*|fur_*|ga_*|gl_*|is_*) DEF_CHARSET="ISO-8859-15";;
-		nn_*|no_*|nb_*|oc_*|sc_*|sq_*|wa_*) DEF_CHARSET="ISO-8859-15";;
+		br_*|da_*|et_*|eu_*|fi_*|fo_*|fy_*) DEF_CHARSET="ISO-8859-15" ;;
+		fur_*|ga_*|gl_*|is_*|nn_*|no_*) DEF_CHARSET="ISO-8859-15" ;;
+		nb_*|oc_*|sc_*|sq_*|wa_*) DEF_CHARSET="ISO-8859-15" ;;
 		be_*|bg_*) DEF_CHARSET="CP1251" ;;
 		ru_*) DEF_CHARSET="KOI8-R" ;;
 		uk_*) DEF_CHARSET="KOI8-U" ;;
@@ -315,8 +315,7 @@ done
 
 # languages which have several locales
 #
-for i in $RPM_SOURCE_DIR/nds_??* /usr/share/i18n/locales/li_?? \
-	 $RPM_SOURCE_DIR/fy_??   $RPM_SOURCE_DIR/sw_?? \
+for i in $RPM_SOURCE_DIR/nds_??* $RPM_SOURCE_DIR/sw_?? \
 	 /usr/share/i18n/locales/aa_??* /usr/share/i18n/locales/ar_?? \
 	 /usr/share/i18n/locales/ber_?? \
 	 /usr/share/i18n/locales/bn_?? /usr/share/i18n/locales/ca_?? \
@@ -324,9 +323,9 @@ for i in $RPM_SOURCE_DIR/nds_??* /usr/share/i18n/locales/li_?? \
 	 /usr/share/i18n/locales/en_NG \
 	 /usr/share/i18n/locales/en_?? /usr/share/i18n/locales/es_?? \
 	 /usr/share/i18n/locales/fr_?? /usr/share/i18n/locales/gez_??* \
-	 /usr/share/i18n/locales/it_?? /usr/share/i18n/locales/nl_?? \
-	 /usr/share/i18n/locales/pa_?? /usr/share/i18n/locales/pt_?? \
-	 /usr/share/i18n/locales/ru_?? \
+	 /usr/share/i18n/locales/it_?? /usr/share/i18n/locales/li_?? \
+	 /usr/share/i18n/locales/nl_?? /usr/share/i18n/locales/pa_?? \
+	 /usr/share/i18n/locales/pt_?? /usr/share/i18n/locales/ru_?? \
 	 /usr/share/i18n/locales/so_?? /usr/share/i18n/locales/sv_?? \
 	 /usr/share/i18n/locales/tr_??
 do
