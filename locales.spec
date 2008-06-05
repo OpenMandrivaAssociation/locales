@@ -24,7 +24,7 @@
 %define glibc_ver 2.8
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 2
+%define release   %mkrel 3
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -65,8 +65,6 @@ Source19: ky_KG
 Source22: km_KH
 Source25: nds_DE@traditional
 Source38: dz_BT
-# glibc no longer comes with Latn version...
-Source44: http://srpski.org/locale/sr_CS@Latn
 
 # Those exist in glibc >= 2.3.2 but the attached ones
 # are more correct/more complete
@@ -258,7 +256,7 @@ for i in \
 	 lg_UG lo_LA lt_LT lv_LV mg_MG mi_NZ mk_MK ml_IN mn_MN mr_IN ms_MY \
 	 mt_MT nb_NO ne_NP nn_NO nr_ZA nso_ZA oc_FR om_ET om_KE \
 	 fil_PH pap_AN pl_PL ro_RO rw_RW sc_IT se_NO si_LK sid_ET sk_SK sl_SI \
-	 sq_AL sr_CS ss_ZA st_ZA ta_IN te_IN tg_TJ th_TH ti_ER ti_ET \
+	 sq_AL ss_ZA st_ZA ta_IN te_IN tg_TJ th_TH ti_ER ti_ET \
 	 tig_ER tk_TM tl_PH tn_ZA ts_ZA tt_RU ug_CN uk_UA ur_PK uz_UZ uz_UZ@cyrillic \
 	 ve_ZA vi_VN wa_BE wal_ET xh_ZA \
 	 yi_US yo_NG zh_CN zh_HK zh_SG zh_TW zu_ZA
@@ -326,8 +324,8 @@ for i in $RPM_SOURCE_DIR/nds_??* $RPM_SOURCE_DIR/sw_?? \
 	 /usr/share/i18n/locales/it_?? /usr/share/i18n/locales/li_?? \
 	 /usr/share/i18n/locales/nl_?? /usr/share/i18n/locales/pa_?? \
 	 /usr/share/i18n/locales/pt_?? /usr/share/i18n/locales/ru_?? \
-	 /usr/share/i18n/locales/so_?? /usr/share/i18n/locales/sv_?? \
-	 /usr/share/i18n/locales/tr_??
+	 /usr/share/i18n/locales/so_?? /usr/share/i18n/locales/sr_??* \
+	 /usr/share/i18n/locales/sv_?? /usr/share/i18n/locales/tr_??
 do
 	DEF_CHARSET="UTF-8"
 	# for those languages we still keep a default charset different of UTF-8
@@ -506,32 +504,6 @@ localedef -c -f CP1251     -i ru_UA $LOCALEDIR/ru_UA.CP1251 || :
 # Albanian
 localedef -c -f ISO-8859-1 -i sq_AL $LOCALEDIR/sq_AL.ISO-8859-1 || :
 localedef -c -f ISO-8859-2 -i sq_AL $LOCALEDIR/sq_AL.ISO-8859-2 || :
-
-# Serbian
-localedef -c -f ISO-8859-5  -i sr_CS $LOCALEDIR/sr_CS.ISO-8859-5 || :
-localedef -c -f CP1252      -i sr_CS $LOCALEDIR/sr_CS.CP1251 || :
-cp $RPM_SOURCE_DIR/sr_CS@Latn .
-if [ -r "sr_CS@Latn" ]; then
-localedef -c -f UTF-8 -i ./sr_CS@Latn $LOCALEDIR/sr@Latn || :
-localedef -c -f UTF-8 -i ./sr_CS@Latn $LOCALEDIR/sr_CS@Latn || :
-localedef -c -f UTF-8 -i ./sr_CS@Latn $LOCALEDIR/sr_CS.UTF-8@Latn || :
-localedef -c -f ISO-8859-2 -i ./sr_CS@Latn $LOCALEDIR/sr_CS.ISO-8859-2@Latn || :
-fi
-# for old compatibility
-if [ -r "sr_CS" ]; then
-localedef -c -f UTF-8      -i ./sr_CS $LOCALEDIR/sr_YU || :
-localedef -c -f ISO-8859-5 -i ./sr_CS $LOCALEDIR/sr_YU.ISO-8859-5 || :
-localedef -c -f CP1251     -i ./sr_CS $LOCALEDIR/sr_YU.CP1251 || :
-localedef -c -f UTF-8      -i ./sr_CS $LOCALEDIR/sr_YU.UTF-8 || :
-fi
-if [ -r "sr_CS@Latn" ]; then
-localedef -c -f UTF-8      -i ./sr_CS@Latn $LOCALEDIR/sr_YU@Latn || :
-localedef -c -f ISO-8859-2 -i ./sr_CS@Latn $LOCALEDIR/sr_YU.ISO-8859-2@Latn ||:
-localedef -c -f UTF-8      -i ./sr_CS@Latn $LOCALEDIR/sr_YU.UTF-8@Latn || :
-localedef -c -f UTF-8      -i ./sr_CS@Latn $LOCALEDIR/sh_YU || :
-localedef -c -f ISO-8859-2 -i ./sr_CS@Latn $LOCALEDIR/sh_YU.ISO-8859-2 || :
-localedef -c -f UTF-8      -i ./sr_CS@Latn $LOCALEDIR/sh_YU.UTF-8 || :
-fi
 
 # Turkmen
 localedef -c -f ISO-8859-2 -i tk_TM $LOCALEDIR/tk_TM.ISO-8859-2 || :
@@ -3643,16 +3615,15 @@ i brojeva po pravilima Srpskog jezika.
 
 %post -n locales-sr
 if [ "$1" = "1" ]; then
-	%{loc_add} sr sr@Latn sh
+	%{loc_add} sr_ME sr_RS
 fi
 %preun -n locales-sr
 if [ "$1" = "0" ]; then
-	%{loc_del} sr sr@Latn sh
+	%{loc_del} sr_ME sr_RS
 fi
 
 %files -n locales-sr
 %defattr(-,root,root)
-/usr/share/locale/sh*
 /usr/share/locale/sr*
 
 ### ss
