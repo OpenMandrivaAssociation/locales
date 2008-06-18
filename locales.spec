@@ -24,7 +24,7 @@
 %define glibc_ver 2.8
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 3
+%define release   %mkrel 4
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -623,9 +623,8 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 
 %post
-if [ "$1" = "1" ]; then
-	%{loc_add} "UTF-8"
-fi
+%{loc_add} "UTF-8"
+
 %preun
 if [ "$1" = "0" ]; then
 	%{loc_del} "UTF-8"
@@ -661,9 +660,8 @@ alfabetical sorting and representation of dates and numbers according
 to Afar language conventions.
 
 %post -n locales-aa
-if [ "$1" = "1" ]; then
-	%{loc_add} aa_DJ aa_ER aa_ET
-fi
+%{loc_add} aa_DJ aa_ER aa_ET
+
 %preun -n locales-aa
 if [ "$1" = "0" ]; then
 	%{loc_del} aa_DJ aa_ER aa_ET
@@ -697,9 +695,8 @@ sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
 vertoon.
 
 %post -n locales-af
-if [ "$1" = "1" ]; then
-	%{loc_add} af af_ZA
-fi
+%{loc_add} af af_ZA
+
 %preun -n locales-af
 if [ "$1" = "0" ]; then
 	%{loc_del} af af_ZA
@@ -738,10 +735,9 @@ to Amharic language conventions.
 ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
 
 %post -n locales-am
-if [ "$1" = "1" ]; then
-	%{loc_add} am am_ET byn byn_ER gez gez_ER gez_ET om om_ET om_KE \
-	           sid sid_ET ti ti_ER ti_ET tig tig_ER wal wal_ET
-fi
+%{loc_add} am am_ET byn byn_ER gez gez_ER gez_ET om om_ET om_KE \
+           sid sid_ET ti ti_ER ti_ET tig tig_ER wal wal_ET
+
 %preun -n locales-am
 if [ "$1" = "0" ]; then
 	%{loc_del} am am_ET byn byn_ER gez gez_ER gez_ET om om_ET om_KE \
@@ -801,10 +797,9 @@ to do that.
 العربية، بما في ذلك إظهار التاريخ و غيره.
 
 %post -n locales-ar
-if [ "$1" = "1" ]; then
-	%{loc_add} ar ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB \
-	           ar_LY ar_MA ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
-fi
+%{loc_add} ar ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB \
+           ar_LY ar_MA ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
+
 %preun -n locales-ar
 if [ "$1" = "0" ]; then
 	%{loc_del} ar ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB \
@@ -846,9 +841,8 @@ alphabetical sorting and representation of dates and numbers according
 to Assamese language conventions.
 
 %post -n locales-as
-if [ "$1" = "1" ]; then
-	%{loc_add} as as_IN
-fi
+%{loc_add} as as_IN
+
 %preun -n locales-as
 if [ "$1" = "0" ]; then
 	%{loc_del} as as_IN
@@ -872,9 +866,8 @@ alphabetical sorting and representation of dates and numbers according
 to Azeri language conventions.
 
 %post -n locales-az
-if [ "$1" = "1" ]; then
-	%{loc_add} az az_AZ
-fi
+%{loc_add} az az_AZ
+
 %preun -n locales-az
 if [ "$1" = "0" ]; then
 	%{loc_del} az az_AZ
@@ -898,9 +891,8 @@ alphabetical sorting and representation of dates and numbers according
 to Belarussian language conventions.
 
 %post -n locales-be
-if [ "$1" = "1" ]; then
-	%{loc_add} be be_BY
-fi
+%{loc_add} be be_BY
+
 %preun -n locales-be
 if [ "$1" = "0" ]; then
 	%{loc_del} be be_BY
@@ -924,9 +916,8 @@ alphabetical sorting and representation of dates and numbers according
 to Amazigh language conventions.
 
 %post -n locales-ber
-if [ "$1" = "1" ]; then
-	%{loc_add} ber_DZ ber_MA
-fi
+%{loc_add} ber_DZ ber_MA
+
 %preun -n locales-ber
 if [ "$1" = "0" ]; then
 	%{loc_del} ber_DZ ber_MA
@@ -958,9 +949,8 @@ to Bulgarian language conventions.
 в съответствие на правилата на българския език.
 
 %post -n locales-bg
-if [ "$1" = "1" ]; then
-	%{loc_add} bg bg_BG
-fi
+%{loc_add} bg bg_BG
+
 %preun -n locales-bg
 if [ "$1" = "0" ]; then
 	%{loc_del} bg bg_BG
@@ -984,9 +974,8 @@ alphabetical sorting and representation of dates and numbers according
 to Bengali language conventions.
 
 %post -n locales-bn
-if [ "$1" = "1" ]; then
-	%{loc_add} bn_BD bn_IN
-fi
+%{loc_add} bn_BD bn_IN
+
 %preun -n locales-bn
 if [ "$1" = "0" ]; then
 	%{loc_del} bn_BD bn_IN
@@ -1025,9 +1014,8 @@ lizherenneg, taolennañ an deizadoù hag an niveroù hervez kendivizadoù ar
 brezhoneg.
 
 %post -n locales-br
-if [ "$1" = "1" ]; then
-	%{loc_add} br br_FR
-fi
+%{loc_add} br br_FR
+
 %preun -n locales-br
 if [ "$1" = "0" ]; then
 	%{loc_del} br br_FR
@@ -1051,9 +1039,8 @@ alphabetical sorting and representation of dates and numbers according
 to Bosnian language conventions.
 
 %post -n locales-bs
-if [ "$1" = "1" ]; then
-	%{loc_add} bs bs_BA
-fi
+%{loc_add} bs bs_BA
+
 %preun -n locales-bs
 if [ "$1" = "0" ]; then
 	%{loc_del} bs bs_BA
@@ -1100,9 +1087,8 @@ donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates des nombres.
 
 %post -n locales-ca
-if [ "$1" = "1" ]; then
-	%{loc_add} ca ca_AD ca_ES ca_FR ca_IT
-fi
+%{loc_add} ca ca_AD ca_ES ca_FR ca_IT
+
 %preun -n locales-ca
 if [ "$1" = "0" ]; then
 	%{loc_del} ca ca_AD ca_ES ca_FR ca_IT
@@ -1136,9 +1122,8 @@ pro správné zobrazování českých 8bitových znaků a pro správné české
 třídění a reprezentaci data a čísel podle českých konvencí.
 
 %post -n locales-cs
-if [ "$1" = "1" ]; then
-	%{loc_add} cs cs_CZ
-fi
+%{loc_add} cs cs_CZ
+
 %preun -n locales-cs
 if [ "$1" = "0" ]; then
 	%{loc_del} cs cs_CZ
@@ -1168,9 +1153,8 @@ dangos yn iawn y cymeriadau Cymraeg 8-bit, a threfniant y wyddor,
 dyddiadau a rhifau yn ôl yr arfer Cymraeg.
 
 %post -n locales-cy
-if [ "$1" = "1" ]; then
-	%{loc_add} cy cy_GB
-fi
+%{loc_add} cy cy_GB
+
 %preun -n locales-cy
 if [ "$1" = "0" ]; then
 	%{loc_del} cy cy_GB
@@ -1202,9 +1186,8 @@ og tal korrekt ifølge dansk retskrivning.
 
 
 %post -n locales-da
-if [ "$1" = "1" ]; then
-	%{loc_add} da da_DK
-fi
+%{loc_add} da da_DK
+
 %preun -n locales-da
 if [ "$1" = "0" ]; then
 	%{loc_del} da da_DK
@@ -1242,9 +1225,8 @@ die deutsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt.
 
 %post -n locales-de
-if [ "$1" = "1" ]; then
-	%{loc_add} de de_AT de_BE de_CH de_DE de_LU
-fi
+%{loc_add} de de_AT de_BE de_CH de_DE de_LU
+
 %preun -n locales-de
 if [ "$1" = "0" ]; then
 	%{loc_del} de de_AT de_BE de_CH de_DE de_LU
@@ -1272,9 +1254,8 @@ alphabetical sorting and representation of dates and numbers according
 to Dzongkha language conventions.
 
 %post -n locales-dz
-if [ "$1" = "1" ]; then
-	%{loc_add} dz dz_BT
-fi
+%{loc_add} dz dz_BT
+
 %preun -n locales-dz
 if [ "$1" = "0" ]; then
 	%{loc_del} dz dz_BT
@@ -1308,9 +1289,8 @@ to Greek language conventions.
 της ελληνικής γλώσσας.
 
 %post -n locales-el
-if [ "$1" = "1" ]; then
-	%{loc_add} el el_CY el_GR
-fi
+%{loc_add} el el_CY el_GR
+
 %preun -n locales-el
 if [ "$1" = "0" ]; then
 	%{loc_del} el el_CY el_GR
@@ -1337,10 +1317,9 @@ These are the base files for English language localization.
 Contains: en_CA en_DK en_GB en_IE en_US
 
 %post -n locales-en
-if [ "$1" = "1" ]; then
-	%{loc_add} en en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN en_NG \
-	           en_NZ en_PH en_SG en_US en_ZA en_ZW
-fi
+%{loc_add} en en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN en_NG \
+           en_NZ en_PH en_SG en_US en_ZA en_ZW
+
 %preun -n locales-en
 if [ "$1" = "0" ]; then
 	%{loc_del} en en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN en_NG \
@@ -1388,9 +1367,8 @@ alfabeta ordo, datindikoj kaj nombroj konvene al la konvencioj
 en esperanta medio.
 
 %post -n locales-eo
-if [ "$1" = "1" ]; then
-	%{loc_add} eo eo_XX
-fi
+%{loc_add} eo eo_XX
+
 %preun -n locales-eo
 if [ "$1" = "0" ]; then
 	%{loc_del} eo eo_XX
@@ -1423,11 +1401,10 @@ y para la representación correcta de los números y fechas según
 las convenciones del castellano.
 
 %post -n locales-es
-if [ "$1" = "1" ]; then
-	%{loc_add} an an_ES es es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES \
-	           es_GT es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US \
-	           es_UY es_VE
-fi
+%{loc_add} an an_ES es es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES \
+           es_GT es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US \
+           es_UY es_VE
+
 %preun -n locales-es
 if [ "$1" = "0" ]; then
 	%{loc_del} an an_ES es es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES \
@@ -1485,9 +1462,8 @@ numbrite ja kuupäevade
 eesti keele reeglitele vastavaks esituseks.
 
 %post -n locales-et
-if [ "$1" = "1" ]; then
-	%{loc_add} et et_EE
-fi
+%{loc_add} et et_EE
+
 %preun -n locales-et
 if [ "$1" = "0" ]; then
 	%{loc_del} et et_EE
@@ -1535,9 +1511,8 @@ donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates des nombres.
 
 %post -n locales-eu
-if [ "$1" = "1" ]; then
-	%{loc_add} eu eu_ES
-fi
+%{loc_add} eu eu_ES
+
 %preun -n locales-eu
 if [ "$1" = "0" ]; then
 	%{loc_del} eu eu_ES
@@ -1569,9 +1544,8 @@ to do that.
 اینها پرونده‌های اساسی زبان فارسی می‌باشند؛ شما برای نمایش درست ۸ بیت حروف فارسی، ترتیب مناسب الفبا، معرفی تاریخ و اعداد بر اساس قواعد زبان فارسی به آنها احتیاج دارید. توجه داشته باشید که این پاکت تعویض نگارش از راست به چپ و از چپ به راست را عهده‌دار نمی‌باشد و نه حتی ترکیب نهایی حروف را؛ این عمل را پایانه‌ی اکس، برنامه یا کارگزار کنسول مجازی انجام می‌دهند.
 
 %post -n locales-fa
-if [ "$1" = "1" ]; then
-	%{loc_add} fa fa_IR
-fi
+%{loc_add} fa fa_IR
+
 %preun -n locales-fa
 if [ "$1" = "0" ]; then
 	%{loc_del} fa fa_IR
@@ -1602,9 +1576,8 @@ Tässä on perustiedot Linuxin suomentamiseen. Tarvitset sitä suomalaisten
 päivien ja numeroiden esitykseen suomenkielen käytännön mukaan.
 
 %post -n locales-fi
-if [ "$1" = "1" ]; then
-	%{loc_add} fi fi_FI
-fi
+%{loc_add} fi fi_FI
+
 %preun -n locales-fi
 if [ "$1" = "0" ]; then
 	%{loc_del} fi fi_FI
@@ -1634,9 +1607,8 @@ neyðugar fyri at vísa føroyskar 8-bit stavir, fyri at fáa rætt stavrað og
 vísa dagfestingar og tøl sambært føroyska siðvenju.
 
 %post -n locales-fo
-if [ "$1" = "1" ]; then
-	%{loc_add} fo fo_FO
-fi
+%{loc_add} fo fo_FO
+
 %preun -n locales-fo
 if [ "$1" = "0" ]; then
 	%{loc_del} fo fo_FO
@@ -1676,9 +1648,8 @@ die französische Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt.
 
 %post -n locales-fr
-if [ "$1" = "1" ]; then
-	%{loc_add} fr fr_BE fr_CA fr_CH fr_FR fr_LU
-fi
+%{loc_add} fr fr_BE fr_CA fr_CH fr_FR fr_LU
+
 %preun -n locales-fr
 if [ "$1" = "0" ]; then
 	%{loc_del} fr fr_BE fr_CA fr_CH fr_FR fr_LU
@@ -1706,9 +1677,8 @@ alfabetical sorting and representation of dates and numbers
 according to friulan language conventions.
 
 %post -n locales-fur
-if [ "$1" = "1" ]; then
-	%{loc_add} fur fur_IT
-fi
+%{loc_add} fur fur_IT
+
 %preun -n locales-fur
 if [ "$1" = "0" ]; then
 	%{loc_del} fur fur_IT
@@ -1732,9 +1702,8 @@ alfabetical sorting and representation of dates and numbers
 according to frisian language conventions.
 
 %post -n locales-fy
-if [ "$1" = "1" ]; then
-	%{loc_add} fy fy_DE fy_NL
-fi
+%{loc_add} fy fy_DE fy_NL
+
 %preun -n locales-fy
 if [ "$1" = "0" ]; then
 	%{loc_del} fy fy_DE fy_NL
@@ -1766,9 +1735,8 @@ agus sórtáil in ord aibitre agus dátaí agus uimhreacha a chur i
 láthair de réir coinbhinsiúnaigh na Gaeilge.
 
 %post -n locales-ga
-if [ "$1" = "1" ]; then
-	%{loc_add} ga ga_IE
-fi
+%{loc_add} ga ga_IE
+
 %preun -n locales-ga
 if [ "$1" = "0" ]; then
 	%{loc_del} ga ga_IE
@@ -1801,9 +1769,8 @@ chur ann an òrd na h-aibidile, agus gus àireamhan is cinn-latha
 a riochdachadh a-réir nòs na Gàidhlig.
 
 %post -n locales-gd
-if [ "$1" = "1" ]; then
-	%{loc_add} gd gd_GB
-fi
+%{loc_add} gd gd_GB
+
 %preun -n locales-gd
 if [ "$1" = "0" ]; then
 	%{loc_del} gd gd_GB
@@ -1842,9 +1809,8 @@ y para la representación correcta de los números y fechas según
 las convenciones del gallego.
 
 %post -n locales-gl
-if [ "$1" = "1" ]; then
-	%{loc_add} gl gl_ES
-fi
+%{loc_add} gl gl_ES
+
 %preun -n locales-gl
 if [ "$1" = "0" ]; then
 	%{loc_del} gl gl_ES
@@ -1868,9 +1834,8 @@ alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
 
 %post -n locales-gu
-if [ "$1" = "1" ]; then
-	%{loc_add} gu gu_IN
-fi
+%{loc_add} gu gu_IN
+
 %preun -n locales-gu
 if [ "$1" = "0" ]; then
 	%{loc_del} gu gu_IN
@@ -1902,9 +1867,8 @@ reaghey-abbyrlit cooie as taishbyney-daaytyn as earrooyn coardail rish
 reillyn-chengey Gaelagh.
 
 %post -n locales-gv
-if [ "$1" = "1" ]; then
-	%{loc_add} gv gv_GB
-fi
+%{loc_add} gv gv_GB
+
 %preun -n locales-gv
 if [ "$1" = "0" ]; then
 	%{loc_del} gv gv_GB
@@ -1929,9 +1893,8 @@ alphabetical sorting and representation of dates and numbers according
 to Hausa language conventions.
 
 %post -n locales-ha
-if [ "$1" = "1" ]; then
-	%{loc_add} ha ha_NG
-fi
+%{loc_add} ha ha_NG
+
 %preun -n locales-ha
 if [ "$1" = "0" ]; then
 	%{loc_del} ha ha_NG
@@ -1968,9 +1931,8 @@ console driver to do that.
 X11 או המסוף וירטואלי, לעשות כן.
 
 %post -n locales-he
-if [ "$1" = "1" ]; then
-	%{loc_add} he he_IL
-fi
+%{loc_add} he he_IL
+
 %preun -n locales-he
 if [ "$1" = "0" ]; then
 	%{loc_del} he he_IL
@@ -1994,9 +1956,8 @@ alphabetical sorting and representation of dates and numbers according
 to Hindi language conventions.
 
 %post -n locales-hi
-if [ "$1" = "1" ]; then
-	%{loc_add} hi hi_IN
-fi
+%{loc_add} hi hi_IN
+
 %preun -n locales-hi
 if [ "$1" = "0" ]; then
 	%{loc_del} hi hi_IN
@@ -2028,9 +1989,8 @@ sortiranje po abecedi i prikaz datuma i brojeva po pravilima
 Hrvatskog jezika.
 
 %post -n locales-hr
-if [ "$1" = "1" ]; then
-	%{loc_add} hr hr_HR
-fi
+%{loc_add} hr hr_HR
+
 %preun -n locales-hr
 if [ "$1" = "0" ]; then
 	%{loc_del} hr hr_HR
@@ -2055,9 +2015,8 @@ proper representation of dates and numbers according
 to Upper Sorbian language conventions.
 
 %post -n locales-hsb
-if [ "$1" = "1" ]; then
-	%{loc_add} hsb hsb_DE
-fi
+%{loc_add} hsb hsb_DE
+
 %preun -n locales-hsb
 if [ "$1" = "0" ]; then
 	%{loc_del} hsb hsb_DE
@@ -2087,9 +2046,8 @@ magyar helyesírás szabályainak megfelelő sorbarendezéshez,
 számok és dátumok megjelenítéséhez.
 
 %post -n locales-hu
-if [ "$1" = "1" ]; then
-	%{loc_add} hu hu_HU
-fi
+%{loc_add} hu hu_HU
+
 %preun -n locales-hu
 if [ "$1" = "0" ]; then
 	%{loc_del} hu hu_HU
@@ -2121,9 +2079,8 @@ numbers according to Armenian language conventions.
 կանոնների։
 
 %post -n locales-hy
-if [ "$1" = "1" ]; then
-	%{loc_add} hy hy_AM
-fi
+%{loc_add} hy hy_AM
+
 %preun -n locales-hy
 if [ "$1" = "0" ]; then
 	%{loc_del} hy hy_AM
@@ -2153,9 +2110,8 @@ File ini dibutuhkan bila Anda ingin menampilkan tanggal dan penomoran
 yang sesuai dengan kaidah Bahasa Indonesia.
 
 %post -n locales-id
-if [ "$1" = "1" ]; then
-	%{loc_add} id id_ID
-fi
+%{loc_add} id id_ID
+
 %preun -n locales-id
 if [ "$1" = "0" ]; then
 	%{loc_del} id id_ID
@@ -2180,9 +2136,8 @@ alphabetical sorting and representation of dates and numbers according
 to Igbo language conventions.
 
 %post -n locales-ig
-if [ "$1" = "1" ]; then
-	%{loc_add} ig ig_NG
-fi
+%{loc_add} ig ig_NG
+
 %preun -n locales-ig
 if [ "$1" = "0" ]; then
 	%{loc_del} ig ig_NG
@@ -2206,9 +2161,8 @@ alphabetical sorting and representation of dates and numbers according
 to Inupiaq language conventions.
 
 %post -n locales-ik
-if [ "$1" = "1" ]; then
-	%{loc_add} ik ik_CA
-fi
+%{loc_add} ik ik_CA
+
 %preun -n locales-ik
 if [ "$1" = "0" ]; then
 	%{loc_del} ik ik_CA
@@ -2240,9 +2194,8 @@ rétta stafrófsröð og til að dagsetningar og tölur birtist eins og
 venja er í íslensku.
 
 %post -n locales-is
-if [ "$1" = "1" ]; then
-	%{loc_add} is is_IS
-fi
+%{loc_add} is is_IS
+
 %preun -n locales-is
 if [ "$1" = "0" ]; then
 	%{loc_del} is is_IS
@@ -2273,9 +2226,8 @@ per l'ordinamento alfabetico corretto e per la rappresentazione delle
 date e dei numeri in forma italiana.
 
 %post -n locales-it
-if [ "$1" = "1" ]; then
-	%{loc_add} it it_CH it_IT
-fi
+%{loc_add} it it_CH it_IT
+
 %preun -n locales-it
 if [ "$1" = "0" ]; then
 	%{loc_del} it it_CH it_IT
@@ -2300,9 +2252,8 @@ alphabetical sorting and representation of dates and numbers according
 to Inuktitut language conventions.
 
 %post -n locales-iu
-if [ "$1" = "1" ]; then
-	%{loc_add} iu iu_CA
-fi
+%{loc_add} iu iu_CA
+
 %preun -n locales-iu
 if [ "$1" = "0" ]; then
 	%{loc_del} iu iu_CA
@@ -2335,9 +2286,8 @@ representation of dates and numbers according to japanese language conventions.
 （多少「誤魔化し」を利かせて作ったからです）。
 
 %post -n locales-ja
-if [ "$1" = "1" ]; then
-	%{loc_add} ja ja_JP
-fi
+%{loc_add} ja ja_JP
+
 %preun -n locales-ja
 if [ "$1" = "0" ]; then
 	%{loc_del} ja ja_JP
@@ -2368,9 +2318,8 @@ to Georgian language conventions.
 რიცხვითი მნიშვნელობების მართებული წარმოდგენისათვის.
 
 %post -n locales-ka
-if [ "$1" = "1" ]; then
-	%{loc_add} ka ka_GE
-fi
+%{loc_add} ka ka_GE
+
 %preun -n locales-ka
 if [ "$1" = "0" ]; then
 	%{loc_del} ka ka_GE
@@ -2395,9 +2344,8 @@ alphabetical sorting and representation of dates and numbers according
 to Kazakh language conventions.
 
 %post -n locales-kk
-if [ "$1" = "1" ]; then
-	%{loc_add} kk kk_KZ
-fi
+%{loc_add} kk kk_KZ
+
 %preun -n locales-kk
 if [ "$1" = "0" ]; then
 	%{loc_del} kk kk_KZ
@@ -2421,9 +2369,8 @@ alphabetical sorting and representation of dates and numbers according
 to Grenlandic language conventions.
 
 %post -n locales-kl
-if [ "$1" = "1" ]; then
-	%{loc_add} kl kl_GL
-fi
+%{loc_add} kl kl_GL
+
 %preun -n locales-kl
 if [ "$1" = "0" ]; then
 	%{loc_del} kl kl_GL
@@ -2447,9 +2394,8 @@ alphabetical sorting and representation of dates and numbers according
 to Khmer language conventions.
 
 %post -n locales-km
-if [ "$1" = "1" ]; then
-	%{loc_add} km km_KH
-fi
+%{loc_add} km km_KH
+
 %preun -n locales-km
 if [ "$1" = "0" ]; then
 	%{loc_del} km km_KH
@@ -2473,9 +2419,8 @@ alphabetical sorting and representation of dates and numbers according
 to Kannada language conventions.
 
 %post -n locales-kn
-if [ "$1" = "1" ]; then
-	%{loc_add} kn kn_IN
-fi
+%{loc_add} kn kn_IN
+
 %preun -n locales-kn
 if [ "$1" = "0" ]; then
 	%{loc_del} kn kn_IN
@@ -2506,9 +2451,8 @@ representation of dates and numbers according to korean language conventions.
 코드로 정확히 배열하는데 그것이 필요하다.
 
 %post -n locales-ko
-if [ "$1" = "1" ]; then
-	%{loc_add} ko ko_KR
-fi
+%{loc_add} ko ko_KR
+
 %preun -n locales-ko
 if [ "$1" = "0" ]; then
 	%{loc_del} ko ko_KR
@@ -2539,9 +2483,8 @@ kurdi, dîrok, seat, hêjmar û edetê malbatâ zîmanê kurdin vêre naskirin
 bi haliyê systême
 
 %post -n locales-ku
-if [ "$1" = "1" ]; then
-	%{loc_add} ku ku_TR
-fi
+%{loc_add} ku ku_TR
+
 %preun -n locales-ku
 if [ "$1" = "0" ]; then
 	%{loc_del} ku ku_TR
@@ -2574,9 +2517,8 @@ abecedery gwyw ha dysquesdhes dedhyow ha nyverow herwyth rewlys
 a'n tavas Kernewek.
 
 %post -n locales-kw
-if [ "$1" = "1" ]; then
-	%{loc_add} kw kw_GB
-fi
+%{loc_add} kw kw_GB
+
 %preun -n locales-kw
 if [ "$1" = "0" ]; then
 	%{loc_del} kw kw_GB
@@ -2600,9 +2542,8 @@ alphabetical sorting and representation of dates and numbers according
 to Kyrgyz language conventions.
 
 %post -n locales-ky
-if [ "$1" = "1" ]; then
-	%{loc_add} ky ky_KG
-fi
+%{loc_add} ky ky_KG
+
 %preun -n locales-ky
 if [ "$1" = "0" ]; then
 	%{loc_del} ky ky_KG
@@ -2627,9 +2568,8 @@ alphabetical sorting and representation of dates and numbers according
 to Luganda language conventions.
 
 %post -n locales-lg
-if [ "$1" = "1" ]; then
-	%{loc_add} lg lg_UG
-fi
+%{loc_add} lg lg_UG
+
 %preun -n locales-lg
 if [ "$1" = "0" ]; then
 	%{loc_del} lg lg_UG
@@ -2653,9 +2593,8 @@ alphabetical sorting and representation of dates and numbers according
 to Limburguish language conventions.
 
 %post -n locales-li
-if [ "$1" = "1" ]; then
-	%{loc_add} li li_BE li_NL
-fi
+%{loc_add} li li_BE li_NL
+
 %preun -n locales-li
 if [ "$1" = "0" ]; then
 	%{loc_del} li li_BE li_NL
@@ -2680,9 +2619,8 @@ alphabetical sorting and representation of dates and numbers according
 to Laotian language conventions.
 
 %post -n locales-lo
-if [ "$1" = "1" ]; then
-	%{loc_add} lo lo_LA
-fi
+%{loc_add} lo lo_LA
+
 %preun -n locales-lo
 if [ "$1" = "0" ]; then
 	%{loc_del} lo lo_LA
@@ -2712,9 +2650,8 @@ kam lietuviškų, 8 bitų simbolių atvaizdavimui, alfabetiniam rūšiavimui
 bei datos ir skaičių atvaizdavimui.
 
 %post -n locales-lt
-if [ "$1" = "1" ]; then
-	%{loc_add} lt lt_LT
-fi
+%{loc_add} lt lt_LT
+
 %preun -n locales-lt
 if [ "$1" = "0" ]; then
 	%{loc_del} lt lt_LT
@@ -2746,11 +2683,9 @@ nepieciešami, lai pareizi attēlotu 8bitu latviešu burtus, veiktu
 pareizu kārtošanu pēc alfabēta, kā arī attēlotu datumus un skaitļus
 saskaņā ar latviešu valodā pieņemtajām normām.
 
-
 %post -n locales-lv
-if [ "$1" = "1" ]; then
-	%{loc_add} lv lv_LV
-fi
+%{loc_add} lv lv_LV
+
 %preun -n locales-lv
 if [ "$1" = "0" ]; then
 	%{loc_del} lv lv_LV
@@ -2775,9 +2710,8 @@ proper representation of dates and numbers according
 to Malagasy language conventions.
 
 %post -n locales-mg
-if [ "$1" = "1" ]; then
-	%{loc_add} mg mg_MG
-fi
+%{loc_add} mg mg_MG
+
 %preun -n locales-mg
 if [ "$1" = "0" ]; then
 	%{loc_del} mg mg_MG
@@ -2809,9 +2743,8 @@ whakatakotoranga hoki o ngā wā me ngā nama kia tika ai anō e ai ki ngā aro
 whānui reo Māori.
 
 %post -n locales-mi
-if [ "$1" = "1" ]; then
-	%{loc_add} mi mi_NZ
-fi
+%{loc_add} mi mi_NZ
+
 %preun -n locales-mi
 if [ "$1" = "0" ]; then
 	%{loc_del} mi mi_NZ
@@ -2834,9 +2767,8 @@ proper alphabetical sorting and representation of dates and numbers according
 to Macedonian language conventions.
 
 %post -n locales-mk
-if [ "$1" = "1" ]; then
-	%{loc_add} mk mk_MK
-fi
+%{loc_add} mk mk_MK
+
 %preun -n locales-mk
 if [ "$1" = "0" ]; then
 	%{loc_del} mk mk_MK
@@ -2859,9 +2791,8 @@ proper alphabetical sorting and representation of dates and numbers according
 to Malayalam language conventions.
 
 %post -n locales-ml
-if [ "$1" = "1" ]; then
-	%{loc_add} ml ml_IN
-fi
+%{loc_add} ml ml_IN
+
 %preun -n locales-ml
 if [ "$1" = "0" ]; then
 	%{loc_del} ml ml_IN
@@ -2884,9 +2815,8 @@ proper alphabetical sorting and representation of dates and numbers according
 to Mongolian language conventions.
 
 %post -n locales-mn
-if [ "$1" = "1" ]; then
-	%{loc_add} mn mn_MN
-fi
+%{loc_add} mn mn_MN
+
 %preun -n locales-mn
 if [ "$1" = "0" ]; then
 	%{loc_del} mn mn_MN
@@ -2910,9 +2840,8 @@ alphabetical sorting and representation of dates and numbers according
 to Marathi language conventions.
 
 %post -n locales-mr
-if [ "$1" = "1" ]; then
-	%{loc_add} mr mr_IN
-fi
+%{loc_add} mr mr_IN
+
 %preun -n locales-mr
 if [ "$1" = "0" ]; then
 	%{loc_del} mr mr_IN
@@ -2935,9 +2864,8 @@ proper alphabetical sorting and representation of dates and numbers according
 to Malay language conventions.
 
 %post -n locales-ms
-if [ "$1" = "1" ]; then
-	%{loc_add} ms ms_MY
-fi
+%{loc_add} ms ms_MY
+
 %preun -n locales-ms
 if [ "$1" = "0" ]; then
 	%{loc_del} ms ms_MY
@@ -2969,9 +2897,8 @@ alfabetikament, u biex turi dati u numri skond il-konvenzjonijiet
 tal-lingwa Maltija.
 
 %post -n locales-mt
-if [ "$1" = "1" ]; then
-	%{loc_add} mt mt_MT
-fi
+%{loc_add} mt mt_MT
+
 %preun -n locales-mt
 if [ "$1" = "0" ]; then
 	%{loc_del} mt mt_MT
@@ -3009,9 +2936,8 @@ die plautdietsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt
 
 %post -n locales-nds
-if [ "$1" = "1" ]; then
-	%{loc_add} nds nds_DE nds_NL
-fi
+%{loc_add} nds nds_DE nds_NL
+
 %preun -n locales-nds
 if [ "$1" = "0" ]; then
 	%{loc_del} nds nds_DE nds_NL
@@ -3036,9 +2962,8 @@ alphabetical sorting and representation of dates and numbers according
 to Nepali language conventions.
 
 %post -n locales-ne
-if [ "$1" = "1" ]; then
-	%{loc_add} ne ne_NP
-fi
+%{loc_add} ne ne_NP
+
 %preun -n locales-ne
 if [ "$1" = "0" ]; then
 	%{loc_del} ne ne_NP
@@ -3076,9 +3001,8 @@ voor een juiste alfabetische sortering en weergave van data en nummers
 volgens de Nederlandse Taalconventies
 
 %post -n locales-nl
-if [ "$1" = "1" ]; then
-	%{loc_add} nl nl_BE nl_NL
-fi
+%{loc_add} nl nl_BE nl_NL
+
 %preun -n locales-nl
 if [ "$1" = "0" ]; then
 	%{loc_del} nl nl_BE nl_NL
@@ -3113,9 +3037,8 @@ etter alfabetet og visning av datoer og tall i samsvar med norske
 konvensjoner.
 
 %post -n locales-no
-if [ "$1" = "1" ]; then
-	%{loc_add} nb nb_NO nn nn_NO no no_NO
-fi
+%{loc_add} nb nb_NO nn nn_NO no no_NO
+
 %preun -n locales-no
 if [ "$1" = "0" ]; then
 	%{loc_del} nb nb_NO nn nn_NO no no_NO
@@ -3143,9 +3066,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Ndebele language conventions.
 
 %post -n locales-nr
-if [ "$1" = "1" ]; then
-	%{loc_add} nr nr_ZA
-fi
+%{loc_add} nr nr_ZA
+
 %preun -n locales-nr
 if [ "$1" = "0" ]; then
 	%{loc_del} nr nr_ZA
@@ -3170,9 +3092,8 @@ alphabetical sorting and representation of dates and numbers according
 to Northern Sotho language conventions.
 
 %post -n locales-nso
-if [ "$1" = "1" ]; then
-	%{loc_add} nso nso_ZA
-fi
+%{loc_add} nso nso_ZA
+
 %preun -n locales-nso
 if [ "$1" = "0" ]; then
 	%{loc_del} nso nso_ZA
@@ -3203,9 +3124,8 @@ fenestron, classar l'òrdre alfabetic e atanben comptar los jorns
 e los meses en occitan.
 
 %post -n locales-oc
-if [ "$1" = "1" ]; then
-	%{loc_add} oc oc_FR
-fi
+%{loc_add} oc oc_FR
+
 %preun -n locales-oc
 if [ "$1" = "0" ]; then
 	%{loc_del} oc oc_FR
@@ -3229,9 +3149,8 @@ alphabetical sorting and representation of dates and numbers according
 to Oromo language conventions.
 
 %post -n locales-om
-if [ "$1" = "1" ]; then
-	%{loc_add} om
-fi
+%{loc_add} om
+
 %preun -n locales-om
 if [ "$1" = "0" ]; then
 	%{loc_del} om
@@ -3254,9 +3173,8 @@ representation of dates and numbers according
 to Punjabi language conventions.
 
 %post -n locales-pa
-if [ "$1" = "1" ]; then
-	%{loc_add} pa pa_IN pa_PK
-fi
+%{loc_add} pa pa_IN pa_PK
+
 %preun -n locales-pa
 if [ "$1" = "0" ]; then
 	%{loc_del} pa pa_IN pa_PK
@@ -3283,9 +3201,8 @@ alphabetical sorting and representation of dates and numbers according
 to Papiamento language conventions.
 
 %post -n locales-pap
-if [ "$1" = "1" ]; then
-	%{loc_add} pap pap_AN
-fi
+%{loc_add} pap pap_AN
+
 %preun -n locales-pap
 if [ "$1" = "0" ]; then
 	%{loc_del} pap pap_AN
@@ -3316,9 +3233,8 @@ wyświetlania 8-mio bitowych polskich znaków diakrytycznych, sortowania,
 prezentowania dat i liczb zgodnie z regułami języka polskiego.
 
 %post -n locales-pl
-if [ "$1" = "1" ]; then
-	%{loc_add} pl pl_PL
-fi
+%{loc_add} pl pl_PL
+
 %preun -n locales-pl
 if [ "$1" = "0" ]; then
 	%{loc_del} pl pl_PL
@@ -3352,9 +3268,8 @@ alfabéticas e representação de datas e números de acordo com as convenções
 da língua portuguesa.
 
 %post -n locales-pt
-if [ "$1" = "1" ]; then
-	%{loc_add} pt pt_BR pt_PT
-fi
+%{loc_add} pt pt_BR pt_PT
+
 %preun -n locales-pt
 if [ "$1" = "0" ]; then
 	%{loc_del} pt pt_BR pt_PT
@@ -3387,9 +3302,8 @@ si pentru sortarea alfabetica si reprezentarea datelor si numerelor conform
 cu conventiile din limba româna.
 
 %post -n locales-ro
-if [ "$1" = "1" ]; then
-	%{loc_add} ro ro_RO
-fi
+%{loc_add} ro ro_RO
+
 %preun -n locales-ro
 if [ "$1" = "0" ]; then
 	%{loc_del} ro ro_RO
@@ -3422,9 +3336,8 @@ to Russian language conventions.
 русского языка.
 
 %post -n locales-ru
-if [ "$1" = "1" ]; then
-	%{loc_add} ru ru_RU ru_UA
-fi
+%{loc_add} ru ru_RU ru_UA
+
 %preun -n locales-ru
 if [ "$1" = "0" ]; then
 	%{loc_del} ru ru_RU ru_UA
@@ -3450,9 +3363,8 @@ alphabetical sorting and representation of dates and numbers according
 to Kinyarwanda language conventions.
 
 %post -n locales-rw
-if [ "$1" = "1" ]; then
-	%{loc_add} rw rw_RW
-fi
+%{loc_add} rw rw_RW
+
 %preun -n locales-rw
 if [ "$1" = "0" ]; then
 	%{loc_del} rw rw_RW
@@ -3476,9 +3388,8 @@ alfabetical sorting and representation of dates and numbers
 according to sardinian language conventions.
 
 %post -n locales-sc
-if [ "$1" = "1" ]; then
-	%{loc_add} sc sc_IT
-fi
+%{loc_add} sc sc_IT
+
 %preun -n locales-sc
 if [ "$1" = "0" ]; then
 	%{loc_del} sc sc_IT
@@ -3503,9 +3414,8 @@ alphabetical sorting and representation of dates and numbers according
 to Saami language conventions.
 
 %post -n locales-se
-if [ "$1" = "1" ]; then
-	%{loc_add} se se_NO
-fi
+%{loc_add} se se_NO
+
 %preun -n locales-se
 if [ "$1" = "0" ]; then
 	%{loc_del} se se_NO
@@ -3530,9 +3440,8 @@ alfabetical sorting and representation of dates and numbers
 according to sinhalese language conventions.
 
 %post -n locales-si
-if [ "$1" = "1" ]; then
-	%{loc_add} si si_LK
-fi
+%{loc_add} si si_LK
+
 %preun -n locales-si
 if [ "$1" = "0" ]; then
 	%{loc_del} si si_LK
@@ -3562,9 +3471,8 @@ korektné zobrazovanie slovenských 8bitových znakov a pre správne triedenie a
 reprezentáciu dátumu a čísel podľa konvencií slovenského jazyka.
 
 %post -n locales-sk
-if [ "$1" = "1" ]; then
-	%{loc_add} sk sk_SK
-fi
+%{loc_add} sk sk_SK
+
 %preun -n locales-sk
 if [ "$1" = "0" ]; then
 	%{loc_del} sk sk_SK
@@ -3597,9 +3505,8 @@ predstavitev datumov in številk glede na pravila
 slovenskega jezika.
 
 %post -n locales-sl
-if [ "$1" = "1" ]; then
-	%{loc_add} sl sl_SI
-fi
+%{loc_add} sl sl_SI
+
 %preun -n locales-sl
 if [ "$1" = "0" ]; then
 	%{loc_del} sl sl_SI
@@ -3623,9 +3530,8 @@ alphabetical sorting and representation of dates and numbers according
 to Somali language conventions.
 
 %post -n locales-so
-if [ "$1" = "1" ]; then
-	%{loc_add} so_DJ so_ET so_KE so_SO
-fi
+%{loc_add} so_DJ so_ET so_KE so_SO
+
 %preun -n locales-so
 if [ "$1" = "0" ]; then
 	%{loc_del} so_DJ so_ET so_KE so_SO
@@ -3651,9 +3557,8 @@ alphabetical sorting and representation of dates and numbers according
 to Albanian language conventions.
 
 %post -n locales-sq
-if [ "$1" = "1" ]; then
-	%{loc_add} sq sq_AL
-fi
+%{loc_add} sq sq_AL
+
 %preun -n locales-sq
 if [ "$1" = "0" ]; then
 	%{loc_del} sq sq_AL
@@ -3706,9 +3611,8 @@ sortiranje po abecedi i prikaz datuma
 i brojeva po pravilima Srpskog jezika.
 
 %post -n locales-sr
-if [ "$1" = "1" ]; then
-	%{loc_add} sr_ME sr_RS
-fi
+%{loc_add} sr_ME sr_RS
+
 %preun -n locales-sr
 if [ "$1" = "0" ]; then
 	%{loc_del} sr_ME sr_RS
@@ -3732,9 +3636,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Swati language conventions.
 
 %post -n locales-ss
-if [ "$1" = "1" ]; then
-	%{loc_add} ss ss_ZA
-fi
+%{loc_add} ss ss_ZA
+
 %preun -n locales-ss
 if [ "$1" = "0" ]; then
 	%{loc_del} ss ss_ZA
@@ -3758,9 +3661,8 @@ alphabetical sorting and representation of dates and numbers according
 to Sotho language conventions.
 
 %post -n locales-st
-if [ "$1" = "1" ]; then
-	%{loc_add} st st_ZA
-fi
+%{loc_add} st st_ZA
+
 %preun -n locales-st
 if [ "$1" = "0" ]; then
 	%{loc_del} st st_ZA
@@ -3791,9 +3693,8 @@ svenska 8 bitars tecken och för korrekt alfabetisk sortering. De gör även
 att datum och nummerformat visas på svenskt vis.
 
 %post -n locales-sv
-if [ "$1" = "1" ]; then
-	%{loc_add} sv sv_FI sv_SE
-fi
+%{loc_add} sv sv_FI sv_SE
+
 %preun -n locales-sv
 if [ "$1" = "0" ]; then
 	%{loc_del} sv sv_FI sv_SE
@@ -3818,9 +3719,8 @@ alphabetical sorting and representation of dates and numbers according
 to Swahili language conventions.
 
 %post -n locales-sw
-if [ "$1" = "1" ]; then
-	%{loc_add} sw_XX
-fi
+%{loc_add} sw_XX
+
 %preun -n locales-sw
 if [ "$1" = "0" ]; then
 	%{loc_del} sw_XX
@@ -3844,9 +3744,8 @@ alphabetical sorting and representation of dates and numbers according
 to Tamil language conventions.
 
 %post -n locales-ta
-if [ "$1" = "1" ]; then
-	%{loc_add} ta ta_IN
-fi
+%{loc_add} ta ta_IN
+
 %preun -n locales-ta
 if [ "$1" = "0" ]; then
 	%{loc_del} ta ta_IN
@@ -3870,9 +3769,8 @@ alphabetical sorting and representation of dates and numbers according
 to Telugu language conventions.
 
 %post -n locales-te
-if [ "$1" = "1" ]; then
-	%{loc_add} te te_IN
-fi
+%{loc_add} te te_IN
+
 %preun -n locales-te
 if [ "$1" = "0" ]; then
 	%{loc_del} te te_IN
@@ -3896,9 +3794,8 @@ alphabetical sorting and representation of dates and numbers according
 to Tajik language conventions.
 
 %post -n locales-tg
-if [ "$1" = "1" ]; then
-	%{loc_add} tg tg_TJ
-fi
+%{loc_add} tg tg_TJ
+
 %preun -n locales-tg
 if [ "$1" = "0" ]; then
 	%{loc_del} tg tg_TJ
@@ -3923,9 +3820,8 @@ alphabetical sorting and representation of dates and numbers according
 to Thai language conventions.
 
 %post -n locales-th
-if [ "$1" = "1" ]; then
-	%{loc_add} th th_TH
-fi
+%{loc_add} th th_TH
+
 %preun -n locales-th
 if [ "$1" = "0" ]; then
 	%{loc_del} th th_TH
@@ -3949,9 +3845,8 @@ alphabetical sorting and representation of dates and numbers according
 to Turkmen language conventions.
 
 %post -n locales-tk
-if [ "$1" = "1" ]; then
-	%{loc_add} tk tk_TM
-fi
+%{loc_add} tk tk_TM
+
 %preun -n locales-tk
 if [ "$1" = "0" ]; then
 	%{loc_del} tk tk_TM
@@ -3979,9 +3874,8 @@ and for proper alphabetical sorting and representation of dates and numbers
 according to Pilipino language conventions.
 
 %post -n locales-tl
-if [ "$1" = "1" ]; then
-	%{loc_add} fil fil_PH ph ph_PH tl tl_PH
-fi
+%{loc_add} fil fil_PH ph ph_PH tl tl_PH
+
 %preun -n locales-tl
 if [ "$1" = "0" ]; then
 	%{loc_del} fil fil_PH ph ph_PH tl tl_PH
@@ -4009,9 +3903,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Tswana language conventions.
 
 %post -n locales-tn
-if [ "$1" = "1" ]; then
-	%{loc_add} tn tn_ZA
-fi
+%{loc_add} tn tn_ZA
+
 %preun -n locales-tn
 if [ "$1" = "0" ]; then
 	%{loc_del} tn tn_ZA
@@ -4043,9 +3936,8 @@ sayı gösterimlerini ve sıralamalarını yapabilmek için bu dosyalara
 ihtiyacınız vardır.
 
 %post -n locales-tr
-if [ "$1" = "1" ]; then
-	%{loc_add} tr tr_CY tr_TR
-fi
+%{loc_add} tr tr_CY tr_TR
+
 %preun -n locales-tr
 if [ "$1" = "0" ]; then
 	%{loc_del} tr tr_CY tr_TR
@@ -4070,9 +3962,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Tsonga language conventions.
 
 %post -n locales-ts
-if [ "$1" = "1" ]; then
-	%{loc_add} ts ts_ZA
-fi
+%{loc_add} ts ts_ZA
+
 %preun -n locales-ts
 if [ "$1" = "0" ]; then
 	%{loc_del} ts ts_ZA
@@ -4096,9 +3987,8 @@ alphabetical sorting and representation of dates and numbers according
 to Tatar language conventions.
 
 %post -n locales-tt
-if [ "$1" = "1" ]; then
-	%{loc_add} tt tt_RU
-fi
+%{loc_add} tt tt_RU
+
 %preun -n locales-tt
 if [ "$1" = "0" ]; then
 	%{loc_del} tt tt_RU
@@ -4123,9 +4013,8 @@ alphabetical sorting and representation of dates and numbers according
 to Uyghur language conventions.
 
 %post -n locales-ug
-if [ "$1" = "1" ]; then
-	%{loc_add} ug ug_CN
-fi
+%{loc_add} ug ug_CN
+
 %preun -n locales-ug
 if [ "$1" = "0" ]; then
 	%{loc_del} ug ug_CN
@@ -4163,9 +4052,8 @@ to Ukrainian language conventions.
 стандартів української мови.
 
 %post -n locales-uk
-if [ "$1" = "1" ]; then
-	%{loc_add} uk uk_UA
-fi
+%{loc_add} uk uk_UA
+
 %preun -n locales-uk
 if [ "$1" = "0" ]; then
 	%{loc_del} uk uk_UA
@@ -4193,9 +4081,8 @@ of letters; it is to the xterm, application or virtual console driver
 to do that.
 
 %post -n locales-ur
-if [ "$1" = "1" ]; then
-	%{loc_add} ur ur_PK
-fi
+%{loc_add} ur ur_PK
+
 %preun -n locales-ur
 if [ "$1" = "0" ]; then
 	%{loc_del} ur ur_PK
@@ -4228,9 +4115,8 @@ O'zbekistonda joriy bo'lgan vaqt, son va valytani
 belgilash qoidalari ham shu fayllarda joylashgan.
 
 %post -n locales-uz
-if [ "$1" = "1" ]; then
-	%{loc_add} uz uz@cyrillic uz_UZ
-fi
+%{loc_add} uz uz@cyrillic uz_UZ
+
 %preun -n locales-uz
 if [ "$1" = "0" ]; then
 	%{loc_del} uz uz@cyrillic uz_UZ
@@ -4255,9 +4141,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Venda language conventions.
 
 %post -n locales-ve
-if [ "$1" = "1" ]; then
-	%{loc_add} ve ve_ZA
-fi
+%{loc_add} ve ve_ZA
+
 %preun -n locales-ve
 if [ "$1" = "0" ]; then
 	%{loc_del} ve ve_ZA
@@ -4290,9 +4175,8 @@ biểu diễn chính xác các kí tự tiếng Việt 8 bits,
 một cách chính xác theo đúng qui ước ngôn ngữ tiếng Việt.
 
 %post -n locales-vi
-if [ "$1" = "1" ]; then
-	%{loc_add} vi vi_VN
-fi
+%{loc_add} vi vi_VN
+
 %preun -n locales-vi
 if [ "$1" = "0" ]; then
 	%{loc_del} vi vi_VN
@@ -4330,9 +4214,8 @@ donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates et des nombres.
 
 %post -n locales-wa
-if [ "$1" = "1" ]; then
-	%{loc_add} wa wa_BE
-fi
+%{loc_add} wa wa_BE
+
 %preun -n locales-wa
 if [ "$1" = "0" ]; then
 	%{loc_del} wa wa_BE
@@ -4356,9 +4239,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Xhosa language conventions.
 
 %post -n locales-xh
-if [ "$1" = "1" ]; then
-	%{loc_add} xh xh_ZA
-fi
+%{loc_add} xh xh_ZA
+
 %preun -n locales-xh
 if [ "$1" = "0" ]; then
 	%{loc_del} xh xh_ZA
@@ -4386,9 +4268,8 @@ switching when displaying; it is to the xterm, application or virtual
 console driver to do that.
 
 %post -n locales-yi
-if [ "$1" = "1" ]; then
-	%{loc_add} yi yi_US
-fi
+%{loc_add} yi yi_US
+
 %preun -n locales-yi
 if [ "$1" = "0" ]; then
 	%{loc_del} yi yi_US
@@ -4413,9 +4294,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Yoruba language conventions.
 
 %post -n locales-yo
-if [ "$1" = "1" ]; then
-	%{loc_add} yo yo_NG
-fi
+%{loc_add} yo yo_NG
+
 %preun -n locales-yo
 if [ "$1" = "0" ]; then
 	%{loc_del} yo yo_NG
@@ -4458,9 +4338,8 @@ or to "zh_TW.Big5" to use traditional characters (Big5 encoding)
 碼),設定為 "zh_TW" 則可顯示繁體中文(大五碼)。 
 
 %post -n locales-zh
-if [ "$1" = "1" ]; then
-	%{loc_add} zh zh_CN zh_HK zh_SG zh_TW
-fi
+%{loc_add} zh zh_CN zh_HK zh_SG zh_TW
+
 %preun -n locales-zh
 if [ "$1" = "0" ]; then
 	%{loc_del} zh zh_CN zh_HK zh_SG zh_TW
@@ -4487,9 +4366,8 @@ alfabetical sorting, and representation of dates and numbers
 according to Xhosa language conventions.
 
 %post -n locales-zu
-if [ "$1" = "1" ]; then
-	%{loc_add} zu zu_ZA
-fi
+%{loc_add} zu zu_ZA
+
 %preun -n locales-zu
 if [ "$1" = "0" ]; then
 	%{loc_del} zu zu_ZA
