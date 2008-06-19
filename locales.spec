@@ -29,7 +29,7 @@
 %define _unpackaged_files_terminate_build 1
 
 # to define when building for PRC
-#%define build_for_PRC 1
+%define build_for_PRC 0
 
 # shorthands for the post scripts
 %define loc_add /usr/bin/locale_install.sh
@@ -539,16 +539,16 @@ localedef -c -f ISO-8859-1  -i kw_GB $LOCALEDIR/kw_GB.ISO-8859-1  || :
 localedef -c -f ISO-8859-14 -i kw_GB $LOCALEDIR/kw_GB.ISO-8859-14 || :
 
 # Chinese
-localedef -c -f GB2312    -i zh_CN $LOCALEDIR/zh || :
-localedef -c -f GB2312    -i zh_CN $LOCALEDIR/zh_CN || :
-localedef -c -f GB2312    -i zh_CN $LOCALEDIR/zh_CN.GB2312 || :
-localedef -c -f GBK       -i zh_CN $LOCALEDIR/zh_CN.GBK || :
-localedef -c -f GB18030   -i zh_CN $LOCALEDIR/zh_CN.GB18030 || :
-localedef -c -f UTF-8     -i zh_CN $LOCALEDIR/zh_CN.UTF-8 || :
-localedef -c -f BIG5HKSCS -i zh_HK $LOCALEDIR/zh_HK || :
-localedef -c -f GB18030   -i zh_HK $LOCALEDIR/zh_HK.GB18030 || :
-localedef -c -f BIG5      -i zh_TW $LOCALEDIR/zh_TW || :
-localedef -c -f BIG5      -i zh_TW $LOCALEDIR/zh_TW.Big5 || :
+localedef -c -f GB2312     -i zh_CN $LOCALEDIR/zh || :
+localedef -c -f GB2312     -i zh_CN $LOCALEDIR/zh_CN || :
+localedef -c -f GB2312     -i zh_CN $LOCALEDIR/zh_CN.GB2312 || :
+localedef -c -f GBK        -i zh_CN $LOCALEDIR/zh_CN.GBK || :
+localedef -c -f GB18030    -i zh_CN $LOCALEDIR/zh_CN.GB18030 || :
+localedef -c -f UTF-8      -i zh_CN $LOCALEDIR/zh_CN.UTF-8 || :
+localedef -c -f BIG5-HKSCS -i zh_HK $LOCALEDIR/zh_HK || :
+localedef -c -f GB18030    -i zh_HK $LOCALEDIR/zh_HK.GB18030 || :
+localedef -c -f BIG5       -i zh_TW $LOCALEDIR/zh_TW || :
+localedef -c -f BIG5       -i zh_TW $LOCALEDIR/zh_TW.Big5 || :
 
 # Filipino -- for old compatibility (to remove in the future)
 localedef -c -f UTF-8       -i fil_PH $LOCALEDIR/ph || :
