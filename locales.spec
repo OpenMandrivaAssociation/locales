@@ -3136,30 +3136,6 @@ fi
 /usr/share/locale/oc
 /usr/share/locale/oc_FR*
 
-### om
-%package -n locales-om
-Summary: Base files for localization (Oromo)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-
-%description -n locales-om
-These are the base files for Oromo language localization; you need
-it to correctly display 8bits Oromo characters, and for proper
-alphabetical sorting and representation of dates and numbers according
-to Oromo language conventions.
-
-%post -n locales-om
-%{loc_add} om
-
-%preun -n locales-om
-if [ "$1" = "0" ]; then
-	%{loc_del} om
-fi
-
-#%files -n locales-om
-#%defattr(-,root,root)
-#/usr/share/locale/om*
-
 ### pa
 %package -n locales-pa
 Summary: Base files for localization (Punjabi)
