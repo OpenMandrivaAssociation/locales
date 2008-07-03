@@ -24,7 +24,7 @@
 %define glibc_ver 2.8
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 4
+%define release   %mkrel 5
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -422,6 +422,10 @@ localedef -c -f ISO-8859-15 -i sv_SE $LOCALEDIR/sv
 localedef -c -f ISO-8859-9  -i tr_TR $LOCALEDIR/tr
 #localedef -c -f ISO-8859-1  -i $RPM_SOURCE_DIR/nds_DE $LOCALEDIR/nds || :
 localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional || :
+
+# tibetan language (bo_CN, bo_IN)
+localedef -c -f UTF-8       -i /usr/share/i18n/locales/bo_CN $LOCALEDIR/bo_CN
+localedef -c -f UTF-8       -i /usr/share/i18n/locales/bo_IN $LOCALEDIR/bo_IN
 
 #=========================================================
 #
@@ -985,6 +989,31 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/bn_BD*
 /usr/share/locale/bn_IN*
+
+### bo
+%package -n locales-bo
+Summary: Base files for localization (Tibetan language)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-bo
+These are the base files for Tibetan language localization; you need
+it to correctly display 8bits Tibetan characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Tibetan language conventions.
+
+%post -n locales-bo
+%{loc_add} bo_CN bo_IN
+
+%preun -n locales-bo
+if [ "$1" = "0" ]; then
+	%{loc_del} bo_CN bo_IN
+fi
+
+%files -n locales-bo
+%defattr(-,root,root)
+/usr/share/locale/bo_CN*
+/usr/share/locale/bo_IN*
 
 ### br
 # Translation by Jañ-Mai Drapier (jan-mai-drapier@mail.dotcom.fr)
