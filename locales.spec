@@ -24,7 +24,7 @@
 %define glibc_ver 2.8
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 5
+%define release   %mkrel 6
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -426,6 +426,9 @@ localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional || :
 # tibetan language (bo_CN, bo_IN)
 localedef -c -f UTF-8       -i /usr/share/i18n/locales/bo_CN $LOCALEDIR/bo_CN
 localedef -c -f UTF-8       -i /usr/share/i18n/locales/bo_IN $LOCALEDIR/bo_IN
+
+# kashubian language (Poland)
+localedef -c -f UTF-8       -i /usr/share/i18n/locales/csb_PL $LOCALEDIR/csb_PL
 
 #=========================================================
 #
@@ -3238,15 +3241,16 @@ wyświetlania 8-mio bitowych polskich znaków diakrytycznych, sortowania,
 prezentowania dat i liczb zgodnie z regułami języka polskiego.
 
 %post -n locales-pl
-%{loc_add} pl pl_PL
+%{loc_add} csb_PL pl pl_PL
 
 %preun -n locales-pl
 if [ "$1" = "0" ]; then
-	%{loc_del} pl pl_PL
+	%{loc_del} csb_PL pl pl_PL
 fi
 
 %files -n locales-pl
 %defattr(-,root,root)
+/usr/share/locale/csb_PL*
 /usr/share/locale/pl
 /usr/share/locale/pl_PL*
 
