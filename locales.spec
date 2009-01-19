@@ -21,10 +21,10 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.8
+%define glibc_ver 2.9
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 6
+%define release   %mkrel 1
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -423,12 +423,12 @@ localedef -c -f ISO-8859-9  -i tr_TR $LOCALEDIR/tr
 #localedef -c -f ISO-8859-1  -i $RPM_SOURCE_DIR/nds_DE $LOCALEDIR/nds || :
 localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional || :
 
-# tibetan language (bo_CN, bo_IN)
-localedef -c -f UTF-8       -i /usr/share/i18n/locales/bo_CN $LOCALEDIR/bo_CN
-localedef -c -f UTF-8       -i /usr/share/i18n/locales/bo_IN $LOCALEDIR/bo_IN
-
-# kashubian language (Poland)
-localedef -c -f UTF-8       -i /usr/share/i18n/locales/csb_PL $LOCALEDIR/csb_PL
+# new locales with UTF-8 charmap only
+for i in bo_CN bo_IN csb_PL en_AG hne_IN ht_HT ks_IN@devanagari nl_AW sd_IN \
+         sd_IN@devanagari shs_CA
+do
+	localedef -c -f UTF-8 -i /usr/share/i18n/locales/$i $LOCALEDIR/$i
+done
 
 #=========================================================
 #
@@ -1349,18 +1349,19 @@ These are the base files for English language localization.
 Contains: en_CA en_DK en_GB en_IE en_US
 
 %post -n locales-en
-%{loc_add} en en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN en_NG \
-           en_NZ en_PH en_SG en_US en_ZA en_ZW
+%{loc_add} en en_AG en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN \
+           en_NG en_NZ en_PH en_SG en_US en_ZA en_ZW
 
 %preun -n locales-en
 if [ "$1" = "0" ]; then
-	%{loc_del} en en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN en_NG \
-	           en_NZ en_PH en_SG en_US en_ZA en_ZW
+	%{loc_del} en en_AG en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN \
+	           en_NG en_NZ en_PH en_SG en_US en_ZA en_ZW
 fi
 
 %files -n locales-en
 %defattr(-,root,root)
 /usr/share/locale/en
+/usr/share/locale/en_AG*
 /usr/share/locale/en_AU*
 /usr/share/locale/en_BE*
 /usr/share/locale/en_BW*
@@ -2000,6 +2001,30 @@ fi
 /usr/share/locale/hi
 /usr/share/locale/hi_IN*
 
+### hne
+%package -n locales-hne
+Summary: Base files for localization (Chhattisgarhi)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-hne
+These are the base files for Chhattisgarhi language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Chhattisgarhi language conventions.
+
+%post -n locales-hne
+%{loc_add} hne_IN
+
+%preun -n locales-hne
+if [ "$1" = "0" ]; then
+	%{loc_del} hne_IN
+fi
+
+%files -n locales-hne
+%defattr(-,root,root)
+/usr/share/locale/hne_IN
+
 ### hr
 # translations by Vedran Rodic <vrodic@udig.hr>
 %package -n locales-hr
@@ -2058,6 +2083,30 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/hsb
 /usr/share/locale/hsb_DE*
+
+### ht
+%package -n locales-ht
+Summary: Base files for localization (Breyol)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-ht
+These are the base files for Breyol language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according 
+to Breyol language conventions.
+
+%post -n locales-ht
+%{loc_add} ht_HT
+
+%preun -n locales-ht
+if [ "$1" = "0" ]; then
+	%{loc_del} ht_HT
+fi
+
+%files -n locales-ht
+%defattr(-,root,root)
+/usr/share/locale/ht_HT
 
 ### hu
 %package -n locales-hu
@@ -2494,6 +2543,30 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/ko
 /usr/share/locale/ko_KR*
+
+### ks
+%package -n locales-ks
+Summary: Base files for localization (Kashmiri)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-ks
+These are the base files for Kashmiri language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Kashmiri language conventions.
+
+%post -n locales-ks
+%{loc_add} ks_IN@devanagari
+
+%preun -n locales-ks
+if [ "$1" = "0" ]; then
+	%{loc_del} ks_IN@devanagari
+fi
+
+%files -n locales-ks
+%defattr(-,root,root)
+/usr/share/locale/ks_IN@devanagari
 
 ### ku
 %package -n locales-ku
@@ -3033,16 +3106,17 @@ voor een juiste alfabetische sortering en weergave van data en nummers
 volgens de Nederlandse Taalconventies
 
 %post -n locales-nl
-%{loc_add} nl nl_BE nl_NL
+%{loc_add} nl nl_AW nl_BE nl_NL
 
 %preun -n locales-nl
 if [ "$1" = "0" ]; then
-	%{loc_del} nl nl_BE nl_NL
+	%{loc_del} nl nl_AW nl_BE nl_NL
 fi
 
 %files -n locales-nl
 %defattr(-,root,root)
 /usr/share/locale/nl
+/usr/share/locale/nl_AW*
 /usr/share/locale/nl_BE*
 /usr/share/locale/nl_NL*
 
@@ -3409,6 +3483,31 @@ fi
 /usr/share/locale/sc
 /usr/share/locale/sc_IT*
 
+### sd
+%package -n locales-sd
+Summary: Base files for localization (Sindhi)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-sd
+These are the base files for Sindhi language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Sindhi language conventions.
+
+%post -n locales-sd
+%{loc_add} sd_IN sd_IN@devanagari
+
+%preun -n locales-sd
+if [ "$1" = "0" ]; then
+	%{loc_del} sd_IN sd_IN@devanagari
+fi
+
+%files -n locales-sd
+%defattr(-,root,root)
+/usr/share/locale/sd_IN
+/usr/share/locale/sd_IN@devanagari
+
 ### se
 %package -n locales-se
 Summary: Base files for localization (Saami)
@@ -3434,6 +3533,30 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/se
 /usr/share/locale/se_NO*
+
+### shs
+%package -n locales-shs
+Summary: Base files for localization (Secwepemctsin)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-shs
+These are the base files for Secwepemctsin language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Secwepemctsin language conventions.
+
+%post -n locales-shs
+%{loc_add} shs_CA
+
+%preun -n locales-shs
+if [ "$1" = "0" ]; then
+	%{loc_del} shs_CA
+fi
+
+%files -n locales-shs
+%defattr(-,root,root)
+/usr/share/locale/shs_CA
 
 ### si
 %package -n locales-si
