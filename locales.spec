@@ -424,7 +424,7 @@ localedef -c -f ISO-8859-9  -i tr_TR $LOCALEDIR/tr
 localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional || :
 
 # new locales with UTF-8 charmap only
-for i in bo_CN bo_IN csb_PL en_AG ht_HT ks_IN@devanagari nl_AW sd_IN \
+for i in bo_CN bo_IN csb_PL en_AG hne_IN ht_HT ks_IN@devanagari nl_AW sd_IN \
          sd_IN@devanagari shs_CA
 do
 	localedef -c -f UTF-8 -i /usr/share/i18n/locales/$i $LOCALEDIR/$i
@@ -2002,28 +2002,28 @@ fi
 /usr/share/locale/hi_IN*
 
 ### hne
-#%package -n locales-hne
-#Summary: Base files for localization (Chhattisgarhi)
-#Group: System/Internationalization
-#Requires: locales = %{version}-%{release}
-#
-#%description -n locales-hne
-#These are the base files for Chhattisgarhi language localization.
-#You need it to correctly display sort, for sorting order and
-#proper representation of dates and numbers according
-#to Chhattisgarhi language conventions.
-#
-#%post -n locales-hne
-#%{loc_add} hne_IN
-#
-#%preun -n locales-hne
-#if [ "$1" = "0" ]; then
-#	%{loc_del} hne_IN
-#fi
-#
-#%files -n locales-hne
-#%defattr(-,root,root)
-#/usr/share/locale/hne_IN
+%package -n locales-hne
+Summary: Base files for localization (Chhattisgarhi)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-hne
+These are the base files for Chhattisgarhi language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Chhattisgarhi language conventions.
+
+%post -n locales-hne
+%{loc_add} hne_IN
+
+%preun -n locales-hne
+if [ "$1" = "0" ]; then
+	%{loc_del} hne_IN
+fi
+
+%files -n locales-hne
+%defattr(-,root,root)
+/usr/share/locale/hne_IN
 
 ### hr
 # translations by Vedran Rodic <vrodic@udig.hr>
