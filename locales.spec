@@ -24,7 +24,7 @@
 %define glibc_ver 2.9
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 1
+%define release   %mkrel 2
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
