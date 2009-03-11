@@ -24,7 +24,7 @@
 %define glibc_ver 2.9
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 2
+%define release   %mkrel 3
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -424,8 +424,8 @@ localedef -c -f ISO-8859-9  -i tr_TR $LOCALEDIR/tr
 localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional || :
 
 # new locales with UTF-8 charmap only
-for i in bo_CN bo_IN csb_PL en_AG hne_IN ht_HT ks_IN@devanagari nl_AW sd_IN \
-         sd_IN@devanagari shs_CA
+for i in bo_CN bo_IN csb_PL en_AG hne_IN ht_HT ks_IN@devanagari nl_AW or_IN \
+         sd_IN sd_IN@devanagari shs_CA
 do
 	localedef -c -f UTF-8 -i /usr/share/i18n/locales/$i $LOCALEDIR/$i
 done
@@ -3241,6 +3241,30 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/oc
 /usr/share/locale/oc_FR*
+
+### or
+%package -n locales-or
+Summary: Base files for localization (Oriya)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-or
+These are the base files for Oriya language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Oriya language conventions.
+
+%post -n locales-or
+%{loc_add} or_IN
+
+%preun -n locales-or
+if [ "$1" = "0" ]; then
+	%{loc_del} or_IN
+fi
+
+%files -n locales-or
+%defattr(-,root,root)
+/usr/share/locale/or_IN
 
 ### pa
 %package -n locales-pa
