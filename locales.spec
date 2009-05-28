@@ -24,7 +24,7 @@
 %define glibc_ver 2.10.1
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 1
+%define release   %mkrel 2
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -425,7 +425,7 @@ localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional || :
 
 # new locales with UTF-8 charmap only
 for i in bo_CN bo_IN csb_PL en_AG hne_IN ht_HT ks_IN ks_IN@devanagari \
-         nl_AW or_IN sd_IN sd_IN@devanagari shs_CA
+         nan_TW@latin nl_AW or_IN sd_IN sd_IN@devanagari shs_CA
 do
 	localedef -c -f UTF-8 -i /usr/share/i18n/locales/$i $LOCALEDIR/$i
 done
@@ -4495,15 +4495,16 @@ or to "zh_TW.Big5" to use traditional characters (Big5 encoding)
 碼),設定為 "zh_TW" 則可顯示繁體中文(大五碼)。 
 
 %post -n locales-zh
-%{loc_add} zh zh_CN zh_HK zh_SG zh_TW
+%{loc_add} nan_TW@latin zh zh_CN zh_HK zh_SG zh_TW
 
 %preun -n locales-zh
 if [ "$1" = "0" ]; then
-	%{loc_del} zh zh_CN zh_HK zh_SG zh_TW
+	%{loc_del} nan_TW@latin zh zh_CN zh_HK zh_SG zh_TW
 fi
 
 %files -n locales-zh
 %defattr(-,root,root)
+/usr/share/locale/nan_TW@latin
 /usr/share/locale/zh
 /usr/share/locale/zh_CN*
 /usr/share/locale/zh_HK*
