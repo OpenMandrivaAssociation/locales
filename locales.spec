@@ -119,8 +119,8 @@ Requires(post): perl-base rpm coreutils
 Requires(postun): perl-base rpm coreutils
 # glibc >= 2.2.5-6mdk now comes with glibc-i18ndata package
 BuildRequires: glibc-i18ndata = %{glibc_epoch}:%{glibc_ver}
-# needed for dz_BT (LC_COLLATE with more than 250 rules)
-BuildRequires: glibc >= 2.3.6-2mdk
+# usually needed to ensure support for new locales
+BuildRequires: glibc >= %{glibc_epoch}:%{glibc_ver}
 
 %description
 These are the base files for language localization.
