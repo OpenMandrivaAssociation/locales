@@ -41,17 +41,13 @@ Version: %{version}
 Release: %{release}
 License: GPL
 Group: System/Internationalization
-
+Source0: Makefile
 # updated to include unicode 5.0 introduced latin/cyrullic/greek letters
 #
 Source1: iso14651_hack
 # scripts to install/uninstall a locale
 Source2: locale_install.sh
 Source3: locale_uninstall.sh
-# the default "i18n" locale; updated to unicode 5.0
-Source4: i18n
-# the UTF-8 charset definition; updated to unicode 5.0
-Source5: UTF-8.gz
 
 # this one is on glibc, however there is the politic issue
 # of the naming of Taiwan 
@@ -138,7 +134,6 @@ mkdir -p $RPM_BUILD_ROOT/usr/bin/
 install -m 755 %{SOURCE2} ${RPM_BUILD_ROOT}%{loc_add}
 install -m 755 %{SOURCE3} ${RPM_BUILD_ROOT}%{loc_del}
 
-#mv /usr/share/locale /usr/share/locale_bak
 mkdir -p $RPM_BUILD_ROOT/usr/share/locale
 LOCALEDIR=$RPM_BUILD_ROOT/usr/share/locale
 
@@ -152,22 +147,8 @@ do
 	cat iso14651_hack | sed "s/#hack-$i#//" > iso14651_$i
 done
 
-# copy updated UTF-8/i18n files (we check for U0513 introduced in unicode 5.0)
-if ! zgrep 'U0513' /usr/share/i18n/charmaps/UTF-8.gz >& /dev/null
-then
- [ -r $RPM_SOURCE_DIR/UTF-8.gz ] && zcat $RPM_SOURCE_DIR/UTF-8.gz > UTF-8
-else
- echo "the glibc UTF-8 file is already unicode 5.0 or higher"
-fi
-if ! grep 'U0513' /usr/share/i18n/locales/i18n >& /dev/null
-then
- [ -r $RPM_SOURCE_DIR/i18n ] && cp $RPM_SOURCE_DIR/i18n i18n
-else
- cp /usr/share/i18n/locales/i18n i18n
-fi
-
 # for turkic languages (upperwasing/lowercasing of iwithdot/dotlessi)
-cat i18n | \
+cat /usr/share/i18n/locales/i18n | \
 	sed 's/<U0069>,<U0049>/<U0069>,<U0130>/' | \
 	sed 's/<U0049>,<U0069>/<U0049>,<U0131>/' > i18n_tr
 
@@ -201,6 +182,8 @@ do
 	# don't use en_DK because of LC_MONETARY
 	localedef -c -f $DEF_CHARSET -i en_US $LOCALEDIR/`basename $DEF_CHARSET` || :
 done
+
+#make -f %{_sourcedir}/Makefile DESTDIR=$RPM_BUILD_ROOT
 
 # fix for Arabic yes/no expr
 for i in /usr/share/i18n/locales/ar_??
