@@ -24,7 +24,7 @@
 %define glibc_ver 2.10.1
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 6
+%define release   %mkrel 7
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -305,7 +305,7 @@ EOF
 chmod a+x softlink.pl
 (
  cd $RPM_BUILD_ROOT/usr/share/locale ;
- for i in `echo ??_??*`
+ for i in `echo ??_??* ???_??*`
  do
 	LC_ALL=C $RPM_BUILD_DIR/locales-%{version}/softlink.pl $i
  done
