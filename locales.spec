@@ -24,7 +24,7 @@
 %define glibc_ver 2.10.1
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 5
+%define release   %mkrel 6
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -298,14 +298,14 @@ foreach \$fi (@files) {
     \$orig{\$sum} =\$fi;
   } else {
     \`rm \$fi\`;
-	\`ln -s ../\$orig{\$sum} \$fi\`;
+    \`ln -s ../\$orig{\$sum} \$fi\`;
   }
 }
 EOF
 chmod a+x softlink.pl
 (
  cd $RPM_BUILD_ROOT/usr/share/locale ;
- for i in `echo ?? ???`
+ for i in `echo ??_??*`
  do
 	LC_ALL=C $RPM_BUILD_DIR/locales-%{version}/softlink.pl $i
  done
