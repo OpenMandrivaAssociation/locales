@@ -24,7 +24,7 @@
 %define glibc_ver 2.10.1
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 4
+%define release   %mkrel 5
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -82,8 +82,6 @@ Source56: es_CO
 Source58: sq_AL
 # ours has yesexpr using tajik
 Source59: tg_TJ
-# changed LC_COLLATE to new format
-Source60: tr_TR_collate
 # tr_TR thet includes "i18n_tr" (generated with a simple regexp replacing)
 Source61: tr_TR
 # LC_COLLATE for vietnamese is incorrect in glibc, and LC_CTIME seems
@@ -114,7 +112,7 @@ Requires: glibc = %{glibc_epoch}:%{glibc_ver}
 Requires(post): perl-base rpm coreutils
 Requires(postun): perl-base rpm coreutils
 # glibc >= 2.2.5-6mdk now comes with glibc-i18ndata package
-BuildRequires: glibc-i18ndata = %{glibc_epoch}:%{glibc_ver}
+BuildRequires: glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}-8mnb2
 # usually needed to ensure support for new locales
 BuildRequires: glibc >= %{glibc_epoch}:%{glibc_ver}
 
@@ -140,7 +138,6 @@ LOCALEDIR=$RPM_BUILD_ROOT/usr/share/locale
 rm -rf locales-%{version}
 mkdir -p locales-%{version} ; cd locales-%{version}
 
-cp $RPM_SOURCE_DIR/iso14651_hack iso14651_t1
 cp $RPM_SOURCE_DIR/iso14651_hack .
 for i in `grep '^#LIST_LOCALES=' iso14651_hack | cut -d= -f2 | tr ':' ' '`
 do
@@ -165,6 +162,19 @@ done
 	cp $RPM_SOURCE_DIR/zh_TW_2 zh_TW
 %endif
 
+# copy local locales unavailable in glibc
+for loc in eo_XX es@tradicional nds_DE@traditional sw_XX
+do
+	cp %{_sourcedir}/$loc .
+done
+
+# copy modified glibc locales
+for loc in ar_SA az_AZ bs_BA dz_BT es_ES es_US es_CO km_KH ku_TR ky_KG sq_AL \
+           tg_TJ tr_TR vi_VN wa_BE yi_US zh_CN
+do
+	cp %{_sourcedir}/$loc .
+done
+
 # making default charset pseudo-locales
 # those will be symlinked (for LC_CTYPE, LC_COLLATE mainly) from
 # a lot of other locales, thus saving space
@@ -183,8 +193,6 @@ do
 	localedef -c -f $DEF_CHARSET -i en_US $LOCALEDIR/`basename $DEF_CHARSET` || :
 done
 
-#make -f %{_sourcedir}/Makefile DESTDIR=$RPM_BUILD_ROOT
-
 # fix for Arabic yes/no expr
 for i in /usr/share/i18n/locales/ar_??
 do
@@ -200,14 +208,14 @@ done
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=3035
 for i in /usr/share/i18n/locales/be_BY /usr/share/i18n/locales/cy_GB \
 	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_GR \
-	/usr/share/i18n/locales/es_CL /usr/share/i18n/locales/es_ES@euro \
+	/usr/share/i18n/locales/es_CL \
 	/usr/share/i18n/locales/es_MX /usr/share/i18n/locales/fr_?? \
 	/usr/share/i18n/locales/fy_NL /usr/share/i18n/locales/it_?? \
 	/usr/share/i18n/locales/lt_LT /usr/share/i18n/locales/mi_NZ \
 	/usr/share/i18n/locales/nl_BE /usr/share/i18n/locales/nl_NL \
 	/usr/share/i18n/locales/pt_PT /usr/share/i18n/locales/ru_UA \
 	/usr/share/i18n/locales/se_NO /usr/share/i18n/locales/sv_FI \
-	/usr/share/i18n/locales/sv_FI@euro /usr/share/i18n/locales/*_ES vi_VN
+	/usr/share/i18n/locales/*_ES vi_VN
 do
 	LOCALENAME=`basename $i`
 	if [ -r $RPM_SOURCE_DIR/$i ]; then
@@ -225,288 +233,28 @@ do
 	fi
 done
 
-# languages which have only one locale; use the language name as locale
-# name for them; that makes the localization far easier
-#
-for i in \
-	 af_ZA am_ET an_ES as_IN az_AZ be_BY bg_BG \
-	 br_FR bs_BA byn_ER cs_CZ cy_GB da_DK dz_BT \
-	 eo_XX et_EE eu_ES fa_IR fi_FI \
-	 fo_FO fur_IT fy_DE fy_NL ga_IE gd_GB gl_ES gu_IN gv_GB \
-	 ha_NG he_IL hi_IN hr_HR hsb_DE hu_HU hy_AM \
-	 id_ID ig_NG ik_CA is_IS iu_CA ja_JP \
-	 ka_GE kk_KZ kl_GL km_KH kn_IN ko_KR ku_TR kw_GB ky_KG \
-	 lg_UG lo_LA lt_LT lv_LV mg_MG mi_NZ mk_MK ml_IN mn_MN mr_IN ms_MY \
-	 mt_MT nb_NO ne_NP nn_NO nr_ZA nso_ZA oc_FR om_ET om_KE \
-	 fil_PH pap_AN pl_PL ro_RO rw_RW sc_IT se_NO si_LK sid_ET sk_SK sl_SI \
-	 sq_AL ss_ZA st_ZA ta_IN te_IN tg_TJ th_TH ti_ER ti_ET \
-	 tig_ER tk_TM tl_PH tn_ZA ts_ZA tt_RU ug_CN uk_UA ur_PK uz_UZ uz_UZ@cyrillic \
-	 ve_ZA vi_VN wa_BE wal_ET xh_ZA \
-	 yi_US yo_NG zh_CN zh_HK zh_SG zh_TW zu_ZA
-do
-	LOCALENAME=$i
-	if [ -r ./$i ]; then
-		DEF_LOCALE_FILE="./$i"
-	elif [ -r $RPM_SOURCE_DIR/$i ]; then
-		DEF_LOCALE_FILE="$RPM_SOURCE_DIR/$i"
-		cp $RPM_SOURCE_DIR/$i .
-	else
-		DEF_LOCALE_FILE="/usr/share/i18n/locales/$i"
-	fi
-	DEF_CHARSET="UTF-8"
-	# for those languages we still keep a default charset different of UTF-8
-	case "$i" in
-		af_*) DEF_CHARSET="ISO-8859-1" ;;
-		bs_*|cs_*|hr_*|hu_*|pl_*|ro_*|sk_*|sl_*) DEF_CHARSET="ISO-8859-2" ;;
-		lt_*|lv*) DEF_CHARSET="ISO-8859-13" ;;
-		br_*|da_*|et_*|eu_*|fi_*|fo_*|fy_*) DEF_CHARSET="ISO-8859-15" ;;
-		fur_*|ga_*|gl_*|is_*|nn_*|no_*) DEF_CHARSET="ISO-8859-15" ;;
-		nb_*|oc_*|sc_*|sq_*|wa_*) DEF_CHARSET="ISO-8859-15" ;;
-		be_*|bg_*) DEF_CHARSET="CP1251" ;;
-		ru_*) DEF_CHARSET="KOI8-R" ;;
-		uk_*) DEF_CHARSET="KOI8-U" ;;
-		ja_*) DEF_CHARSET="EUC-JP" ;;
-		ko_*) DEF_CHARSET="EUC-KR" ;;
-		th_*) DEF_CHARSET="TIS-620" ;;
-		zh_CN|zh_SG) DEF_CHARSET="GB2312" ;;
-		zh_TW|zh_TW) DEF_CHARSET="BIG5" ;;
-	esac
-	DEF_LOCALE=`basename $i`
-    case "$DEF_LOCALE" in
-		*@*) VARIANT="`echo $DEF_LOCALE | sed 's/^[^@]*@/@/'`" ;
-		     DEF_LOCALE="`echo $DEF_LOCALE | sed s/${VARIANT}//`" ;;
-	    *) VARIANT="" ;;
-    esac
-	DEF_LANG=`echo $DEF_LOCALE | cut -d'_' -f1`
-	# find the charset definition
-    if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET ]; then
-    	if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET.gz ]; then
-			cp $RPM_SOURCE_DIR/$DEF_CHARSET .
-			DEF_CHARSET=$RPM_SOURCE_DIR/$DEF_CHARSET
-		fi
-	fi
-	# if some locale returns a non 0 return code it isn't important
-	[ "$DEF_LANG" != "${LOCALENAME}" -a ! -r "$LOCALEDIR/$DEF_LANG${VARIANT}" ] && \
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LANG${VARIANT}  || :
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}${VARIANT} || :
-	[ "$DEF_CHARSET" != "BIG5" -a "$DEF_CHARSET" != "UTF-8" ] && \
-	(localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}.`basename ${DEF_CHARSET}`${VARIANT} || : )
-	localedef -c -f UTF-8 -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}.UTF-8${VARIANT} || :
-done
+%make -f %{_sourcedir}/Makefile DESTDIR=$RPM_BUILD_ROOT
 
-# languages which have several locales
-#
-for i in $RPM_SOURCE_DIR/nds_??* $RPM_SOURCE_DIR/sw_?? \
-	 /usr/share/i18n/locales/aa_??* /usr/share/i18n/locales/ar_?? \
-	 /usr/share/i18n/locales/ber_?? \
-	 /usr/share/i18n/locales/bn_?? /usr/share/i18n/locales/ca_?? \
-	 /usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_?? \
-	 /usr/share/i18n/locales/en_NG \
-	 /usr/share/i18n/locales/en_?? /usr/share/i18n/locales/es_?? \
-	 /usr/share/i18n/locales/fr_?? /usr/share/i18n/locales/gez_??* \
-	 /usr/share/i18n/locales/it_?? /usr/share/i18n/locales/li_?? \
-	 /usr/share/i18n/locales/nl_?? /usr/share/i18n/locales/pa_?? \
-	 /usr/share/i18n/locales/pt_?? /usr/share/i18n/locales/ru_?? \
-	 /usr/share/i18n/locales/so_?? /usr/share/i18n/locales/sr_??* \
-	 /usr/share/i18n/locales/sv_?? /usr/share/i18n/locales/tr_??
-do
-	DEF_CHARSET="UTF-8"
-	# for those languages we still keep a default charset different of UTF-8
-	case "`basename $i`" in
-		en_IN|en_NG) DEF_CHARSET="UTF-8" ;;
-		en_IE|es_ES) DEF_CHARSET="ISO-8859-15" ;;
-		en_*|es_*) DEF_CHARSET="ISO-8859-1" ;;
-		bs_*|cs_*|hr_*|hu_*|pl_*|ro_*|sk_*|sl_*) DEF_CHARSET="ISO-8859-2" ;;
-		el_*) DEF_CHARSET="ISO-8859-7" ;;
-		tr_*) DEF_CHARSET="ISO-8859-9" ;;
-		lt_*|lv*) DEF_CHARSET="ISO-8859-13" ;;
-		ca_*|de_*|fr_*|it_*|nl_*|pt_*|sv_*) DEF_CHARSET="ISO-8859-15";;
-		fy_*|nds_*|li_*) DEF_CHARSET="ISO-8859-15";;
-		ru_*) DEF_CHARSET="KOI8-R" ;;
-	esac
-	if [ -r ./`basename $i` ]; then
-		DEF_LOCALE_FILE="./`basename $i`"
-	elif [ -r $RPM_SOURCE_DIR/`basename $i` ]; then
-		DEF_LOCALE_FILE="$RPM_SOURCE_DIR/`basename $i`"
-		cp $RPM_SOURCE_DIR/`basename $i` .
-	else
-		DEF_LOCALE_FILE="/usr/share/i18n/locales/`basename $i`"
-		cp /usr/share/i18n/locales/`basename $i` .
-	fi
-	DEF_LOCALE=`basename $i`
-    case "$DEF_LOCALE" in
-		*@*) VARIANT="`echo $DEF_LOCALE | sed 's/^[^@]*@/@/'`" ;
-		     DEF_LOCALE="`echo $DEF_LOCALE | sed s/${VARIANT}//`" ;;
-	    *) VARIANT="" ;;
-    esac
-	# if some locale returns a non 0 return code it isn't important
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LOCALE${VARIANT} || :
-	# for compatibility 
-	[ "$DEF_CHARSET" = "ISO-8859-15" ] && \
-	(localedef -c -f ISO-8859-1 -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}.ISO-8859-1${VARIANT} || : )
-	[ "$DEF_CHARSET" != "UTF-8" ] && \
-	(localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}.`basename ${DEF_CHARSET}`${VARIANT} || : )
-	localedef -c -f UTF-8 -i $DEF_LOCALE_FILE $LOCALEDIR/${DEF_LOCALE}.UTF-8${VARIANT} || :
-done
-
-# locales using ISO-8859-15 that are not for the default locale of their
-# respectives languages
-for i in de_AT de_BE de_LU en_IE fi_FI fr_BE fr_LU nl_BE sv_FI
-do
-	if [ -r ./`basename $i` ]; then
-		DEF_LOCALE_FILE="./`basename $i`"
-    elif [ -r $RPM_SOURCE_DIR/`basename $i` ]; then
-		DEF_LOCALE_FILE="$RPM_SOURCE_DIR/`basename $i`"
-		cp $RPM_SOURCE_DIR/`basename $i` .
-    else
-		DEF_LOCALE_FILE="/usr/share/i18n/locales/`basename $i`"
-    fi
-	DEF_LANG=`basename $i | cut -d'_' -f1 `
-	DEF_LOCALE=`basename $i`
-	DEF_CHARSET=ISO-8859-15
-	
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LOCALE || :
-	# for compatibility 
-	localedef -c -f ISO-8859-1 -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LOCALE.ISO-8859-1 || :
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LOCALE.ISO-8859-15 || :
-done
-
-# locales using iso-8859-15 which are the default ones for their respective
-# languages
-for i in br_FR ca_ES da_DK de_DE es_ES eu_ES fi_FI fr_FR ga_IE \
-	 gl_ES is_IS it_IT li_NL nds_DE nds_NL nl_NL pt_PT wa_BE
-do
-	if [ -r ./`basename $i` ]; then
-		DEF_LOCALE_FILE="./`basename $i`"
-    elif [ -r $RPM_SOURCE_DIR/`basename $i` ]; then
-		DEF_LOCALE_FILE="$RPM_SOURCE_DIR/`basename $i`"
-		cp $RPM_SOURCE_DIR/`basename $i` .
-	else
-		DEF_LOCALE_FILE="/usr/share/i18n/locales/`basename $i`"
-	fi
-	DEF_LANG=`basename $i | cut -d'_' -f1 `
-	DEF_LOCALE=`basename $i`
-	DEF_CHARSET=ISO-8859-15
-		
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LANG || :
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LOCALE || :
-	# for compatibility 
-	localedef -c -f ISO-8859-1   -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LOCALE.ISO-8859-1 || :
-	localedef -c -f $DEF_CHARSET -i $DEF_LOCALE_FILE $LOCALEDIR/$DEF_LOCALE.ISO-8859-15 || :
-done
+localedef -c -f ISO-8859-15 -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional
+localedef -c -f ISO-8859-1  -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional.ISO-8859-1
+localedef -c -f UTF-8       -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional.UTF-8
+localedef -c -f UTF-8       -i sw_XX              $LOCALEDIR/sw_XX
+localedef -c -f UTF-8       -i eo_XX              $LOCALEDIR/eo_XX
+localedef -c -f UTF-8       -i wal_ET             $LOCALEDIR/wal_ET || :
 
 # create the default locales for languages whith multiple locales
-localedef -c -f UTF-8       -i ar_EG $LOCALEDIR/ar || :
-localedef -c -f ISO-8859-7  -i el_GR $LOCALEDIR/el
-localedef -c -f ISO-8859-1  -i en_US $LOCALEDIR/en
-localedef -c -f UTF-8       -i pa_IN $LOCALEDIR/pa
-localedef -c -f KOI8-R      -i ru_RU $LOCALEDIR/ru
-localedef -c -f ISO-8859-15 -i sv_SE $LOCALEDIR/sv
-localedef -c -f ISO-8859-9  -i tr_TR $LOCALEDIR/tr
-#localedef -c -f ISO-8859-1  -i $RPM_SOURCE_DIR/nds_DE $LOCALEDIR/nds || :
-localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional || :
-
-# new locales with UTF-8 charmap only
-for i in bo_CN bo_IN csb_PL en_AG hne_IN ht_HT ks_IN ks_IN@devanagari \
-         nan_TW@latin nl_AW or_IN sd_IN sd_IN@devanagari shs_CA
-do
-	localedef -c -f UTF-8 -i /usr/share/i18n/locales/$i $LOCALEDIR/$i
-done
+localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional
 
 #=========================================================
 #
 # special non-UTF-8 locales for compatibility
 #
 
-# Bielorussian
-localedef -c -f CP1251     -i be_BY $LOCALEDIR/be || :
-localedef -c -f CP1251     -i be_BY $LOCALEDIR/be_BY || :
-localedef -c -f ISO-8859-5 -i be_BY $LOCALEDIR/be_BY.ISO-8859-5 || :
-
 # Esperanto
-localedef -c -f ISO-8859-3 -i eo_XX $LOCALEDIR/eo_XX.ISO-8859-3 || :
+localedef -c -f ISO-8859-3 -i eo_XX $LOCALEDIR/eo_XX.ISO-8859-3
 
-# estonian can use iso-8859-15 and iso-8859-4
-localedef -c -f ISO-8859-15 -i et_EE $LOCALEDIR/et || :
-localedef -c -f ISO-8859-15 -i et_EE $LOCALEDIR/et_EE || :
-localedef -c -f ISO-8859-4  -i et_EE $LOCALEDIR/et_EE.ISO-8859-4 || :
-localedef -c -f ISO-8859-13 -i et_EE $LOCALEDIR/et_EE.ISO-8859-13 || :
-
-# Finnish default must be iso8859-15
-localedef -c -f ISO-8859-1  -i fi_FI $LOCALEDIR/fi_FI.ISO-8859-1 || :
-
-# Hebrew -- for old compatibility and for use with Wine
-localedef -c -f ISO-8859-8 -i he_IL $LOCALEDIR/he_IL.ISO-8859-8 || :
-localedef -c -f CP1255     -i he_IL $LOCALEDIR/he_IL.CP1255 || :
-
-# Armenian -- for old compatibility
-localedef -c -f ARMSCII-8 -i hy_AM $LOCALEDIR/hy_AM.ARMSCII-8 || :
-
-# georgian -- for old compatibility
-localedef -c -f GEORGIAN-ACADEMY -i ka_GE $LOCALEDIR/ka_GE.GEORGIAN-ACADEMY || :
-localedef -c -f GEORGIAN-PS      -i ka_GE $LOCALEDIR/ka_GE.GEORGIAN-PS || :
-
-# Kurdish 
-localedef -c -f ISO-8859-9 -i ku_TR $LOCALEDIR/ku_TR.ISO-8859-9 || :
-
-# Lithuanian
-localedef -c -f ISO-8859-13 -i lt_LT $LOCALEDIR/lt || :
-localedef -c -f ISO-8859-13 -i lt_LT $LOCALEDIR/lt_LT || :
-localedef -c -f ISO-8859-4  -i lt_LT $LOCALEDIR/lt_LT.ISO-8859-4 || :
-localedef -c -f ISO-8859-4  -i lt_LT $LOCALEDIR/lt_LT.ISO-8859-13 || :
-
-# Latvian
-localedef -c -f ISO-8859-13 -i lv_LV $LOCALEDIR/lv || :
-localedef -c -f ISO-8859-13 -i lv_LV $LOCALEDIR/lv_LV || :
-localedef -c -f ISO-8859-4  -i lv_LV $LOCALEDIR/lv_LV.ISO-8859-4 || :
-localedef -c -f ISO-8859-13 -i lv_LV $LOCALEDIR/lv_LV.ISO-8859-13 || :
-
-# Maltese -- for old compatibility
-localedef -c -f ISO-8859-3 -i mt_MT $LOCALEDIR/mt_MT.ISO-8859-3 || :
-
-# Norwegian bokmål -- for old compatibility
-localedef -c -f ISO-8859-15 -i nb_NO $LOCALEDIR/no || :
-localedef -c -f ISO-8859-15 -i nb_NO $LOCALEDIR/no_NO || :
-localedef -c -f ISO-8859-1  -i nb_NO $LOCALEDIR/no_NO.ISO-8859-1 || :
-localedef -c -f ISO-8859-15 -i nb_NO $LOCALEDIR/no_NO.ISO-8859-15 || :
-localedef -c -f UTF-8       -i nb_NO $LOCALEDIR/no_NO.UTF-8 || : 
-
-# special case for romanian
-localedef -c -f ISO-8859-2  -i ./ro_RO $LOCALEDIR/ro_RO.ISO-8859-2
-localedef -c -f ISO-8859-16 -i ./ro_RO $LOCALEDIR/ro_RO.ISO-8859-16
-localedef -c -f UTF-8 -i       ./ro_RO $LOCALEDIR/ro_RO.UTF-8
-# default, using latin2 for compatibility
-localedef -c -f ISO-8859-2 -i  ./ro_RO $LOCALEDIR/ro_RO
-localedef -c -f ISO-8859-2 -i  ./ro_RO $LOCALEDIR/ro
-
-# Russian uses koi8-r by default, iso-8859-5 is a second choice
-# "ru_RU" locale set to ISO-8859-5 for compatibility reasons
-localedef -c -f KOI8-R     -i ru_RU $LOCALEDIR/ru_RU || :
-localedef -c -f KOI8-R     -i ru_RU $LOCALEDIR/ru_RU.KOI8-R || :
-localedef -c -f ISO-8859-5 -i ru_RU $LOCALEDIR/ru_RU.ISO-8859-5 || :
-localedef -c -f CP1251     -i ru_RU $LOCALEDIR/ru_RU.CP1251 || :
-# Russian in Ukrainia can use koi8-u
-localedef -c -f KOI8-R     -i ru_UA $LOCALEDIR/ru_UA.KOI8-R || :
-localedef -c -f KOI8-U     -i ru_UA $LOCALEDIR/ru_UA.KOI8-U || :
-localedef -c -f ISO-8859-5 -i ru_UA $LOCALEDIR/ru_UA.ISO-8859-5 || :
-localedef -c -f CP1251     -i ru_UA $LOCALEDIR/ru_UA.CP1251 || :
-
-# Albanian
-localedef -c -f ISO-8859-1 -i sq_AL $LOCALEDIR/sq_AL.ISO-8859-1 || :
-localedef -c -f ISO-8859-2 -i sq_AL $LOCALEDIR/sq_AL.ISO-8859-2 || :
-
-# Turkmen
-localedef -c -f ISO-8859-2 -i tk_TM $LOCALEDIR/tk_TM.ISO-8859-2 || :
-
-# Provide cp1251 for Ukrainian too...
-localedef -c -f CP1251     -i uk_UA $LOCALEDIR/uk_UA.CP1251 || :
-
-# Vietnamese -- for old compatibility
-localedef -c -f VISCII     -i vi_VN $LOCALEDIR/vi_VN.VISCII || :
-localedef -c -f TCVN5712-1 -i vi_VN $LOCALEDIR/vi_VN.TCVN || :
-localedef -c -f TCVN5712-1 -i vi_VN $LOCALEDIR/vi_VN.TCVN-5712 || :
-
-# en_BE is required for conformance to LI18NUX2000
+# en_BE is required for conformance to LI18NUX2000/OpenI18N
+# (http://www.openi18n.org/docs/pdf/OpenI18N1.3.pdf)
 for i in $LOCALEDIR/en_IE* ; do
 	mkdir $LOCALEDIR/en_BE`basename $i | cut -b6- `
 	cp -var $i/* $LOCALEDIR/en_BE`basename $i | cut -b6- `
@@ -517,51 +265,7 @@ for i in $LOCALEDIR/en_IE* ; do
 	done
 done
 
-# celtic languages may want to use iso-8859-14
-localedef -c -f ISO-8859-14 -i br_FR $LOCALEDIR/br_FR.ISO-8859-14 || :
-localedef -c -f ISO-8859-14 -i cy_GB $LOCALEDIR/cy_GB.ISO-8859-14 || :
-localedef -c -f ISO-8859-14 -i ga_IE $LOCALEDIR/ga_IE.ISO-8859-14 || :
-localedef -c -f ISO-8859-1  -i gd_GB $LOCALEDIR/gd_GB.ISO-8859-1  || :
-localedef -c -f ISO-8859-14 -i gd_GB $LOCALEDIR/gd_GB.ISO-8859-14 || :
-localedef -c -f ISO-8859-1  -i gv_GB $LOCALEDIR/gv_GB.ISO-8859-1  || :
-localedef -c -f ISO-8859-14 -i gv_GB $LOCALEDIR/gv_GB.ISO-8859-14 || :
-localedef -c -f ISO-8859-1  -i kw_GB $LOCALEDIR/kw_GB.ISO-8859-1  || :
-localedef -c -f ISO-8859-14 -i kw_GB $LOCALEDIR/kw_GB.ISO-8859-14 || :
-
-# Chinese
-localedef -c -f GB2312     -i zh_CN $LOCALEDIR/zh || :
-localedef -c -f GB2312     -i zh_CN $LOCALEDIR/zh_CN || :
-localedef -c -f GB2312     -i zh_CN $LOCALEDIR/zh_CN.GB2312 || :
-localedef -c -f GBK        -i zh_CN $LOCALEDIR/zh_CN.GBK || :
-localedef -c -f GB18030    -i zh_CN $LOCALEDIR/zh_CN.GB18030 || :
-localedef -c -f UTF-8      -i zh_CN $LOCALEDIR/zh_CN.UTF-8 || :
-localedef -c -f BIG5-HKSCS -i zh_HK $LOCALEDIR/zh_HK || :
-localedef -c -f GB18030    -i zh_HK $LOCALEDIR/zh_HK.GB18030 || :
-localedef -c -f BIG5       -i zh_TW $LOCALEDIR/zh_TW || :
-localedef -c -f BIG5       -i zh_TW $LOCALEDIR/zh_TW.Big5 || :
-
-# Filipino -- for old compatibility (to remove in the future)
-localedef -c -f UTF-8       -i fil_PH $LOCALEDIR/ph || :
-localedef -c -f UTF-8       -i fil_PH $LOCALEDIR/ph_PH || : 
-localedef -c -f UTF-8       -i fil_PH $LOCALEDIR/ph_PH.UTF-8 || : 
-localedef -c -f ISO-8859-15 -i fil_PH $LOCALEDIR/fil_PH.ISO-8859-15 || : 
-
 #=========================================================
-
-# aliases
-for i in ja vi ; do
-	case "$i" in
-		ja) list="ja_JP.ujis" ;;
-		*) list="" ;;
-	esac
-
-	for j in `echo $list` ;  do
-		mkdir -p $LOCALEDIR/$j
-		ln $LOCALEDIR/$i/LC_* $LOCALEDIR/$j || :
-		mkdir $LOCALEDIR/$j/LC_MESSAGES
-		ln $LOCALEDIR/$i/LC_MESSAGES/* $LOCALEDIR/$j/LC_MESSAGES || :
-	done
-done
 
 # replace all identique files with hard links.
 # script from Alastair McKinstry, 2000-07-03
@@ -685,16 +389,15 @@ sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
 vertoon.
 
 %post -n locales-af
-%{loc_add} af af_ZA
+%{loc_add} af_ZA
 
 %preun -n locales-af
 if [ "$1" = "0" ]; then
-	%{loc_del} af af_ZA
+	%{loc_del} af_ZA
 fi
 
 %files -n locales-af
 %defattr(-,root,root)
-/usr/share/locale/af
 /usr/share/locale/af_ZA*
 
 ### am
@@ -725,41 +428,34 @@ to Amharic language conventions.
 ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
 
 %post -n locales-am
-%{loc_add} am am_ET byn byn_ER gez gez_ER gez_ET om om_ET om_KE \
-           sid sid_ET ti ti_ER ti_ET tig tig_ER wal wal_ET
+%{loc_add} am_ET byn_ER gez_ER gez_ET om_ET om_KE sid_ET ti_ER ti_ET tig_ER \
+           wal_ET
 
 %preun -n locales-am
 if [ "$1" = "0" ]; then
-	%{loc_del} am am_ET byn byn_ER gez gez_ER gez_ET om om_ET om_KE \
-	           sid sid_ET ti ti_ER ti_ET tig tig_ER wal wal_ET
+	%{loc_del} am_ET byn_ER gez_ER gez_ET om_ET om_KE sid_ET ti_ER ti_ET \
+	           tig_ER wal_ET
 fi
 
 %files -n locales-am
 %defattr(-,root,root)
-/usr/share/locale/am
 /usr/share/locale/am_ET*
 # blin
-/usr/share/locale/byn
 /usr/share/locale/byn_ER*
 # tigrinya
-/usr/share/locale/ti
 /usr/share/locale/ti_ER*
 /usr/share/locale/ti_ET*
 # ge'ez
 /usr/share/locale/gez_ER*
 /usr/share/locale/gez_ET*
 # sidama
-/usr/share/locale/sid
 /usr/share/locale/sid_ET*
 # tigre
-/usr/share/locale/tig
 /usr/share/locale/tig_ER*
 # Oromo
-/usr/share/locale/om
 /usr/share/locale/om_ET*
 /usr/share/locale/om_KE*
 # Walaita
-/usr/share/locale/wal
 /usr/share/locale/wal_ET*
 
 ### ar
@@ -787,18 +483,17 @@ to do that.
 العربية، بما في ذلك إظهار التاريخ و غيره.
 
 %post -n locales-ar
-%{loc_add} ar ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB \
-           ar_LY ar_MA ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
+%{loc_add} ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB ar_LY ar_MA \
+           ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
 
 %preun -n locales-ar
 if [ "$1" = "0" ]; then
-	%{loc_del} ar ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB \
-	           ar_LY ar_MA ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
+	%{loc_del} ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB ar_LY \
+	           ar_MA ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
 fi
 
 %files -n locales-ar
 %defattr(-,root,root)
-/usr/share/locale/ar
 /usr/share/locale/ar_AE*
 /usr/share/locale/ar_BH*
 /usr/share/locale/ar_DZ*
@@ -831,17 +526,40 @@ alphabetical sorting and representation of dates and numbers according
 to Assamese language conventions.
 
 %post -n locales-as
-%{loc_add} as as_IN
+%{loc_add} as_IN
 
 %preun -n locales-as
 if [ "$1" = "0" ]; then
-	%{loc_del} as as_IN
+	%{loc_del} as_IN
 fi
 
 %files -n locales-as
 %defattr(-,root,root)
-/usr/share/locale/as
 /usr/share/locale/as_IN*
+
+### ast
+%package -n locales-ast
+Summary: Base files for localization (Asturian)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-ast
+These are the base files for Asturian language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Asturian language conventions.
+
+%post -n locales-ast
+%{loc_add} ast_ES
+
+%preun -n locales-ast
+if [ "$1" = "0" ]; then
+	%{loc_del} ast_ES
+fi
+
+%files -n locales-ast
+%defattr(-,root,root)
+/usr/share/locale/ast_ES*
 
 ### az
 %package -n locales-az
@@ -856,16 +574,15 @@ alphabetical sorting and representation of dates and numbers according
 to Azeri language conventions.
 
 %post -n locales-az
-%{loc_add} az az_AZ
+%{loc_add} az_AZ
 
 %preun -n locales-az
 if [ "$1" = "0" ]; then
-	%{loc_del} az az_AZ
+	%{loc_del} az_AZ
 fi
 
 %files -n locales-az
 %defattr(-,root,root)
-/usr/share/locale/az
 /usr/share/locale/az_AZ*
 
 ### be
@@ -881,16 +598,15 @@ alphabetical sorting and representation of dates and numbers according
 to Belarussian language conventions.
 
 %post -n locales-be
-%{loc_add} be be_BY
+%{loc_add} be_BY
 
 %preun -n locales-be
 if [ "$1" = "0" ]; then
-	%{loc_del} be be_BY
+	%{loc_del} be_BY
 fi
 
 %files -n locales-be
 %defattr(-,root,root)
-/usr/share/locale/be
 /usr/share/locale/be_BY*
 
 ### ber
@@ -939,16 +655,15 @@ to Bulgarian language conventions.
 в съответствие на правилата на българския език.
 
 %post -n locales-bg
-%{loc_add} bg bg_BG
+%{loc_add} bg_BG
 
 %preun -n locales-bg
 if [ "$1" = "0" ]; then
-	%{loc_del} bg bg_BG
+	%{loc_del} bg_BG
 fi
 
 %files -n locales-bg
 %defattr(-,root,root)
-/usr/share/locale/bg
 /usr/share/locale/bg_BG*
 
 ### bn
@@ -1029,16 +744,15 @@ lizherenneg, taolennañ an deizadoù hag an niveroù hervez kendivizadoù ar
 brezhoneg.
 
 %post -n locales-br
-%{loc_add} br br_FR
+%{loc_add} br_FR
 
 %preun -n locales-br
 if [ "$1" = "0" ]; then
-	%{loc_del} br br_FR
+	%{loc_del} br_FR
 fi
 
 %files -n locales-br
 %defattr(-,root,root)
-/usr/share/locale/br
 /usr/share/locale/br_FR*
 
 ### bs
@@ -1054,16 +768,15 @@ alphabetical sorting and representation of dates and numbers according
 to Bosnian language conventions.
 
 %post -n locales-bs
-%{loc_add} bs bs_BA
+%{loc_add} bs_BA
 
 %preun -n locales-bs
 if [ "$1" = "0" ]; then
-	%{loc_del} bs bs_BA
+	%{loc_del} bs_BA
 fi
 
 %files -n locales-bs
 %defattr(-,root,root)
-/usr/share/locale/bs
 /usr/share/locale/bs_BA*
 
 ### ca
@@ -1102,20 +815,43 @@ donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates des nombres.
 
 %post -n locales-ca
-%{loc_add} ca ca_AD ca_ES ca_FR ca_IT
+%{loc_add} ca_AD ca_ES ca_FR ca_IT
 
 %preun -n locales-ca
 if [ "$1" = "0" ]; then
-	%{loc_del} ca ca_AD ca_ES ca_FR ca_IT
+	%{loc_del} ca_AD ca_ES ca_FR ca_IT
 fi
 
 %files -n locales-ca
 %defattr(-,root,root)
-/usr/share/locale/ca
 /usr/share/locale/ca_AD*
 /usr/share/locale/ca_ES*
 /usr/share/locale/ca_FR*
 /usr/share/locale/ca_IT*
+
+### crh
+%package -n locales-crh
+Summary: Base files for localization (Crimean Tatar)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-crh
+These are the base files for Crimean Tatar language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Crimean Tatar language conventions.
+
+%post -n locales-crh
+%{loc_add} crh_UA
+
+%preun -n locales-crh
+if [ "$1" = "0" ]; then
+	%{loc_del} crh_UA
+fi
+
+%files -n locales-crh
+%defattr(-,root,root)
+/usr/share/locale/crh_UA
 
 ### cs
 # translation by <pavel@SnowWhite.inet.cz>
@@ -1137,16 +873,15 @@ pro správné zobrazování českých 8bitových znaků a pro správné české
 třídění a reprezentaci data a čísel podle českých konvencí.
 
 %post -n locales-cs
-%{loc_add} cs cs_CZ
+%{loc_add} cs_CZ
 
 %preun -n locales-cs
 if [ "$1" = "0" ]; then
-	%{loc_del} cs cs_CZ
+	%{loc_del} cs_CZ
 fi
 
 %files -n locales-cs
 %defattr(-,root,root)
-/usr/share/locale/cs
 /usr/share/locale/cs_CZ*
 
 ### cy
@@ -1168,16 +903,15 @@ dangos yn iawn y cymeriadau Cymraeg 8-bit, a threfniant y wyddor,
 dyddiadau a rhifau yn ôl yr arfer Cymraeg.
 
 %post -n locales-cy
-%{loc_add} cy cy_GB
+%{loc_add} cy_GB
 
 %preun -n locales-cy
 if [ "$1" = "0" ]; then
-	%{loc_del} cy cy_GB
+	%{loc_del} cy_GB
 fi
 
 %files -n locales-cy
 %defattr(-,root,root)
-/usr/share/locale/cy
 /usr/share/locale/cy_GB*
 
 ### da
@@ -1201,16 +935,15 @@ og tal korrekt ifølge dansk retskrivning.
 
 
 %post -n locales-da
-%{loc_add} da da_DK
+%{loc_add} da_DK
 
 %preun -n locales-da
 if [ "$1" = "0" ]; then
-	%{loc_del} da da_DK
+	%{loc_del} da_DK
 fi
 
 %files -n locales-da
 %defattr(-,root,root)
-/usr/share/locale/da
 /usr/share/locale/da_DK*
 
 ### de
@@ -1240,16 +973,15 @@ die deutsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt.
 
 %post -n locales-de
-%{loc_add} de de_AT de_BE de_CH de_DE de_LU
+%{loc_add} de_AT de_BE de_CH de_DE de_LU
 
 %preun -n locales-de
 if [ "$1" = "0" ]; then
-	%{loc_del} de de_AT de_BE de_CH de_DE de_LU
+	%{loc_del} de_AT de_BE de_CH de_DE de_LU
 fi
 
 %files -n locales-de
 %defattr(-,root,root)
-/usr/share/locale/de
 /usr/share/locale/de_AT*
 /usr/share/locale/de_BE*
 /usr/share/locale/de_CH*
@@ -1269,16 +1001,15 @@ alphabetical sorting and representation of dates and numbers according
 to Dzongkha language conventions.
 
 %post -n locales-dz
-%{loc_add} dz dz_BT
+%{loc_add} dz_BT
 
 %preun -n locales-dz
 if [ "$1" = "0" ]; then
-	%{loc_del} dz dz_BT
+	%{loc_del} dz_BT
 fi
 
 %files -n locales-dz
 %defattr(-,root,root)
-/usr/share/locale/dz
 /usr/share/locale/dz_BT*
 
 ### el
@@ -1304,16 +1035,15 @@ to Greek language conventions.
 της ελληνικής γλώσσας.
 
 %post -n locales-el
-%{loc_add} el el_CY el_GR
+%{loc_add} el_CY el_GR
 
 %preun -n locales-el
 if [ "$1" = "0" ]; then
-	%{loc_del} el el_CY el_GR
+	%{loc_del} el_CY el_GR
 fi
 
 %files -n locales-el
 %defattr(-,root,root)
-/usr/share/locale/el
 /usr/share/locale/el_CY*
 /usr/share/locale/el_GR*
 
@@ -1332,18 +1062,17 @@ These are the base files for English language localization.
 Contains: en_CA en_DK en_GB en_IE en_US
 
 %post -n locales-en
-%{loc_add} en en_AG en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN \
-           en_NG en_NZ en_PH en_SG en_US en_ZA en_ZW
+%{loc_add} en_AG en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN en_NG \
+           en_NZ en_PH en_SG en_US en_ZA en_ZW
 
 %preun -n locales-en
 if [ "$1" = "0" ]; then
-	%{loc_del} en en_AG en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN \
+	%{loc_del} en_AG en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN \
 	           en_NG en_NZ en_PH en_SG en_US en_ZA en_ZW
 fi
 
 %files -n locales-en
 %defattr(-,root,root)
-/usr/share/locale/en
 /usr/share/locale/en_AG*
 /usr/share/locale/en_AU*
 /usr/share/locale/en_BE*
@@ -1383,16 +1112,15 @@ alfabeta ordo, datindikoj kaj nombroj konvene al la konvencioj
 en esperanta medio.
 
 %post -n locales-eo
-%{loc_add} eo eo_XX
+%{loc_add} eo_XX
 
 %preun -n locales-eo
 if [ "$1" = "0" ]; then
-	%{loc_del} eo eo_XX
+	%{loc_del} eo_XX
 fi
 
 %files -n locales-eo
 %defattr(-,root,root)
-/usr/share/locale/eo
 /usr/share/locale/eo_XX*
 
 ### es
@@ -1417,20 +1145,18 @@ y para la representación correcta de los números y fechas según
 las convenciones del castellano.
 
 %post -n locales-es
-%{loc_add} an an_ES es es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES \
-           es_GT es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US \
-           es_UY es_VE
+%{loc_add} an_ES es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES es_GT es_HN \
+           es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US es_UY es_VE
 
 %preun -n locales-es
 if [ "$1" = "0" ]; then
-	%{loc_del} an an_ES es es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES \
-	           es_GT es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US \
-	           es_UY es_VE
+	%{loc_del} an_ES es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES es_GT \
+	           es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US es_UY \
+	           es_VE
 fi
 
 %files -n locales-es
 %defattr(-,root,root)
-/usr/share/locale/es
 /usr/share/locale/es@tradicional
 /usr/share/locale/es_AR*
 /usr/share/locale/es_BO*
@@ -1453,7 +1179,6 @@ fi
 /usr/share/locale/es_UY*
 /usr/share/locale/es_VE*
 # Aragonese
-/usr/share/locale/an
 /usr/share/locale/an_ES*
 
 ### et
@@ -1478,16 +1203,15 @@ numbrite ja kuupäevade
 eesti keele reeglitele vastavaks esituseks.
 
 %post -n locales-et
-%{loc_add} et et_EE
+%{loc_add} et_EE
 
 %preun -n locales-et
 if [ "$1" = "0" ]; then
-	%{loc_del} et et_EE
+	%{loc_del} et_EE
 fi
 
 %files -n locales-et
 %defattr(-,root,root)
-/usr/share/locale/et
 /usr/share/locale/et_EE*
 
 ### eu
@@ -1527,16 +1251,15 @@ donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates des nombres.
 
 %post -n locales-eu
-%{loc_add} eu eu_ES
+%{loc_add} eu_ES
 
 %preun -n locales-eu
 if [ "$1" = "0" ]; then
-	%{loc_del} eu eu_ES
+	%{loc_del} eu_ES
 fi
 
 %files -n locales-eu
 %defattr(-,root,root)
-/usr/share/locale/eu
 /usr/share/locale/eu_ES*
 
 ### fa
@@ -1560,16 +1283,15 @@ to do that.
 اینها پرونده‌های اساسی زبان فارسی می‌باشند؛ شما برای نمایش درست ۸ بیت حروف فارسی، ترتیب مناسب الفبا، معرفی تاریخ و اعداد بر اساس قواعد زبان فارسی به آنها احتیاج دارید. توجه داشته باشید که این پاکت تعویض نگارش از راست به چپ و از چپ به راست را عهده‌دار نمی‌باشد و نه حتی ترکیب نهایی حروف را؛ این عمل را پایانه‌ی اکس، برنامه یا کارگزار کنسول مجازی انجام می‌دهند.
 
 %post -n locales-fa
-%{loc_add} fa fa_IR
+%{loc_add} fa_IR
 
 %preun -n locales-fa
 if [ "$1" = "0" ]; then
-	%{loc_del} fa fa_IR
+	%{loc_del} fa_IR
 fi
 
 %files -n locales-fa
 %defattr(-,root,root)
-/usr/share/locale/fa
 /usr/share/locale/fa_IR*
 
 ### fi
@@ -1592,16 +1314,15 @@ Tässä on perustiedot Linuxin suomentamiseen. Tarvitset sitä suomalaisten
 päivien ja numeroiden esitykseen suomenkielen käytännön mukaan.
 
 %post -n locales-fi
-%{loc_add} fi fi_FI
+%{loc_add} fi_FI
 
 %preun -n locales-fi
 if [ "$1" = "0" ]; then
-	%{loc_del} fi fi_FI
+	%{loc_del} fi_FI
 fi
 
 %files -n locales-fi
 %defattr(-,root,root)
-/usr/share/locale/fi
 /usr/share/locale/fi_FI*
 
 ### fo
@@ -1623,16 +1344,15 @@ neyðugar fyri at vísa føroyskar 8-bit stavir, fyri at fáa rætt stavrað og
 vísa dagfestingar og tøl sambært føroyska siðvenju.
 
 %post -n locales-fo
-%{loc_add} fo fo_FO
+%{loc_add} fo_FO
 
 %preun -n locales-fo
 if [ "$1" = "0" ]; then
-	%{loc_del} fo fo_FO
+	%{loc_del} fo_FO
 fi
 
 %files -n locales-fo
 %defattr(-,root,root)
-/usr/share/locale/fo
 /usr/share/locale/fo_FO*
 
 ### fr
@@ -1664,16 +1384,15 @@ die französische Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt.
 
 %post -n locales-fr
-%{loc_add} fr fr_BE fr_CA fr_CH fr_FR fr_LU
+%{loc_add} fr_BE fr_CA fr_CH fr_FR fr_LU
 
 %preun -n locales-fr
 if [ "$1" = "0" ]; then
-	%{loc_del} fr fr_BE fr_CA fr_CH fr_FR fr_LU
+	%{loc_del} fr_BE fr_CA fr_CH fr_FR fr_LU
 fi
 
 %files -n locales-fr
 %defattr(-,root,root)
-/usr/share/locale/fr
 /usr/share/locale/fr_BE*
 /usr/share/locale/fr_CA*
 /usr/share/locale/fr_CH*
@@ -1693,16 +1412,15 @@ alfabetical sorting and representation of dates and numbers
 according to friulan language conventions.
 
 %post -n locales-fur
-%{loc_add} fur fur_IT
+%{loc_add} fur_IT
 
 %preun -n locales-fur
 if [ "$1" = "0" ]; then
-	%{loc_del} fur fur_IT
+	%{loc_del} fur_IT
 fi
 
 %files -n locales-fur
 %defattr(-,root,root)
-/usr/share/locale/fur
 /usr/share/locale/fur_IT*
 
 ### fy
@@ -1718,16 +1436,15 @@ alfabetical sorting and representation of dates and numbers
 according to frisian language conventions.
 
 %post -n locales-fy
-%{loc_add} fy fy_DE fy_NL
+%{loc_add} fy_DE fy_NL
 
 %preun -n locales-fy
 if [ "$1" = "0" ]; then
-	%{loc_del} fy fy_DE fy_NL
+	%{loc_del} fy_DE fy_NL
 fi
 
 %files -n locales-fy
 %defattr(-,root,root)
-/usr/share/locale/fy
 /usr/share/locale/fy_DE*
 /usr/share/locale/fy_NL*
 
@@ -1751,16 +1468,15 @@ agus sórtáil in ord aibitre agus dátaí agus uimhreacha a chur i
 láthair de réir coinbhinsiúnaigh na Gaeilge.
 
 %post -n locales-ga
-%{loc_add} ga ga_IE
+%{loc_add} ga_IE
 
 %preun -n locales-ga
 if [ "$1" = "0" ]; then
-	%{loc_del} ga ga_IE
+	%{loc_del} ga_IE
 fi
 
 %files -n locales-ga
 %defattr(-,root,root)
-/usr/share/locale/ga
 /usr/share/locale/ga_IE*
 
 ### gd
@@ -1785,16 +1501,15 @@ chur ann an òrd na h-aibidile, agus gus àireamhan is cinn-latha
 a riochdachadh a-réir nòs na Gàidhlig.
 
 %post -n locales-gd
-%{loc_add} gd gd_GB
+%{loc_add} gd_GB
 
 %preun -n locales-gd
 if [ "$1" = "0" ]; then
-	%{loc_del} gd gd_GB
+	%{loc_del} gd_GB
 fi
 
 %files -n locales-gd
 %defattr(-,root,root)
-/usr/share/locale/gd
 /usr/share/locale/gd_GB*
 
 ### gl
@@ -1825,16 +1540,15 @@ y para la representación correcta de los números y fechas según
 las convenciones del gallego.
 
 %post -n locales-gl
-%{loc_add} gl gl_ES
+%{loc_add} gl_ES
 
 %preun -n locales-gl
 if [ "$1" = "0" ]; then
-	%{loc_del} gl gl_ES
+	%{loc_del} gl_ES
 fi
 
 %files -n locales-gl
 %defattr(-,root,root)
-/usr/share/locale/gl
 /usr/share/locale/gl_ES*
 
 ### gu
@@ -1850,16 +1564,15 @@ alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
 
 %post -n locales-gu
-%{loc_add} gu gu_IN
+%{loc_add} gu_IN
 
 %preun -n locales-gu
 if [ "$1" = "0" ]; then
-	%{loc_del} gu gu_IN
+	%{loc_del} gu_IN
 fi
 
 %files -n locales-gu
 %defattr(-,root,root)
-/usr/share/locale/gu
 /usr/share/locale/gu_IN*
 
 ### gv
@@ -1883,16 +1596,15 @@ reaghey-abbyrlit cooie as taishbyney-daaytyn as earrooyn coardail rish
 reillyn-chengey Gaelagh.
 
 %post -n locales-gv
-%{loc_add} gv gv_GB
+%{loc_add} gv_GB
 
 %preun -n locales-gv
 if [ "$1" = "0" ]; then
-	%{loc_del} gv gv_GB
+	%{loc_del} gv_GB
 fi
 
 %files -n locales-gv
 %defattr(-,root,root)
-/usr/share/locale/gv
 /usr/share/locale/gv_GB*
 
 ### ha
@@ -1909,16 +1621,15 @@ alphabetical sorting and representation of dates and numbers according
 to Hausa language conventions.
 
 %post -n locales-ha
-%{loc_add} ha ha_NG
+%{loc_add} ha_NG
 
 %preun -n locales-ha
 if [ "$1" = "0" ]; then
-	%{loc_del} ha ha_NG
+	%{loc_del} ha_NG
 fi
 
 %files -n locales-ha
 %defattr(-,root,root)
-/usr/share/locale/ha
 /usr/share/locale/ha_NG*
 
 ### he (formerly iw)
@@ -1947,17 +1658,17 @@ console driver to do that.
 X11 או המסוף וירטואלי, לעשות כן.
 
 %post -n locales-he
-%{loc_add} he he_IL
+%{loc_add} he_IL iw_IL
 
 %preun -n locales-he
 if [ "$1" = "0" ]; then
-	%{loc_del} he he_IL
+	%{loc_del} he_IL iw_IL
 fi
 
 %files -n locales-he
 %defattr(-,root,root)
-/usr/share/locale/he
 /usr/share/locale/he_IL*
+/usr/share/locale/iw_IL*
 
 ### hi
 %package -n locales-hi
@@ -1972,16 +1683,15 @@ alphabetical sorting and representation of dates and numbers according
 to Hindi language conventions.
 
 %post -n locales-hi
-%{loc_add} hi hi_IN
+%{loc_add} hi_IN
 
 %preun -n locales-hi
 if [ "$1" = "0" ]; then
-	%{loc_del} hi hi_IN
+	%{loc_del} hi_IN
 fi
 
 %files -n locales-hi
 %defattr(-,root,root)
-/usr/share/locale/hi
 /usr/share/locale/hi_IN*
 
 ### hne
@@ -2029,16 +1739,15 @@ sortiranje po abecedi i prikaz datuma i brojeva po pravilima
 Hrvatskog jezika.
 
 %post -n locales-hr
-%{loc_add} hr hr_HR
+%{loc_add} hr_HR
 
 %preun -n locales-hr
 if [ "$1" = "0" ]; then
-	%{loc_del} hr hr_HR
+	%{loc_del} hr_HR
 fi
 
 %files -n locales-hr
 %defattr(-,root,root)
-/usr/share/locale/hr
 /usr/share/locale/hr_HR*
 
 ### hsb
@@ -2055,16 +1764,15 @@ proper representation of dates and numbers according
 to Upper Sorbian language conventions.
 
 %post -n locales-hsb
-%{loc_add} hsb hsb_DE
+%{loc_add} hsb_DE
 
 %preun -n locales-hsb
 if [ "$1" = "0" ]; then
-	%{loc_del} hsb hsb_DE
+	%{loc_del} hsb_DE
 fi
 
 %files -n locales-hsb
 %defattr(-,root,root)
-/usr/share/locale/hsb
 /usr/share/locale/hsb_DE*
 
 ### ht
@@ -2110,16 +1818,15 @@ magyar helyesírás szabályainak megfelelő sorbarendezéshez,
 számok és dátumok megjelenítéséhez.
 
 %post -n locales-hu
-%{loc_add} hu hu_HU
+%{loc_add} hu_HU
 
 %preun -n locales-hu
 if [ "$1" = "0" ]; then
-	%{loc_del} hu hu_HU
+	%{loc_del} hu_HU
 fi
 
 %files -n locales-hu
 %defattr(-,root,root)
-/usr/share/locale/hu
 /usr/share/locale/hu_HU*
 
 ### hy
@@ -2143,16 +1850,15 @@ numbers according to Armenian language conventions.
 կանոնների։
 
 %post -n locales-hy
-%{loc_add} hy hy_AM
+%{loc_add} hy_AM
 
 %preun -n locales-hy
 if [ "$1" = "0" ]; then
-	%{loc_del} hy hy_AM
+	%{loc_del} hy_AM
 fi
 
 %files -n locales-hy
 %defattr(-,root,root)
-/usr/share/locale/hy
 /usr/share/locale/hy_AM*
 
 ### id (formerly in)
@@ -2174,16 +1880,15 @@ File ini dibutuhkan bila Anda ingin menampilkan tanggal dan penomoran
 yang sesuai dengan kaidah Bahasa Indonesia.
 
 %post -n locales-id
-%{loc_add} id id_ID
+%{loc_add} id_ID
 
 %preun -n locales-id
 if [ "$1" = "0" ]; then
-	%{loc_del} id id_ID
+	%{loc_del} id_ID
 fi
 
 %files -n locales-id
 %defattr(-,root,root)
-/usr/share/locale/id
 /usr/share/locale/id_ID*
 
 ### ig
@@ -2200,16 +1905,15 @@ alphabetical sorting and representation of dates and numbers according
 to Igbo language conventions.
 
 %post -n locales-ig
-%{loc_add} ig ig_NG
+%{loc_add} ig_NG
 
 %preun -n locales-ig
 if [ "$1" = "0" ]; then
-	%{loc_del} ig ig_NG
+	%{loc_del} ig_NG
 fi
 
 %files -n locales-ig
 %defattr(-,root,root)
-/usr/share/locale/ig
 /usr/share/locale/ig_NG*
 
 ### ik
@@ -2225,16 +1929,15 @@ alphabetical sorting and representation of dates and numbers according
 to Inupiaq language conventions.
 
 %post -n locales-ik
-%{loc_add} ik ik_CA
+%{loc_add} ik_CA
 
 %preun -n locales-ik
 if [ "$1" = "0" ]; then
-	%{loc_del} ik ik_CA
+	%{loc_del} ik_CA
 fi
 
 %files -n locales-ik
 %defattr(-,root,root)
-/usr/share/locale/ik
 /usr/share/locale/ik_CA*
 
 ### is
@@ -2258,16 +1961,15 @@ rétta stafrófsröð og til að dagsetningar og tölur birtist eins og
 venja er í íslensku.
 
 %post -n locales-is
-%{loc_add} is is_IS
+%{loc_add} is_IS
 
 %preun -n locales-is
 if [ "$1" = "0" ]; then
-	%{loc_del} is is_IS
+	%{loc_del} is_IS
 fi
 
 %files -n locales-is
 %defattr(-,root,root)
-/usr/share/locale/is
 /usr/share/locale/is_IS*
 
 ### it
@@ -2290,16 +1992,15 @@ per l'ordinamento alfabetico corretto e per la rappresentazione delle
 date e dei numeri in forma italiana.
 
 %post -n locales-it
-%{loc_add} it it_CH it_IT
+%{loc_add} it_CH it_IT
 
 %preun -n locales-it
 if [ "$1" = "0" ]; then
-	%{loc_del} it it_CH it_IT
+	%{loc_del} it_CH it_IT
 fi
 
 %files -n locales-it
 %defattr(-,root,root)
-/usr/share/locale/it
 /usr/share/locale/it_CH*
 /usr/share/locale/it_IT*
 
@@ -2316,16 +2017,15 @@ alphabetical sorting and representation of dates and numbers according
 to Inuktitut language conventions.
 
 %post -n locales-iu
-%{loc_add} iu iu_CA
+%{loc_add} iu_CA
 
 %preun -n locales-iu
 if [ "$1" = "0" ]; then
-	%{loc_del} iu iu_CA
+	%{loc_del} iu_CA
 fi
 
 %files -n locales-iu
 %defattr(-,root,root)
-/usr/share/locale/iu
 /usr/share/locale/iu_CA*
 
 ### ja
@@ -2350,16 +2050,15 @@ representation of dates and numbers according to japanese language conventions.
 （多少「誤魔化し」を利かせて作ったからです）。
 
 %post -n locales-ja
-%{loc_add} ja ja_JP
+%{loc_add} ja_JP
 
 %preun -n locales-ja
 if [ "$1" = "0" ]; then
-	%{loc_del} ja ja_JP
+	%{loc_del} ja_JP
 fi
 
 %files -n locales-ja
 %defattr(-,root,root)
-/usr/share/locale/ja
 /usr/share/locale/ja_JP*
 
 ### ka
@@ -2382,16 +2081,15 @@ to Georgian language conventions.
 რიცხვითი მნიშვნელობების მართებული წარმოდგენისათვის.
 
 %post -n locales-ka
-%{loc_add} ka ka_GE
+%{loc_add} ka_GE
 
 %preun -n locales-ka
 if [ "$1" = "0" ]; then
-	%{loc_del} ka ka_GE
+	%{loc_del} ka_GE
 fi
 
 %files -n locales-ka
 %defattr(-,root,root)
-/usr/share/locale/ka
 /usr/share/locale/ka_GE*
 
 ### kk
@@ -2408,16 +2106,15 @@ alphabetical sorting and representation of dates and numbers according
 to Kazakh language conventions.
 
 %post -n locales-kk
-%{loc_add} kk kk_KZ
+%{loc_add} kk_KZ
 
 %preun -n locales-kk
 if [ "$1" = "0" ]; then
-	%{loc_del} kk kk_KZ
+	%{loc_del} kk_KZ
 fi
 
 %files -n locales-kk
 %defattr(-,root,root)
-/usr/share/locale/kk
 /usr/share/locale/kk_KZ*
 
 ### kl
@@ -2433,16 +2130,15 @@ alphabetical sorting and representation of dates and numbers according
 to Grenlandic language conventions.
 
 %post -n locales-kl
-%{loc_add} kl kl_GL
+%{loc_add} kl_GL
 
 %preun -n locales-kl
 if [ "$1" = "0" ]; then
-	%{loc_del} kl kl_GL
+	%{loc_del} kl_GL
 fi
 
 %files -n locales-kl
 %defattr(-,root,root)
-/usr/share/locale/kl
 /usr/share/locale/kl_GL*
 
 ### km
@@ -2458,16 +2154,15 @@ alphabetical sorting and representation of dates and numbers according
 to Khmer language conventions.
 
 %post -n locales-km
-%{loc_add} km km_KH
+%{loc_add} km_KH
 
 %preun -n locales-km
 if [ "$1" = "0" ]; then
-	%{loc_del} km km_KH
+	%{loc_del} km_KH
 fi
 
 %files -n locales-km
 %defattr(-,root,root)
-/usr/share/locale/km
 /usr/share/locale/km_KH*
 
 ### kn
@@ -2483,16 +2178,15 @@ alphabetical sorting and representation of dates and numbers according
 to Kannada language conventions.
 
 %post -n locales-kn
-%{loc_add} kn kn_IN
+%{loc_add} kn_IN
 
 %preun -n locales-kn
 if [ "$1" = "0" ]; then
-	%{loc_del} kn kn_IN
+	%{loc_del} kn_IN
 fi
 
 %files -n locales-kn
 %defattr(-,root,root)
-/usr/share/locale/kn
 /usr/share/locale/kn_IN*
 
 ### ko
@@ -2515,16 +2209,15 @@ representation of dates and numbers according to korean language conventions.
 코드로 정확히 배열하는데 그것이 필요하다.
 
 %post -n locales-ko
-%{loc_add} ko ko_KR
+%{loc_add} ko_KR
 
 %preun -n locales-ko
 if [ "$1" = "0" ]; then
-	%{loc_del} ko ko_KR
+	%{loc_del} ko_KR
 fi
 
 %files -n locales-ko
 %defattr(-,root,root)
-/usr/share/locale/ko
 /usr/share/locale/ko_KR*
 
 ### ks
@@ -2572,16 +2265,15 @@ kurdi, dîrok, seat, hêjmar û edetê malbatâ zîmanê kurdin vêre naskirin
 bi haliyê systême
 
 %post -n locales-ku
-%{loc_add} ku ku_TR
+%{loc_add} ku_TR
 
 %preun -n locales-ku
 if [ "$1" = "0" ]; then
-	%{loc_del} ku ku_TR
+	%{loc_del} ku_TR
 fi
 
 %files -n locales-ku
 %defattr(-,root,root)
-/usr/share/locale/ku
 /usr/share/locale/ku_TR*
 
 ### kw
@@ -2606,16 +2298,15 @@ abecedery gwyw ha dysquesdhes dedhyow ha nyverow herwyth rewlys
 a'n tavas Kernewek.
 
 %post -n locales-kw
-%{loc_add} kw kw_GB
+%{loc_add} kw_GB
 
 %preun -n locales-kw
 if [ "$1" = "0" ]; then
-	%{loc_del} kw kw_GB
+	%{loc_del} kw_GB
 fi
 
 %files -n locales-kw
 %defattr(-,root,root)
-/usr/share/locale/kw
 /usr/share/locale/kw_GB*
 
 ### ky
@@ -2631,16 +2322,15 @@ alphabetical sorting and representation of dates and numbers according
 to Kyrgyz language conventions.
 
 %post -n locales-ky
-%{loc_add} ky ky_KG
+%{loc_add} ky_KG
 
 %preun -n locales-ky
 if [ "$1" = "0" ]; then
-	%{loc_del} ky ky_KG
+	%{loc_del} ky_KG
 fi
 
 %files -n locales-ky
 %defattr(-,root,root)
-/usr/share/locale/ky
 /usr/share/locale/ky_KG*
 
 ### lg
@@ -2657,16 +2347,15 @@ alphabetical sorting and representation of dates and numbers according
 to Luganda language conventions.
 
 %post -n locales-lg
-%{loc_add} lg lg_UG
+%{loc_add} lg_UG
 
 %preun -n locales-lg
 if [ "$1" = "0" ]; then
-	%{loc_del} lg lg_UG
+	%{loc_del} lg_UG
 fi
 
 %files -n locales-lg
 %defattr(-,root,root)
-/usr/share/locale/lg
 /usr/share/locale/lg_UG*
 
 ### li
@@ -2682,16 +2371,15 @@ alphabetical sorting and representation of dates and numbers according
 to Limburguish language conventions.
 
 %post -n locales-li
-%{loc_add} li li_BE li_NL
+%{loc_add} li_BE li_NL
 
 %preun -n locales-li
 if [ "$1" = "0" ]; then
-	%{loc_del} li li_BE li_NL
+	%{loc_del} li_BE li_NL
 fi
 
 %files -n locales-li
 %defattr(-,root,root)
-/usr/share/locale/li
 /usr/share/locale/li_BE*
 /usr/share/locale/li_NL*
 
@@ -2708,16 +2396,15 @@ alphabetical sorting and representation of dates and numbers according
 to Laotian language conventions.
 
 %post -n locales-lo
-%{loc_add} lo lo_LA
+%{loc_add} lo_LA
 
 %preun -n locales-lo
 if [ "$1" = "0" ]; then
-	%{loc_del} lo lo_LA
+	%{loc_del} lo_LA
 fi
 
 %files -n locales-lo
 %defattr(-,root,root)
-/usr/share/locale/lo
 /usr/share/locale/lo_LA*
 
 ### lt
@@ -2739,16 +2426,15 @@ kam lietuviškų, 8 bitų simbolių atvaizdavimui, alfabetiniam rūšiavimui
 bei datos ir skaičių atvaizdavimui.
 
 %post -n locales-lt
-%{loc_add} lt lt_LT
+%{loc_add} lt_LT
 
 %preun -n locales-lt
 if [ "$1" = "0" ]; then
-	%{loc_del} lt lt_LT
+	%{loc_del} lt_LT
 fi
 
 %files -n locales-lt
 %defattr(-,root,root)
-/usr/share/locale/lt
 /usr/share/locale/lt_LT*
 
 ### lv
@@ -2773,17 +2459,40 @@ pareizu kārtošanu pēc alfabēta, kā arī attēlotu datumus un skaitļus
 saskaņā ar latviešu valodā pieņemtajām normām.
 
 %post -n locales-lv
-%{loc_add} lv lv_LV
+%{loc_add} lv_LV
 
 %preun -n locales-lv
 if [ "$1" = "0" ]; then
-	%{loc_del} lv lv_LV
+	%{loc_del} lv_LV
 fi
 
 %files -n locales-lv
 %defattr(-,root,root)
-/usr/share/locale/lv
 /usr/share/locale/lv_LV*
+
+### mai
+%package -n locales-mai
+Summary: Base files for localization (Maithili)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-mai
+These are the base files for Maithili language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Maithili language conventions.
+
+%post -n locales-mai
+%{loc_add} mai_IN
+
+%preun -n locales-mai
+if [ "$1" = "0" ]; then
+	%{loc_del} mai_IN
+fi
+
+%files -n locales-mai
+%defattr(-,root,root)
+/usr/share/locale/mai_IN
 
 ### mg
 %package -n locales-mg
@@ -2799,16 +2508,15 @@ proper representation of dates and numbers according
 to Malagasy language conventions.
 
 %post -n locales-mg
-%{loc_add} mg mg_MG
+%{loc_add} mg_MG
 
 %preun -n locales-mg
 if [ "$1" = "0" ]; then
-	%{loc_del} mg mg_MG
+	%{loc_del} mg_MG
 fi
 
 %files -n locales-mg
 %defattr(-,root,root)
-/usr/share/locale/mg
 /usr/share/locale/mg_MG*
 
 ### mi
@@ -2832,16 +2540,15 @@ whakatakotoranga hoki o ngā wā me ngā nama kia tika ai anō e ai ki ngā aro
 whānui reo Māori.
 
 %post -n locales-mi
-%{loc_add} mi mi_NZ
+%{loc_add} mi_NZ
 
 %preun -n locales-mi
 if [ "$1" = "0" ]; then
-	%{loc_del} mi mi_NZ
+	%{loc_del} mi_NZ
 fi
 
 %files -n locales-mi
 %defattr(-,root,root)
-/usr/share/locale/mi
 /usr/share/locale/mi_NZ*
 
 ### mk
@@ -2856,16 +2563,15 @@ proper alphabetical sorting and representation of dates and numbers according
 to Macedonian language conventions.
 
 %post -n locales-mk
-%{loc_add} mk mk_MK
+%{loc_add} mk_MK
 
 %preun -n locales-mk
 if [ "$1" = "0" ]; then
-	%{loc_del} mk mk_MK
+	%{loc_del} mk_MK
 fi
 
 %files -n locales-mk
 %defattr(-,root,root)
-/usr/share/locale/mk
 /usr/share/locale/mk_MK*
 
 ### ml
@@ -2880,16 +2586,15 @@ proper alphabetical sorting and representation of dates and numbers according
 to Malayalam language conventions.
 
 %post -n locales-ml
-%{loc_add} ml ml_IN
+%{loc_add} ml_IN
 
 %preun -n locales-ml
 if [ "$1" = "0" ]; then
-	%{loc_del} ml ml_IN
+	%{loc_del} ml_IN
 fi
 
 %files -n locales-ml
 %defattr(-,root,root)
-/usr/share/locale/ml
 /usr/share/locale/ml_IN*
 
 ### mn
@@ -2904,16 +2609,15 @@ proper alphabetical sorting and representation of dates and numbers according
 to Mongolian language conventions.
 
 %post -n locales-mn
-%{loc_add} mn mn_MN
+%{loc_add} mn_MN
 
 %preun -n locales-mn
 if [ "$1" = "0" ]; then
-	%{loc_del} mn mn_MN
+	%{loc_del} mn_MN
 fi
 
 %files -n locales-mn
 %defattr(-,root,root)
-/usr/share/locale/mn
 /usr/share/locale/mn_MN*
 
 ### mr
@@ -2929,16 +2633,15 @@ alphabetical sorting and representation of dates and numbers according
 to Marathi language conventions.
 
 %post -n locales-mr
-%{loc_add} mr mr_IN
+%{loc_add} mr_IN
 
 %preun -n locales-mr
 if [ "$1" = "0" ]; then
-	%{loc_del} mr mr_IN
+	%{loc_del} mr_IN
 fi
 
 %files -n locales-mr
 %defattr(-,root,root)
-/usr/share/locale/mr
 /usr/share/locale/mr_IN*
 
 ### ms
@@ -2953,16 +2656,15 @@ proper alphabetical sorting and representation of dates and numbers according
 to Malay language conventions.
 
 %post -n locales-ms
-%{loc_add} ms ms_MY
+%{loc_add} ms_MY
 
 %preun -n locales-ms
 if [ "$1" = "0" ]; then
-	%{loc_del} ms ms_MY
+	%{loc_del} ms_MY
 fi
 
 %files -n locales-ms
 %defattr(-,root,root)
-/usr/share/locale/ms
 /usr/share/locale/ms_MY*
 
 ### mt
@@ -2986,16 +2688,15 @@ alfabetikament, u biex turi dati u numri skond il-konvenzjonijiet
 tal-lingwa Maltija.
 
 %post -n locales-mt
-%{loc_add} mt mt_MT
+%{loc_add} mt_MT
 
 %preun -n locales-mt
 if [ "$1" = "0" ]; then
-	%{loc_del} mt mt_MT
+	%{loc_del} mt_MT
 fi
 
 %files -n locales-mt
 %defattr(-,root,root)
-/usr/share/locale/mt
 /usr/share/locale/mt_MT*
 
 ### nds
@@ -3025,16 +2726,15 @@ die plautdietsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt
 
 %post -n locales-nds
-%{loc_add} nds nds_DE nds_NL
+%{loc_add} nds_DE nds_NL
 
 %preun -n locales-nds
 if [ "$1" = "0" ]; then
-	%{loc_del} nds nds_DE nds_NL
+	%{loc_del} nds_DE nds_NL
 fi
 
 %files -n locales-nds
 %defattr(-,root,root)
-/usr/share/locale/nds
 /usr/share/locale/nds_DE*
 /usr/share/locale/nds_NL*
 
@@ -3051,16 +2751,15 @@ alphabetical sorting and representation of dates and numbers according
 to Nepali language conventions.
 
 %post -n locales-ne
-%{loc_add} ne ne_NP
+%{loc_add} ne_NP
 
 %preun -n locales-ne
 if [ "$1" = "0" ]; then
-	%{loc_del} ne ne_NP
+	%{loc_del} ne_NP
 fi
 
 %files -n locales-ne
 %defattr(-,root,root)
-/usr/share/locale/ne
 /usr/share/locale/ne_NP*
 
 ### nl
@@ -3090,16 +2789,15 @@ voor een juiste alfabetische sortering en weergave van data en nummers
 volgens de Nederlandse Taalconventies
 
 %post -n locales-nl
-%{loc_add} nl nl_AW nl_BE nl_NL
+%{loc_add} nl_AW nl_BE nl_NL
 
 %preun -n locales-nl
 if [ "$1" = "0" ]; then
-	%{loc_del} nl nl_AW nl_BE nl_NL
+	%{loc_del} nl_AW nl_BE nl_NL
 fi
 
 %files -n locales-nl
 %defattr(-,root,root)
-/usr/share/locale/nl
 /usr/share/locale/nl_AW*
 /usr/share/locale/nl_BE*
 /usr/share/locale/nl_NL*
@@ -3127,21 +2825,17 @@ etter alfabetet og visning av datoer og tall i samsvar med norske
 konvensjoner.
 
 %post -n locales-no
-%{loc_add} nb nb_NO nn nn_NO no no_NO
+%{loc_add} nb_NO nn_NO
 
 %preun -n locales-no
 if [ "$1" = "0" ]; then
-	%{loc_del} nb nb_NO nn nn_NO no no_NO
+	%{loc_del} nb_NO nn_NO
 fi
 
 %files -n locales-no
 %defattr(-,root,root)
-/usr/share/locale/nb
 /usr/share/locale/nb_NO*
-/usr/share/locale/nn
 /usr/share/locale/nn_NO*
-/usr/share/locale/no
-/usr/share/locale/no_NO*
 
 ### nr
 %package -n locales-nr
@@ -3156,16 +2850,15 @@ alfabetical sorting, and representation of dates and numbers
 according to Ndebele language conventions.
 
 %post -n locales-nr
-%{loc_add} nr nr_ZA
+%{loc_add} nr_ZA
 
 %preun -n locales-nr
 if [ "$1" = "0" ]; then
-	%{loc_del} nr nr_ZA
+	%{loc_del} nr_ZA
 fi
 
 %files -n locales-nr
 %defattr(-,root,root)
-/usr/share/locale/nr
 /usr/share/locale/nr_ZA*
 
 ### nso
@@ -3182,16 +2875,15 @@ alphabetical sorting and representation of dates and numbers according
 to Northern Sotho language conventions.
 
 %post -n locales-nso
-%{loc_add} nso nso_ZA
+%{loc_add} nso_ZA
 
 %preun -n locales-nso
 if [ "$1" = "0" ]; then
-	%{loc_del} nso nso_ZA
+	%{loc_del} nso_ZA
 fi
 
 %files -n locales-nso
 %defattr(-,root,root)
-/usr/share/locale/nso
 /usr/share/locale/nso_ZA*
 
 ### oc
@@ -3214,16 +2906,15 @@ fenestron, classar l'òrdre alfabetic e atanben comptar los jorns
 e los meses en occitan.
 
 %post -n locales-oc
-%{loc_add} oc oc_FR
+%{loc_add} oc_FR
 
 %preun -n locales-oc
 if [ "$1" = "0" ]; then
-	%{loc_del} oc oc_FR
+	%{loc_del} oc_FR
 fi
 
 %files -n locales-oc
 %defattr(-,root,root)
-/usr/share/locale/oc
 /usr/share/locale/oc_FR*
 
 ### or
@@ -3263,16 +2954,15 @@ representation of dates and numbers according
 to Punjabi language conventions.
 
 %post -n locales-pa
-%{loc_add} pa pa_IN pa_PK
+%{loc_add} pa_IN pa_PK
 
 %preun -n locales-pa
 if [ "$1" = "0" ]; then
-	%{loc_del} pa pa_IN pa_PK
+	%{loc_del} pa_IN pa_PK
 fi
 
 %files -n locales-pa
 %defattr(-,root,root)
-/usr/share/locale/pa
 /usr/share/locale/pa_IN*
 /usr/share/locale/pa_PK*
 
@@ -3291,16 +2981,15 @@ alphabetical sorting and representation of dates and numbers according
 to Papiamento language conventions.
 
 %post -n locales-pap
-%{loc_add} pap pap_AN
+%{loc_add} pap_AN
 
 %preun -n locales-pap
 if [ "$1" = "0" ]; then
-	%{loc_del} pap pap_AN
+	%{loc_del} pap_AN
 fi
 
 %files -n locales-pap
 %defattr(-,root,root)
-/usr/share/locale/pap
 /usr/share/locale/pap_AN*
 
 ### pl
@@ -3323,17 +3012,16 @@ wyświetlania 8-mio bitowych polskich znaków diakrytycznych, sortowania,
 prezentowania dat i liczb zgodnie z regułami języka polskiego.
 
 %post -n locales-pl
-%{loc_add} csb_PL pl pl_PL
+%{loc_add} csb_PL pl_PL
 
 %preun -n locales-pl
 if [ "$1" = "0" ]; then
-	%{loc_del} csb_PL pl pl_PL
+	%{loc_del} csb_PL pl_PL
 fi
 
 %files -n locales-pl
 %defattr(-,root,root)
 /usr/share/locale/csb_PL*
-/usr/share/locale/pl
 /usr/share/locale/pl_PL*
 
 ### pt
@@ -3359,16 +3047,15 @@ alfabéticas e representação de datas e números de acordo com as convenções
 da língua portuguesa.
 
 %post -n locales-pt
-%{loc_add} pt pt_BR pt_PT
+%{loc_add} pt_BR pt_PT
 
 %preun -n locales-pt
 if [ "$1" = "0" ]; then
-	%{loc_del} pt pt_BR pt_PT
+	%{loc_del} pt_BR pt_PT
 fi
 
 %files -n locales-pt
 %defattr(-,root,root)
-/usr/share/locale/pt
 /usr/share/locale/pt_BR*
 /usr/share/locale/pt_PT*
 
@@ -3393,16 +3080,15 @@ si pentru sortarea alfabetica si reprezentarea datelor si numerelor conform
 cu conventiile din limba româna.
 
 %post -n locales-ro
-%{loc_add} ro ro_RO
+%{loc_add} ro_RO
 
 %preun -n locales-ro
 if [ "$1" = "0" ]; then
-	%{loc_del} ro ro_RO
+	%{loc_del} ro_RO
 fi
 
 %files -n locales-ro
 %defattr(-,root,root)
-/usr/share/locale/ro
 /usr/share/locale/ro_RO*
 
 ### ru
@@ -3427,16 +3113,15 @@ to Russian language conventions.
 русского языка.
 
 %post -n locales-ru
-%{loc_add} ru ru_RU ru_UA
+%{loc_add} ru_RU ru_UA
 
 %preun -n locales-ru
 if [ "$1" = "0" ]; then
-	%{loc_del} ru ru_RU ru_UA
+	%{loc_del} ru_RU ru_UA
 fi
 
 %files -n locales-ru
 %defattr(-,root,root)
-/usr/share/locale/ru
 /usr/share/locale/ru_RU*
 /usr/share/locale/ru_UA*
 
@@ -3454,17 +3139,40 @@ alphabetical sorting and representation of dates and numbers according
 to Kinyarwanda language conventions.
 
 %post -n locales-rw
-%{loc_add} rw rw_RW
+%{loc_add} rw_RW
 
 %preun -n locales-rw
 if [ "$1" = "0" ]; then
-	%{loc_del} rw rw_RW
+	%{loc_del} rw_RW
 fi
 
 %files -n locales-rw
 %defattr(-,root,root)
-/usr/share/locale/rw
 /usr/share/locale/rw_RW*
+
+### sa
+%package -n locales-sa
+Summary: Base files for localization (Sanskrit)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-sa
+These are the base files for Sanskrit language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Sanskrit language conventions.
+
+%post -n locales-sa
+%{loc_add} sa_IN
+
+%preun -n locales-sa
+if [ "$1" = "0" ]; then
+	%{loc_del} sa_IN
+fi
+
+%files -n locales-sa
+%defattr(-,root,root)
+/usr/share/locale/sa_IN
 
 ### sc
 %package -n locales-sc
@@ -3479,16 +3187,15 @@ alfabetical sorting and representation of dates and numbers
 according to sardinian language conventions.
 
 %post -n locales-sc
-%{loc_add} sc sc_IT
+%{loc_add} sc_IT
 
 %preun -n locales-sc
 if [ "$1" = "0" ]; then
-	%{loc_del} sc sc_IT
+	%{loc_del} sc_IT
 fi
 
 %files -n locales-sc
 %defattr(-,root,root)
-/usr/share/locale/sc
 /usr/share/locale/sc_IT*
 
 ### sd
@@ -3530,16 +3237,15 @@ alphabetical sorting and representation of dates and numbers according
 to Saami language conventions.
 
 %post -n locales-se
-%{loc_add} se se_NO
+%{loc_add} se_NO
 
 %preun -n locales-se
 if [ "$1" = "0" ]; then
-	%{loc_del} se se_NO
+	%{loc_del} se_NO
 fi
 
 %files -n locales-se
 %defattr(-,root,root)
-/usr/share/locale/se
 /usr/share/locale/se_NO*
 
 ### shs
@@ -3580,16 +3286,15 @@ alfabetical sorting and representation of dates and numbers
 according to sinhalese language conventions.
 
 %post -n locales-si
-%{loc_add} si si_LK
+%{loc_add} si_LK
 
 %preun -n locales-si
 if [ "$1" = "0" ]; then
-	%{loc_del} si si_LK
+	%{loc_del} si_LK
 fi
 
 %files -n locales-si
 %defattr(-,root,root)
-/usr/share/locale/si
 /usr/share/locale/si_LK*
 
 ### sk
@@ -3611,16 +3316,15 @@ korektné zobrazovanie slovenských 8bitových znakov a pre správne triedenie a
 reprezentáciu dátumu a čísel podľa konvencií slovenského jazyka.
 
 %post -n locales-sk
-%{loc_add} sk sk_SK
+%{loc_add} sk_SK
 
 %preun -n locales-sk
 if [ "$1" = "0" ]; then
-	%{loc_del} sk sk_SK
+	%{loc_del} sk_SK
 fi
 
 %files -n locales-sk
 %defattr(-,root,root)
-/usr/share/locale/sk
 /usr/share/locale/sk_SK*
 
 ### sl
@@ -3645,16 +3349,15 @@ predstavitev datumov in številk glede na pravila
 slovenskega jezika.
 
 %post -n locales-sl
-%{loc_add} sl sl_SI
+%{loc_add} sl_SI
 
 %preun -n locales-sl
 if [ "$1" = "0" ]; then
-	%{loc_del} sl sl_SI
+	%{loc_del} sl_SI
 fi
 
 %files -n locales-sl
 %defattr(-,root,root)
-/usr/share/locale/sl
 /usr/share/locale/sl_SI*
 
 ### so
@@ -3697,16 +3400,15 @@ alphabetical sorting and representation of dates and numbers according
 to Albanian language conventions.
 
 %post -n locales-sq
-%{loc_add} sq sq_AL
+%{loc_add} sq_AL
 
 %preun -n locales-sq
 if [ "$1" = "0" ]; then
-	%{loc_del} sq sq_AL
+	%{loc_del} sq_AL
 fi
 
 %files -n locales-sq
 %defattr(-,root,root)
-/usr/share/locale/sq
 /usr/share/locale/sq_AL*
 
 ### sr
@@ -3776,16 +3478,15 @@ alfabetical sorting, and representation of dates and numbers
 according to Swati language conventions.
 
 %post -n locales-ss
-%{loc_add} ss ss_ZA
+%{loc_add} ss_ZA
 
 %preun -n locales-ss
 if [ "$1" = "0" ]; then
-	%{loc_del} ss ss_ZA
+	%{loc_del} ss_ZA
 fi
 
 %files -n locales-ss
 %defattr(-,root,root)
-/usr/share/locale/ss
 /usr/share/locale/ss_ZA*
 
 ### st
@@ -3801,16 +3502,15 @@ alphabetical sorting and representation of dates and numbers according
 to Sotho language conventions.
 
 %post -n locales-st
-%{loc_add} st st_ZA
+%{loc_add} st_ZA
 
 %preun -n locales-st
 if [ "$1" = "0" ]; then
-	%{loc_del} st st_ZA
+	%{loc_del} st_ZA
 fi
 
 %files -n locales-st
 %defattr(-,root,root)
-/usr/share/locale/st
 /usr/share/locale/st_ZA*
 
 ### sv
@@ -3833,16 +3533,15 @@ svenska 8 bitars tecken och för korrekt alfabetisk sortering. De gör även
 att datum och nummerformat visas på svenskt vis.
 
 %post -n locales-sv
-%{loc_add} sv sv_FI sv_SE
+%{loc_add} sv_FI sv_SE
 
 %preun -n locales-sv
 if [ "$1" = "0" ]; then
-	%{loc_del} sv sv_FI sv_SE
+	%{loc_del} sv_FI sv_SE
 fi
 
 %files -n locales-sv
 %defattr(-,root,root)
-/usr/share/locale/sv
 /usr/share/locale/sv_FI*
 /usr/share/locale/sv_SE*
 
@@ -3884,16 +3583,15 @@ alphabetical sorting and representation of dates and numbers according
 to Tamil language conventions.
 
 %post -n locales-ta
-%{loc_add} ta ta_IN
+%{loc_add} ta_IN
 
 %preun -n locales-ta
 if [ "$1" = "0" ]; then
-	%{loc_del} ta ta_IN
+	%{loc_del} ta_IN
 fi
 
 %files -n locales-ta
 %defattr(-,root,root)
-/usr/share/locale/ta
 /usr/share/locale/ta_IN*
 
 ### te
@@ -3909,16 +3607,15 @@ alphabetical sorting and representation of dates and numbers according
 to Telugu language conventions.
 
 %post -n locales-te
-%{loc_add} te te_IN
+%{loc_add} te_IN
 
 %preun -n locales-te
 if [ "$1" = "0" ]; then
-	%{loc_del} te te_IN
+	%{loc_del} te_IN
 fi
 
 %files -n locales-te
 %defattr(-,root,root)
-/usr/share/locale/te
 /usr/share/locale/te_IN*
 
 ### tg
@@ -3934,16 +3631,15 @@ alphabetical sorting and representation of dates and numbers according
 to Tajik language conventions.
 
 %post -n locales-tg
-%{loc_add} tg tg_TJ
+%{loc_add} tg_TJ
 
 %preun -n locales-tg
 if [ "$1" = "0" ]; then
-	%{loc_del} tg tg_TJ
+	%{loc_del} tg_TJ
 fi
 
 %files -n locales-tg
 %defattr(-,root,root)
-/usr/share/locale/tg
 /usr/share/locale/tg_TJ*
 
 ### th
@@ -3960,16 +3656,15 @@ alphabetical sorting and representation of dates and numbers according
 to Thai language conventions.
 
 %post -n locales-th
-%{loc_add} th th_TH
+%{loc_add} th_TH
 
 %preun -n locales-th
 if [ "$1" = "0" ]; then
-	%{loc_del} th th_TH
+	%{loc_del} th_TH
 fi
 
 %files -n locales-th
 %defattr(-,root,root)
-/usr/share/locale/th
 /usr/share/locale/th_TH*
 
 ### tk
@@ -3985,16 +3680,15 @@ alphabetical sorting and representation of dates and numbers according
 to Turkmen language conventions.
 
 %post -n locales-tk
-%{loc_add} tk tk_TM
+%{loc_add} tk_TM
 
 %preun -n locales-tk
 if [ "$1" = "0" ]; then
-	%{loc_del} tk tk_TM
+	%{loc_del} tk_TM
 fi
 
 %files -n locales-tk
 %defattr(-,root,root)
-/usr/share/locale/tk
 /usr/share/locale/tk_TM*
 
 ### fil
@@ -4014,20 +3708,16 @@ and for proper alphabetical sorting and representation of dates and numbers
 according to Pilipino language conventions.
 
 %post -n locales-tl
-%{loc_add} fil fil_PH ph ph_PH tl tl_PH
+%{loc_add} fil_PH tl_PH
 
 %preun -n locales-tl
 if [ "$1" = "0" ]; then
-	%{loc_del} fil fil_PH ph ph_PH tl tl_PH
+	%{loc_del} fil_PH tl_PH
 fi
 
 %files -n locales-tl
 %defattr(-,root,root)
-/usr/share/locale/fil
 /usr/share/locale/fil_PH*
-/usr/share/locale/ph
-/usr/share/locale/ph_PH*
-/usr/share/locale/tl
 /usr/share/locale/tl_PH*
 
 ### tn
@@ -4043,16 +3733,15 @@ alfabetical sorting, and representation of dates and numbers
 according to Tswana language conventions.
 
 %post -n locales-tn
-%{loc_add} tn tn_ZA
+%{loc_add} tn_ZA
 
 %preun -n locales-tn
 if [ "$1" = "0" ]; then
-	%{loc_del} tn tn_ZA
+	%{loc_del} tn_ZA
 fi
 
 %files -n locales-tn
 %defattr(-,root,root)
-/usr/share/locale/tn
 /usr/share/locale/tn_ZA*
 
 ### tr
@@ -4076,16 +3765,15 @@ sayı gösterimlerini ve sıralamalarını yapabilmek için bu dosyalara
 ihtiyacınız vardır.
 
 %post -n locales-tr
-%{loc_add} tr tr_CY tr_TR
+%{loc_add} tr_CY tr_TR
 
 %preun -n locales-tr
 if [ "$1" = "0" ]; then
-	%{loc_del} tr tr_CY tr_TR
+	%{loc_del} tr_CY tr_TR
 fi
 
 %files -n locales-tr
 %defattr(-,root,root)
-/usr/share/locale/tr
 /usr/share/locale/tr_CY*
 /usr/share/locale/tr_TR*
 
@@ -4102,16 +3790,15 @@ alfabetical sorting, and representation of dates and numbers
 according to Tsonga language conventions.
 
 %post -n locales-ts
-%{loc_add} ts ts_ZA
+%{loc_add} ts_ZA
 
 %preun -n locales-ts
 if [ "$1" = "0" ]; then
-	%{loc_del} ts ts_ZA
+	%{loc_del} ts_ZA
 fi
 
 %files -n locales-ts
 %defattr(-,root,root)
-/usr/share/locale/ts
 /usr/share/locale/ts_ZA*
 
 ### tt
@@ -4127,16 +3814,15 @@ alphabetical sorting and representation of dates and numbers according
 to Tatar language conventions.
 
 %post -n locales-tt
-%{loc_add} tt tt_RU
+%{loc_add} tt_RU
 
 %preun -n locales-tt
 if [ "$1" = "0" ]; then
-	%{loc_del} tt tt_RU
+	%{loc_del} tt_RU
 fi
 
 %files -n locales-tt
 %defattr(-,root,root)
-/usr/share/locale/tt
 /usr/share/locale/tt_RU*
 
 ### ug
@@ -4153,16 +3839,15 @@ alphabetical sorting and representation of dates and numbers according
 to Uyghur language conventions.
 
 %post -n locales-ug
-%{loc_add} ug ug_CN
+%{loc_add} ug_CN
 
 %preun -n locales-ug
 if [ "$1" = "0" ]; then
-	%{loc_del} ug ug_CN
+	%{loc_del} ug_CN
 fi
 
 %files -n locales-ug
 %defattr(-,root,root)
-/usr/share/locale/ug
 /usr/share/locale/ug_CN*
 
 ### uk
@@ -4192,16 +3877,15 @@ to Ukrainian language conventions.
 стандартів української мови.
 
 %post -n locales-uk
-%{loc_add} uk uk_UA
+%{loc_add} uk_UA
 
 %preun -n locales-uk
 if [ "$1" = "0" ]; then
-	%{loc_del} uk uk_UA
+	%{loc_del} uk_UA
 fi
 
 %files -n locales-uk
 %defattr(-,root,root)
-/usr/share/locale/uk
 /usr/share/locale/uk_UA*
 
 ### ur
@@ -4221,16 +3905,15 @@ of letters; it is to the xterm, application or virtual console driver
 to do that.
 
 %post -n locales-ur
-%{loc_add} ur ur_PK
+%{loc_add} ur_PK
 
 %preun -n locales-ur
 if [ "$1" = "0" ]; then
-	%{loc_del} ur ur_PK
+	%{loc_del} ur_PK
 fi
 
 %files -n locales-ur
 %defattr(-,root,root)
-/usr/share/locale/ur
 /usr/share/locale/ur_PK*
 
 ### uz
@@ -4255,17 +3938,15 @@ O'zbekistonda joriy bo'lgan vaqt, son va valytani
 belgilash qoidalari ham shu fayllarda joylashgan.
 
 %post -n locales-uz
-%{loc_add} uz uz@cyrillic uz_UZ
+%{loc_add} uz_UZ
 
 %preun -n locales-uz
 if [ "$1" = "0" ]; then
-	%{loc_del} uz uz@cyrillic uz_UZ
+	%{loc_del} uz_UZ
 fi
 
 %files -n locales-uz
 %defattr(-,root,root)
-/usr/share/locale/uz
-/usr/share/locale/uz@cyrillic
 /usr/share/locale/uz_UZ*
 
 ### ve
@@ -4281,16 +3962,15 @@ alfabetical sorting, and representation of dates and numbers
 according to Venda language conventions.
 
 %post -n locales-ve
-%{loc_add} ve ve_ZA
+%{loc_add} ve_ZA
 
 %preun -n locales-ve
 if [ "$1" = "0" ]; then
-	%{loc_del} ve ve_ZA
+	%{loc_del} ve_ZA
 fi
 
 %files -n locales-ve
 %defattr(-,root,root)
-/usr/share/locale/ve
 /usr/share/locale/ve_ZA*
 
 ### vi
@@ -4315,16 +3995,15 @@ biểu diễn chính xác các kí tự tiếng Việt 8 bits,
 một cách chính xác theo đúng qui ước ngôn ngữ tiếng Việt.
 
 %post -n locales-vi
-%{loc_add} vi vi_VN
+%{loc_add} vi_VN
 
 %preun -n locales-vi
 if [ "$1" = "0" ]; then
-	%{loc_del} vi vi_VN
+	%{loc_del} vi_VN
 fi
 
 %files -n locales-vi
 %defattr(-,root,root)
-/usr/share/locale/vi
 /usr/share/locale/vi_VN*
 
 ### wa
@@ -4354,17 +4033,40 @@ donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates et des nombres.
 
 %post -n locales-wa
-%{loc_add} wa wa_BE
+%{loc_add} wa_BE
 
 %preun -n locales-wa
 if [ "$1" = "0" ]; then
-	%{loc_del} wa wa_BE
+	%{loc_del} wa_BE
 fi
 
 %files -n locales-wa
 %defattr(-,root,root)
-/usr/share/locale/wa
 /usr/share/locale/wa_BE*
+
+### wo
+%package -n locales-wo
+Summary: Base files for localization (Wolof)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-wo
+These are the base files for Wolof language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Wolof language conventions.
+
+%post -n locales-wo
+%{loc_add} wo_SN
+
+%preun -n locales-wo
+if [ "$1" = "0" ]; then
+	%{loc_del} wo_SN
+fi
+
+%files -n locales-wo
+%defattr(-,root,root)
+/usr/share/locale/wo_SN
 
 ### xh
 %package -n locales-xh
@@ -4379,16 +4081,15 @@ alfabetical sorting, and representation of dates and numbers
 according to Xhosa language conventions.
 
 %post -n locales-xh
-%{loc_add} xh xh_ZA
+%{loc_add} xh_ZA
 
 %preun -n locales-xh
 if [ "$1" = "0" ]; then
-	%{loc_del} xh xh_ZA
+	%{loc_del} xh_ZA
 fi
 
 %files -n locales-xh
 %defattr(-,root,root)
-/usr/share/locale/xh
 /usr/share/locale/xh_ZA*
 
 ### yi
@@ -4408,16 +4109,15 @@ switching when displaying; it is to the xterm, application or virtual
 console driver to do that.
 
 %post -n locales-yi
-%{loc_add} yi yi_US
+%{loc_add} yi_US
 
 %preun -n locales-yi
 if [ "$1" = "0" ]; then
-	%{loc_del} yi yi_US
+	%{loc_del} yi_US
 fi
 
 %files -n locales-yi
 %defattr(-,root,root)
-/usr/share/locale/yi
 /usr/share/locale/yi_US*
 
 ### yo
@@ -4434,16 +4134,15 @@ alfabetical sorting, and representation of dates and numbers
 according to Yoruba language conventions.
 
 %post -n locales-yo
-%{loc_add} yo yo_NG
+%{loc_add} yo_NG
 
 %preun -n locales-yo
 if [ "$1" = "0" ]; then
-	%{loc_del} yo yo_NG
+	%{loc_del} yo_NG
 fi
 
 %files -n locales-yo
 %defattr(-,root,root)
-/usr/share/locale/yo
 /usr/share/locale/yo_NG*
 
 ### zh
@@ -4478,17 +4177,16 @@ or to "zh_TW.Big5" to use traditional characters (Big5 encoding)
 碼),設定為 "zh_TW" 則可顯示繁體中文(大五碼)。 
 
 %post -n locales-zh
-%{loc_add} nan_TW@latin zh zh_CN zh_HK zh_SG zh_TW
+%{loc_add} nan_TW@latin zh_CN zh_HK zh_SG zh_TW
 
 %preun -n locales-zh
 if [ "$1" = "0" ]; then
-	%{loc_del} nan_TW@latin zh zh_CN zh_HK zh_SG zh_TW
+	%{loc_del} nan_TW@latin zh_CN zh_HK zh_SG zh_TW
 fi
 
 %files -n locales-zh
 %defattr(-,root,root)
 /usr/share/locale/nan_TW@latin
-/usr/share/locale/zh
 /usr/share/locale/zh_CN*
 /usr/share/locale/zh_HK*
 /usr/share/locale/zh_SG*
@@ -4507,14 +4205,13 @@ alfabetical sorting, and representation of dates and numbers
 according to Xhosa language conventions.
 
 %post -n locales-zu
-%{loc_add} zu zu_ZA
+%{loc_add} zu_ZA
 
 %preun -n locales-zu
 if [ "$1" = "0" ]; then
-	%{loc_del} zu zu_ZA
+	%{loc_del} zu_ZA
 fi
 
 %files -n locales-zu
 %defattr(-,root,root)
-/usr/share/locale/zu
 /usr/share/locale/zu_ZA*
