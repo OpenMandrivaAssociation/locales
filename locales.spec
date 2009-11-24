@@ -21,10 +21,10 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.10.1
+%define glibc_ver 2.11
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 7
+%define release   %mkrel 1
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -112,7 +112,7 @@ Requires: glibc = %{glibc_epoch}:%{glibc_ver}
 Requires(post): perl-base rpm coreutils
 Requires(postun): perl-base rpm coreutils
 # glibc >= 2.2.5-6mdk now comes with glibc-i18ndata package
-BuildRequires: glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}-8mnb2
+BuildRequires: glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}
 # usually needed to ensure support for new locales
 BuildRequires: glibc >= %{glibc_epoch}:%{glibc_ver}
 
@@ -987,6 +987,30 @@ fi
 /usr/share/locale/de_CH*
 /usr/share/locale/de_DE*
 /usr/share/locale/de_LU*
+
+### dv
+%package -n locales-dv
+Summary: Base files for localization (Dhivehi)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-dv
+These are the base files for Dhivehi language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Dhivehi language conventions.
+
+%post -n locales-dv
+%{loc_add} dv_MV
+
+%preun -n locales-dv
+if [ "$1" = "0" ]; then
+	%{loc_del} dv_MV
+fi
+
+%files -n locales-dv
+%defattr(-,root,root)
+/usr/share/locale/dv_MV
 
 ### dz
 %package -n locales-dz
@@ -2699,6 +2723,30 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/mt_MT*
 
+### my
+%package -n locales-my
+Summary: Base files for localization (Burmese)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-my
+These are the base files for Burmese language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Burmese language conventions.
+
+%post -n locales-my
+%{loc_add} my_MM
+
+%preun -n locales-my
+if [ "$1" = "0" ]; then
+	%{loc_del} my_MM
+fi
+
+%files -n locales-my
+%defattr(-,root,root)
+/usr/share/locale/my_MM
+
 ### nds
 %package -n locales-nds
 Summary: Base files for localization (Lower Saxon)
@@ -3023,6 +3071,30 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/csb_PL*
 /usr/share/locale/pl_PL*
+
+### ps
+%package -n locales-ps
+Summary: Base files for localization (Pashto)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-ps
+These are the base files for Pashto language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Pashto language conventions.
+
+%post -n locales-ps
+%{loc_add} ps_AF
+
+%preun -n locales-ps
+if [ "$1" = "0" ]; then
+	%{loc_del} ps_AF
+fi
+
+%files -n locales-ps
+%defattr(-,root,root)
+/usr/share/locale/ps_AF
 
 ### pt
 %package -n locales-pt
