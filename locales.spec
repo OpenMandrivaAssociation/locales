@@ -24,7 +24,7 @@
 %define glibc_ver 2.11
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 1
+%define release   %mkrel 2
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -112,9 +112,9 @@ Requires: glibc = %{glibc_epoch}:%{glibc_ver}
 Requires(post): perl-base rpm coreutils
 Requires(postun): perl-base rpm coreutils
 # glibc >= 2.2.5-6mdk now comes with glibc-i18ndata package
-BuildRequires: glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}
+BuildRequires: glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}-2mnb2
 # usually needed to ensure support for new locales
-BuildRequires: glibc >= %{glibc_epoch}:%{glibc_ver}
+BuildRequires: glibc >= %{glibc_epoch}:%{glibc_ver}-2mnb2
 
 %description
 These are the base files for language localization.
