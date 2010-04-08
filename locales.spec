@@ -45,9 +45,10 @@ Source0: Makefile
 # updated to include unicode 5.0 introduced latin/cyrullic/greek letters
 #
 Source1: iso14651_hack
-# scripts to install/uninstall a locale
+# scripts/config files to install/uninstall a locale
 Source2: locale_install.sh
 Source3: locale_uninstall.sh
+Source4: locales
 
 # this one is on glibc, however there is the politic issue
 # of the naming of Taiwan 
@@ -131,6 +132,9 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/usr/bin/
 install -m 755 %{SOURCE2} ${RPM_BUILD_ROOT}%{loc_add}
 install -m 755 %{SOURCE3} ${RPM_BUILD_ROOT}%{loc_del}
+
+mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/sysconfig
+install -m 644 %{_sourcedir}/locales $RPM_BUILD_ROOT/%{_sysconfdir}/sysconfig/
 
 mkdir -p $RPM_BUILD_ROOT/usr/share/locale
 LOCALEDIR=$RPM_BUILD_ROOT/usr/share/locale
@@ -326,6 +330,7 @@ fi
 
 %files
 %defattr(-,root,root)
+%config(noreplace) /etc/sysconfig/locales
 %dir /usr/share/locale
 /usr/share/locale/ISO*
 /usr/share/locale/CP*
