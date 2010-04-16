@@ -321,11 +321,11 @@ cd ..
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{loc_add} "UTF-8"
+%{loc_add} "ENCODINGS"
 
 %preun
 if [ "$1" = "0" ]; then
-	%{loc_del} "UTF-8"
+	%{loc_del} "ENCODINGS"
 fi
 
 %files
