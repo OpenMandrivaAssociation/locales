@@ -889,6 +889,30 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/cs_CZ*
 
+### cv
+%package -n locales-cv
+Summary: Base files for localization (Chuvash)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-cv
+These are the base files for Chuvash language localization; you need
+it to correctly display 8bits Chuvash characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Chuvash language conventions.
+
+%post -n locales-cv
+%{loc_add} cv_RU
+
+%preun -n locales-cv
+if [ "$1" = "0" ]; then
+	%{loc_del} cv_RU
+fi
+
+%files -n locales-cv
+%defattr(-,root,root)
+/usr/share/locale/cv_RU*
+
 ### cy
 %package -n locales-cy
 Summary: Base files for localization (Welsh)
@@ -2249,6 +2273,31 @@ fi
 %defattr(-,root,root)
 /usr/share/locale/ko_KR*
 
+### kok
+%package -n locales-kok
+Summary: Base files for localization (Konkani)
+Group: System/Internationalization
+#Icon: bulle-kk.xpm
+Requires: locales = %{version}-%{release}
+
+%description -n locales-kok
+These are the base files for Konkani language localization; you need
+it to correctly display 8bits Konkani characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Konkani language conventions.
+
+%post -n locales-kok
+%{loc_add} kok_IN
+
+%preun -n locales-kok
+if [ "$1" = "0" ]; then
+	%{loc_del} kok_IN
+fi
+
+%files -n locales-kok
+%defattr(-,root,root)
+/usr/share/locale/kok_IN*
+
 ### ks
 %package -n locales-ks
 Summary: Base files for localization (Kashmiri)
@@ -3477,16 +3526,17 @@ alphabetical sorting and representation of dates and numbers according
 to Albanian language conventions.
 
 %post -n locales-sq
-%{loc_add} sq_AL
+%{loc_add} sq_AL sq_MK
 
 %preun -n locales-sq
 if [ "$1" = "0" ]; then
-	%{loc_del} sq_AL
+	%{loc_del} sq_AL sq_MK
 fi
 
 %files -n locales-sq
 %defattr(-,root,root)
 /usr/share/locale/sq_AL*
+/usr/share/locale/sq_MK*
 
 ### sr
 %package -n locales-sr
