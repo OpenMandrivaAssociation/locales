@@ -35,87 +35,86 @@
 %define loc_add /usr/bin/locale_install.sh
 %define loc_del /usr/bin/locale_uninstall.sh
 
-Summary: Base files for localization
-Name: locales
-Version: %{version}
-Release: %{release}
-License: GPL
-Group: System/Internationalization
-Source0: Makefile
+Summary:	Base files for localization
+Name:		locales
+Version:	%{glibc_ver}
+Release:	2
+License:	GPL
+Group:		System/Internationalization
+Source0:	Makefile
 # updated to include unicode 5.0 introduced latin/cyrullic/greek letters
 #
-Source1: iso14651_hack
+Source1:	iso14651_hack
 # scripts/config files to install/uninstall a locale
-Source2: locale_install.sh
-Source3: locale_uninstall.sh
-Source4: locales
+Source2:	locale_install.sh
+Source3:	locale_uninstall.sh
+Source4:	locales
 
 # this one is on glibc, however there is the politic issue
 # of the naming of Taiwan 
-Source6: zh_TW_2
+Source6:	zh_TW_2
 
 # locales data
-Source16: sw_XX
-Source17: ku_TR
-Source18: eo_XX
-Source19: ky_KG
-Source22: km_KH
-Source25: nds_DE@traditional
-Source38: dz_BT
+Source16:	sw_XX
+Source17:	ku_TR
+Source18:	eo_XX
+Source19:	ky_KG
+Source22:	km_KH
+Source25:	nds_DE@traditional
+Source38:	dz_BT
 
 # Those exist in glibc >= 2.3.2 but the attached ones
 # are more correct/more complete
 
 # all ar_?? locales in glibc 2.3.5 are missing "Yy" and "Nn" in 
 # version in glibc 2.3.5 has wrong yexexpr/noexpr and wrong LC_COLLATE
-Source50: ar_SA
+Source50:	ar_SA
 # corrected month names
-Source51: az_AZ
+Source51:	az_AZ
 # LC_COLLATE has one line wrong
-Source52: bs_BA
+Source52:	bs_BA
 # rewritten to take profit of new glibc reordering possibilities
-Source53: es_ES
-Source54: es_US
-Source55: es@tradicional
+Source53:	es_ES
+Source54:	es_US
+Source55:	es@tradicional
 # Colombia uses "Letter" paper size
-Source56: es_CO
+Source56:	es_CO
 # corrected LC_COLLATE
-Source58: sq_AL
+Source58:	sq_AL
 # ours has yesexpr using tajik
-Source59: tg_TJ
+Source59:	tg_TJ
 # tr_TR thet includes "i18n_tr" (generated with a simple regexp replacing)
-Source61: tr_TR
+Source61:	tr_TR
 # LC_COLLATE for vietnamese is incorrect in glibc, and LC_CTIME seems
 # wrong too... 
-Source63: vi_VN
+Source63:	vi_VN
 # fixes in weekday names
-Source64: wa_BE
+Source64:	wa_BE
 # various spelling fixes
-Source65: yi_US
+Source65:	yi_US
 # changed date format strings
-Source66: zh_CN
+Source66:	zh_CN
 
 # ethiopic locales (violate ISO-639! not packaged)
-Source67: ad_ET
-Source68: qo_ET
-Source69: sx_ET
-Source70: sz_ET
+Source67:	ad_ET
+Source68:	qo_ET
+Source69:	sx_ET
+Source70:	sz_ET
 
 # it is arch dependent in fact
 #BuildArchitectures: noarch
 # to build this package glibc = %{glibc_ver} is needed (for locales definitions)
 # no need to check for dependencies when building, there is no executables here
-AutoReqProv: no
-BuildRoot: %{_tmppath}/locales-root
+AutoReqProv:	no
 # locales are very dependent on glibc version
-Requires: glibc = %{glibc_epoch}:%{glibc_ver}
+Requires:	glibc = %{glibc_epoch}:%{glibc_ver}
 # post scripts use grep, perl, etc.
-Requires(post): perl-base rpm coreutils
-Requires(postun): perl-base rpm coreutils
+Requires(post):	perl-base rpm coreutils
+Requires(postun):perl-base rpm coreutils
 # glibc >= 2.2.5-6mdk now comes with glibc-i18ndata package
-BuildRequires: glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}
+BuildRequires:	glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}
 # usually needed to ensure support for new locales
-BuildRequires: glibc >= %{glibc_epoch}:%{glibc_ver}
+BuildRequires:	glibc >= %{glibc_epoch}:%{glibc_ver}
 
 %description
 These are the base files for language localization.
@@ -317,9 +316,6 @@ chmod a+x softlink.pl
 
 cd ..
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %post
 %{loc_add} "ENCODINGS"
 
@@ -329,7 +325,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files
-%defattr(-,root,root)
 %config(noreplace) /etc/sysconfig/locales
 %dir /usr/share/locale
 /usr/share/locale/ISO*
@@ -367,7 +362,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-aa
-%defattr(-,root,root)
 /usr/share/locale/aa_DJ*
 /usr/share/locale/aa_ER*
 /usr/share/locale/aa_ET*
@@ -402,7 +396,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-af
-%defattr(-,root,root)
 /usr/share/locale/af_ZA*
 
 ### am
@@ -443,7 +436,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-am
-%defattr(-,root,root)
 /usr/share/locale/am_ET*
 # blin
 /usr/share/locale/byn_ER*
@@ -498,7 +490,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ar
-%defattr(-,root,root)
 /usr/share/locale/ar_AE*
 /usr/share/locale/ar_BH*
 /usr/share/locale/ar_DZ*
@@ -539,7 +530,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-as
-%defattr(-,root,root)
 /usr/share/locale/as_IN*
 
 ### ast
@@ -563,7 +553,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ast
-%defattr(-,root,root)
 /usr/share/locale/ast_ES*
 
 ### az
@@ -587,7 +576,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-az
-%defattr(-,root,root)
 /usr/share/locale/az_AZ*
 
 ### be
@@ -611,7 +599,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-be
-%defattr(-,root,root)
 /usr/share/locale/be_BY*
 
 ### ber
@@ -635,7 +622,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ber
-%defattr(-,root,root)
 /usr/share/locale/ber_DZ*
 /usr/share/locale/ber_MA*
 
@@ -668,7 +654,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bg
-%defattr(-,root,root)
 /usr/share/locale/bg_BG*
 
 ### bn
@@ -692,7 +677,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bn
-%defattr(-,root,root)
 /usr/share/locale/bn_BD*
 /usr/share/locale/bn_IN*
 
@@ -717,7 +701,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bo
-%defattr(-,root,root)
 /usr/share/locale/bo_CN*
 /usr/share/locale/bo_IN*
 
@@ -757,7 +740,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-br
-%defattr(-,root,root)
 /usr/share/locale/br_FR*
 
 ### bs
@@ -781,7 +763,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bs
-%defattr(-,root,root)
 /usr/share/locale/bs_BA*
 
 ### ca
@@ -828,7 +809,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ca
-%defattr(-,root,root)
 /usr/share/locale/ca_AD*
 /usr/share/locale/ca_ES*
 /usr/share/locale/ca_FR*
@@ -855,7 +835,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-crh
-%defattr(-,root,root)
 /usr/share/locale/crh_UA
 
 ### cs
@@ -886,7 +865,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-cs
-%defattr(-,root,root)
 /usr/share/locale/cs_CZ*
 
 ### cv
@@ -910,7 +888,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-cv
-%defattr(-,root,root)
 /usr/share/locale/cv_RU*
 
 ### cy
@@ -940,7 +917,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-cy
-%defattr(-,root,root)
 /usr/share/locale/cy_GB*
 
 ### da
@@ -972,7 +948,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-da
-%defattr(-,root,root)
 /usr/share/locale/da_DK*
 
 ### de
@@ -1010,7 +985,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-de
-%defattr(-,root,root)
 /usr/share/locale/de_AT*
 /usr/share/locale/de_BE*
 /usr/share/locale/de_CH*
@@ -1038,7 +1012,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-dv
-%defattr(-,root,root)
 /usr/share/locale/dv_MV
 
 ### dz
@@ -1062,7 +1035,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-dz
-%defattr(-,root,root)
 /usr/share/locale/dz_BT*
 
 ### el
@@ -1096,7 +1068,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-el
-%defattr(-,root,root)
 /usr/share/locale/el_CY*
 /usr/share/locale/el_GR*
 
@@ -1125,7 +1096,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-en
-%defattr(-,root,root)
 /usr/share/locale/en_AG*
 /usr/share/locale/en_AU*
 /usr/share/locale/en_BE*
@@ -1173,7 +1143,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-eo
-%defattr(-,root,root)
 /usr/share/locale/eo_XX*
 
 ### es
@@ -1209,7 +1178,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-es
-%defattr(-,root,root)
 /usr/share/locale/es@tradicional
 /usr/share/locale/es_AR*
 /usr/share/locale/es_BO*
@@ -1264,7 +1232,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-et
-%defattr(-,root,root)
 /usr/share/locale/et_EE*
 
 ### eu
@@ -1312,7 +1279,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-eu
-%defattr(-,root,root)
 /usr/share/locale/eu_ES*
 
 ### fa
@@ -1344,7 +1310,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fa
-%defattr(-,root,root)
 /usr/share/locale/fa_IR*
 
 ### fi
@@ -1375,7 +1340,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fi
-%defattr(-,root,root)
 /usr/share/locale/fi_FI*
 
 ### fo
@@ -1405,7 +1369,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fo
-%defattr(-,root,root)
 /usr/share/locale/fo_FO*
 
 ### fr
@@ -1445,7 +1408,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fr
-%defattr(-,root,root)
 /usr/share/locale/fr_BE*
 /usr/share/locale/fr_CA*
 /usr/share/locale/fr_CH*
@@ -1473,7 +1435,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fur
-%defattr(-,root,root)
 /usr/share/locale/fur_IT*
 
 ### fy
@@ -1497,7 +1458,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fy
-%defattr(-,root,root)
 /usr/share/locale/fy_DE*
 /usr/share/locale/fy_NL*
 
@@ -1529,7 +1489,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ga
-%defattr(-,root,root)
 /usr/share/locale/ga_IE*
 
 ### gd
@@ -1562,7 +1521,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gd
-%defattr(-,root,root)
 /usr/share/locale/gd_GB*
 
 ### gl
@@ -1601,7 +1559,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gl
-%defattr(-,root,root)
 /usr/share/locale/gl_ES*
 
 ### gu
@@ -1625,7 +1582,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gu
-%defattr(-,root,root)
 /usr/share/locale/gu_IN*
 
 ### gv
@@ -1657,7 +1613,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gv
-%defattr(-,root,root)
 /usr/share/locale/gv_GB*
 
 ### ha
@@ -1682,7 +1637,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ha
-%defattr(-,root,root)
 /usr/share/locale/ha_NG*
 
 ### he (formerly iw)
@@ -1719,7 +1673,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-he
-%defattr(-,root,root)
 /usr/share/locale/he_IL*
 /usr/share/locale/iw_IL*
 
@@ -1744,7 +1697,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hi
-%defattr(-,root,root)
 /usr/share/locale/hi_IN*
 
 ### hne
@@ -1768,7 +1720,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hne
-%defattr(-,root,root)
 /usr/share/locale/hne_IN
 
 ### hr
@@ -1800,7 +1751,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hr
-%defattr(-,root,root)
 /usr/share/locale/hr_HR*
 
 ### hsb
@@ -1825,7 +1775,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hsb
-%defattr(-,root,root)
 /usr/share/locale/hsb_DE*
 
 ### ht
@@ -1849,7 +1798,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ht
-%defattr(-,root,root)
 /usr/share/locale/ht_HT
 
 ### hu
@@ -1879,7 +1827,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hu
-%defattr(-,root,root)
 /usr/share/locale/hu_HU*
 
 ### hy
@@ -1911,7 +1858,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hy
-%defattr(-,root,root)
 /usr/share/locale/hy_AM*
 
 ### id (formerly in)
@@ -1941,7 +1887,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-id
-%defattr(-,root,root)
 /usr/share/locale/id_ID*
 
 ### ig
@@ -1966,7 +1911,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ig
-%defattr(-,root,root)
 /usr/share/locale/ig_NG*
 
 ### ik
@@ -1990,7 +1934,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ik
-%defattr(-,root,root)
 /usr/share/locale/ik_CA*
 
 ### is
@@ -2022,7 +1965,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-is
-%defattr(-,root,root)
 /usr/share/locale/is_IS*
 
 ### it
@@ -2053,7 +1995,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-it
-%defattr(-,root,root)
 /usr/share/locale/it_CH*
 /usr/share/locale/it_IT*
 
@@ -2078,7 +2019,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-iu
-%defattr(-,root,root)
 /usr/share/locale/iu_CA*
 
 ### ja
@@ -2111,7 +2051,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ja
-%defattr(-,root,root)
 /usr/share/locale/ja_JP*
 
 ### ka
@@ -2142,7 +2081,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ka
-%defattr(-,root,root)
 /usr/share/locale/ka_GE*
 
 ### kk
@@ -2167,7 +2105,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kk
-%defattr(-,root,root)
 /usr/share/locale/kk_KZ*
 
 ### kl
@@ -2191,7 +2128,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kl
-%defattr(-,root,root)
 /usr/share/locale/kl_GL*
 
 ### km
@@ -2215,7 +2151,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-km
-%defattr(-,root,root)
 /usr/share/locale/km_KH*
 
 ### kn
@@ -2239,7 +2174,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kn
-%defattr(-,root,root)
 /usr/share/locale/kn_IN*
 
 ### ko
@@ -2270,7 +2204,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ko
-%defattr(-,root,root)
 /usr/share/locale/ko_KR*
 
 ### kok
@@ -2295,7 +2228,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kok
-%defattr(-,root,root)
 /usr/share/locale/kok_IN*
 
 ### ks
@@ -2319,7 +2251,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ks
-%defattr(-,root,root)
 /usr/share/locale/ks_IN
 /usr/share/locale/ks_IN@devanagari
 
@@ -2351,7 +2282,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ku
-%defattr(-,root,root)
 /usr/share/locale/ku_TR*
 
 ### kw
@@ -2384,7 +2314,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kw
-%defattr(-,root,root)
 /usr/share/locale/kw_GB*
 
 ### ky
@@ -2408,7 +2337,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ky
-%defattr(-,root,root)
 /usr/share/locale/ky_KG*
 
 ### lg
@@ -2433,7 +2361,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lg
-%defattr(-,root,root)
 /usr/share/locale/lg_UG*
 
 ### li
@@ -2457,7 +2384,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-li
-%defattr(-,root,root)
 /usr/share/locale/li_BE*
 /usr/share/locale/li_NL*
 
@@ -2482,7 +2408,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lo
-%defattr(-,root,root)
 /usr/share/locale/lo_LA*
 
 ### lt
@@ -2512,7 +2437,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lt
-%defattr(-,root,root)
 /usr/share/locale/lt_LT*
 
 ### lv
@@ -2545,7 +2469,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lv
-%defattr(-,root,root)
 /usr/share/locale/lv_LV*
 
 ### mai
@@ -2569,7 +2492,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mai
-%defattr(-,root,root)
 /usr/share/locale/mai_IN
 
 ### mg
@@ -2594,7 +2516,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mg
-%defattr(-,root,root)
 /usr/share/locale/mg_MG*
 
 ### mi
@@ -2626,7 +2547,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mi
-%defattr(-,root,root)
 /usr/share/locale/mi_NZ*
 
 ### mk
@@ -2649,7 +2569,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mk
-%defattr(-,root,root)
 /usr/share/locale/mk_MK*
 
 ### ml
@@ -2672,7 +2591,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ml
-%defattr(-,root,root)
 /usr/share/locale/ml_IN*
 
 ### mn
@@ -2695,7 +2613,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mn
-%defattr(-,root,root)
 /usr/share/locale/mn_MN*
 
 ### mr
@@ -2719,7 +2636,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mr
-%defattr(-,root,root)
 /usr/share/locale/mr_IN*
 
 ### ms
@@ -2742,7 +2658,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ms
-%defattr(-,root,root)
 /usr/share/locale/ms_MY*
 
 ### mt
@@ -2774,7 +2689,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mt
-%defattr(-,root,root)
 /usr/share/locale/mt_MT*
 
 ### my
@@ -2798,7 +2712,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-my
-%defattr(-,root,root)
 /usr/share/locale/my_MM
 
 ### nds
@@ -2836,7 +2749,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nds
-%defattr(-,root,root)
 /usr/share/locale/nds_DE*
 /usr/share/locale/nds_NL*
 
@@ -2861,7 +2773,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ne
-%defattr(-,root,root)
 /usr/share/locale/ne_NP*
 
 ### nl
@@ -2899,7 +2810,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nl
-%defattr(-,root,root)
 /usr/share/locale/nl_AW*
 /usr/share/locale/nl_BE*
 /usr/share/locale/nl_NL*
@@ -2935,7 +2845,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-no
-%defattr(-,root,root)
 /usr/share/locale/nb_NO*
 /usr/share/locale/nn_NO*
 
@@ -2960,7 +2869,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nr
-%defattr(-,root,root)
 /usr/share/locale/nr_ZA*
 
 ### nso
@@ -2985,7 +2893,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nso
-%defattr(-,root,root)
 /usr/share/locale/nso_ZA*
 
 ### oc
@@ -3016,7 +2923,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-oc
-%defattr(-,root,root)
 /usr/share/locale/oc_FR*
 
 ### or
@@ -3040,7 +2946,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-or
-%defattr(-,root,root)
 /usr/share/locale/or_IN
 
 ### pa
@@ -3064,7 +2969,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-pa
-%defattr(-,root,root)
 /usr/share/locale/pa_IN*
 /usr/share/locale/pa_PK*
 
@@ -3091,38 +2995,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-pap
-%defattr(-,root,root)
-/usr/share/locale/pap_AN*
-
-### pl
-# translation from piotr pogorzelski <pp@pietrek.priv.pl>
-%package -n locales-pl
-Summary: Base files for localization (Polish)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Summary(pl): Podstawowe pliki dla polskiej lokalizacji
-
-%description -n locales-pl
-These are the base files for Polish language localization; you need
-it to correctly display 8bits Polish characters, and for proper
-alphabetical sorting and representation of dates and numbers according
-to Polish language conventions.
-
-%description -n locales-pl -l pl
-Pliki do lokalizacji systemu dla języka polskiego. Niezbędne do poprawnego
-wyświetlania 8-mio bitowych polskich znaków diakrytycznych, sortowania,
-prezentowania dat i liczb zgodnie z regułami języka polskiego.
-
-%post -n locales-pl
-%{loc_add} csb_PL pl_PL
-
-%preun -n locales-pl
-if [ "$1" = "0" ]; then
-	%{loc_del} csb_PL pl_PL
-fi
-
-%files -n locales-pl
-%defattr(-,root,root)
 /usr/share/locale/csb_PL*
 /usr/share/locale/pl_PL*
 
@@ -3147,7 +3019,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ps
-%defattr(-,root,root)
 /usr/share/locale/ps_AF
 
 ### pt
@@ -3181,7 +3052,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-pt
-%defattr(-,root,root)
 /usr/share/locale/pt_BR*
 /usr/share/locale/pt_PT*
 
@@ -3214,7 +3084,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ro
-%defattr(-,root,root)
 /usr/share/locale/ro_RO*
 
 ### ru
@@ -3247,7 +3116,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ru
-%defattr(-,root,root)
 /usr/share/locale/ru_RU*
 /usr/share/locale/ru_UA*
 
@@ -3273,7 +3141,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-rw
-%defattr(-,root,root)
 /usr/share/locale/rw_RW*
 
 ### sa
@@ -3297,7 +3164,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sa
-%defattr(-,root,root)
 /usr/share/locale/sa_IN
 
 ### sc
@@ -3321,7 +3187,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sc
-%defattr(-,root,root)
 /usr/share/locale/sc_IT*
 
 ### sd
@@ -3345,7 +3210,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sd
-%defattr(-,root,root)
 /usr/share/locale/sd_IN
 /usr/share/locale/sd_IN@devanagari
 
@@ -3371,7 +3235,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-se
-%defattr(-,root,root)
 /usr/share/locale/se_NO*
 
 ### shs
@@ -3395,7 +3258,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-shs
-%defattr(-,root,root)
 /usr/share/locale/shs_CA
 
 ### si
@@ -3420,7 +3282,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-si
-%defattr(-,root,root)
 /usr/share/locale/si_LK*
 
 ### sk
@@ -3450,7 +3311,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sk
-%defattr(-,root,root)
 /usr/share/locale/sk_SK*
 
 ### sl
@@ -3483,7 +3343,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sl
-%defattr(-,root,root)
 /usr/share/locale/sl_SI*
 
 ### so
@@ -3507,7 +3366,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-so
-%defattr(-,root,root)
 /usr/share/locale/so_DJ*
 /usr/share/locale/so_ET*
 /usr/share/locale/so_KE*
@@ -3534,61 +3392,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sq
-%defattr(-,root,root)
-/usr/share/locale/sq_AL*
-/usr/share/locale/sq_MK*
-
-### sr
-%package -n locales-sr
-Summary: Base files for localization (Serbian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-sh = %{version}-%{release}
-Provides: locales-sr@Latn = %{version}-%{release}
-Summary(sr): Основне датотеке за локализацију (Српски) 
-Summary(sr@Latn): Osnovne datoteke za lokalizaciju (Srpski)
-Summary(sh): Osnovne datoteke za lokalizaciju (Srpski)
-
-%description -n locales-sr
-These are the base files for Serbian language localization; you need
-it to correctly display 8bits cyrillic characters, and for proper
-alphabetical sorting and representation of dates and numbers according
-to Serbian language conventions.
-
-%description -n locales-sr -l sr
-Ово су основне датотеке за
-локализацију на Српски језик; потребне
-су да се правилно приказали 8 битни
-Српски знакови, за правилно
-сортирање по абецеди и приказ датума
-и бројева по правилима Српског језика.
-
-%description -n locales-sr -l sr@Latn
-Ovo su osnovne datoteke za
-lokalizaciju na Srpski jezik; potrebne
-su da se pravilno prikazali 8 bitni
-Srpski znakovi, za pravilno
-sortiranje po abecedi i prikaz datuma
-i brojeva po pravilima Srpskog jezika.
-
-%description -n locales-sr -l sh
-Ovo su osnovne datoteke za
-lokalizaciju na Srpski jezik; potrebne
-su da se pravilno prikazali 8 bitni
-Srpski znakovi, za pravilno
-sortiranje po abecedi i prikaz datuma
-i brojeva po pravilima Srpskog jezika.
-
-%post -n locales-sr
-%{loc_add} sr_ME sr_RS
-
-%preun -n locales-sr
-if [ "$1" = "0" ]; then
-	%{loc_del} sr_ME sr_RS
-fi
-
-%files -n locales-sr
-%defattr(-,root,root)
 /usr/share/locale/sr_ME*
 /usr/share/locale/sr_RS*
 
@@ -3613,7 +3416,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ss
-%defattr(-,root,root)
 /usr/share/locale/ss_ZA*
 
 ### st
@@ -3637,7 +3439,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-st
-%defattr(-,root,root)
 /usr/share/locale/st_ZA*
 
 ### sv
@@ -3668,32 +3469,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sv
-%defattr(-,root,root)
-/usr/share/locale/sv_FI*
-/usr/share/locale/sv_SE*
-
-### sw
-%package -n locales-sw
-Summary: Base files for localization (Swahili)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-
-%description -n locales-sw
-These are the base files for Swahili language localization; you need
-it to correctly display 8bits Swahili characters, and for proper
-alphabetical sorting and representation of dates and numbers according
-to Swahili language conventions.
-
-%post -n locales-sw
-%{loc_add} sw_XX
-
-%preun -n locales-sw
-if [ "$1" = "0" ]; then
-	%{loc_del} sw_XX
-fi
-
-%files -n locales-sw
-%defattr(-,root,root)
 /usr/share/locale/sw_XX*
 
 ### ta
@@ -3718,7 +3493,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ta
-%defattr(-,root,root)
 /usr/share/locale/ta_IN*
 
 ### te
@@ -3742,7 +3516,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-te
-%defattr(-,root,root)
 /usr/share/locale/te_IN*
 
 ### tg
@@ -3766,32 +3539,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tg
-%defattr(-,root,root)
-/usr/share/locale/tg_TJ*
-
-### th
-%package -n locales-th
-Summary: Base files for localization (Thai)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-URL: http://www.links.nectec.or.th/~thep/th-locale/
-
-%description -n locales-th
-These are the base files for Thai language localization; you need
-it to correctly display 8bits Thai characters, and for proper
-alphabetical sorting and representation of dates and numbers according
-to Thai language conventions.
-
-%post -n locales-th
-%{loc_add} th_TH
-
-%preun -n locales-th
-if [ "$1" = "0" ]; then
-	%{loc_del} th_TH
-fi
-
-%files -n locales-th
-%defattr(-,root,root)
 /usr/share/locale/th_TH*
 
 ### tk
@@ -3815,7 +3562,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tk
-%defattr(-,root,root)
 /usr/share/locale/tk_TM*
 
 ### fil
@@ -3843,7 +3589,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tl
-%defattr(-,root,root)
 /usr/share/locale/fil_PH*
 /usr/share/locale/tl_PH*
 
@@ -3868,7 +3613,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tn
-%defattr(-,root,root)
 /usr/share/locale/tn_ZA*
 
 ### tr
@@ -3900,7 +3644,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tr
-%defattr(-,root,root)
 /usr/share/locale/tr_CY*
 /usr/share/locale/tr_TR*
 
@@ -3925,7 +3668,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ts
-%defattr(-,root,root)
 /usr/share/locale/ts_ZA*
 
 ### tt
@@ -3949,7 +3691,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tt
-%defattr(-,root,root)
 /usr/share/locale/tt_RU*
 
 ### ug
@@ -3974,7 +3715,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ug
-%defattr(-,root,root)
 /usr/share/locale/ug_CN*
 
 ### uk
@@ -4012,7 +3752,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-uk
-%defattr(-,root,root)
 /usr/share/locale/uk_UA*
 
 ### ur
@@ -4040,7 +3779,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ur
-%defattr(-,root,root)
 /usr/share/locale/ur_PK*
 
 ### uz
@@ -4073,7 +3811,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-uz
-%defattr(-,root,root)
 /usr/share/locale/uz_UZ*
 
 ### ve
@@ -4097,7 +3834,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ve
-%defattr(-,root,root)
 /usr/share/locale/ve_ZA*
 
 ### vi
@@ -4130,7 +3866,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-vi
-%defattr(-,root,root)
 /usr/share/locale/vi_VN*
 
 ### wa
@@ -4168,7 +3903,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-wa
-%defattr(-,root,root)
 /usr/share/locale/wa_BE*
 
 ### wo
@@ -4192,7 +3926,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-wo
-%defattr(-,root,root)
 /usr/share/locale/wo_SN
 
 ### xh
@@ -4216,7 +3949,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-xh
-%defattr(-,root,root)
 /usr/share/locale/xh_ZA*
 
 ### yi
@@ -4244,7 +3976,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-yi
-%defattr(-,root,root)
 /usr/share/locale/yi_US*
 
 ### yo
@@ -4269,7 +4000,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-yo
-%defattr(-,root,root)
 /usr/share/locale/yo_NG*
 
 ### zh
@@ -4312,7 +4042,6 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-zh
-%defattr(-,root,root)
 /usr/share/locale/nan_TW@latin
 /usr/share/locale/zh_CN*
 /usr/share/locale/zh_HK*
@@ -4340,5 +4069,4 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-zu
-%defattr(-,root,root)
 /usr/share/locale/zu_ZA*
