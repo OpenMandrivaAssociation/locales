@@ -3567,7 +3567,7 @@ Summary:	Base files for localization (Thai)
 Group:		System/Internationalization
 Requires:	locales = %{version}-%{release}
 
-%description	sw
+%description	th
 These are the base files for Thai language localization; you need
 it to correctly display 8bits Thai characters, and for proper
 alphabetical sorting and representation of dates and numbers according
