@@ -133,11 +133,11 @@ fi
 
 %files
 %config(noreplace) /etc/sysconfig/locales
-%dir /usr/share/locale
-/usr/share/locale/ISO*
-/usr/share/locale/CP*
-/usr/share/locale/UTF*
-/usr/share/locale/KOI*
+%dir %{_localedir}
+%{_localedir}/ISO*
+%{_localedir}/CP*
+%{_localedir}/UTF*
+%{_localedir}/KOI*
 /usr/bin/*
 
 
@@ -169,9 +169,9 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-aa
-/usr/share/locale/aa_DJ*
-/usr/share/locale/aa_ER*
-/usr/share/locale/aa_ET*
+%{_localedir}/aa_DJ*
+%{_localedir}/aa_ER*
+%{_localedir}/aa_ET*
 
 ### af
 # translation by Schalk Cronje <schalkc@ntaba.co.za>
@@ -203,7 +203,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-af
-/usr/share/locale/af_ZA*
+%{_localedir}/af_ZA*
 
 ### am
 # translation by Daniel Yacob <Yacob@EthiopiaOnline.Net>
@@ -243,24 +243,24 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-am
-/usr/share/locale/am_ET*
+%{_localedir}/am_ET*
 # blin
-/usr/share/locale/byn_ER*
+%{_localedir}/byn_ER*
 # tigrinya
-/usr/share/locale/ti_ER*
-/usr/share/locale/ti_ET*
+%{_localedir}/ti_ER*
+%{_localedir}/ti_ET*
 # ge'ez
-/usr/share/locale/gez_ER*
-/usr/share/locale/gez_ET*
+%{_localedir}/gez_ER*
+%{_localedir}/gez_ET*
 # sidama
-/usr/share/locale/sid_ET*
+%{_localedir}/sid_ET*
 # tigre
-/usr/share/locale/tig_ER*
+%{_localedir}/tig_ER*
 # Oromo
-/usr/share/locale/om_ET*
-/usr/share/locale/om_KE*
+%{_localedir}/om_ET*
+%{_localedir}/om_KE*
 # Walaita
-/usr/share/locale/wal_ET*
+%{_localedir}/wal_ET*
 
 ### ar
 # translation by Wajdi Al-Jedaibi <wajdi@acm.org>
@@ -297,24 +297,24 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ar
-/usr/share/locale/ar_AE*
-/usr/share/locale/ar_BH*
-/usr/share/locale/ar_DZ*
-/usr/share/locale/ar_EG*
-/usr/share/locale/ar_IN*
-/usr/share/locale/ar_IQ*
-/usr/share/locale/ar_JO*
-/usr/share/locale/ar_KW*
-/usr/share/locale/ar_LB*
-/usr/share/locale/ar_LY*
-/usr/share/locale/ar_MA*
-/usr/share/locale/ar_OM*
-/usr/share/locale/ar_QA*
-/usr/share/locale/ar_SA*
-/usr/share/locale/ar_SD*
-/usr/share/locale/ar_SY*
-/usr/share/locale/ar_TN*
-/usr/share/locale/ar_YE*
+%{_localedir}/ar_AE*
+%{_localedir}/ar_BH*
+%{_localedir}/ar_DZ*
+%{_localedir}/ar_EG*
+%{_localedir}/ar_IN*
+%{_localedir}/ar_IQ*
+%{_localedir}/ar_JO*
+%{_localedir}/ar_KW*
+%{_localedir}/ar_LB*
+%{_localedir}/ar_LY*
+%{_localedir}/ar_MA*
+%{_localedir}/ar_OM*
+%{_localedir}/ar_QA*
+%{_localedir}/ar_SA*
+%{_localedir}/ar_SD*
+%{_localedir}/ar_SY*
+%{_localedir}/ar_TN*
+%{_localedir}/ar_YE*
 
 ### as
 %package -n locales-as
@@ -337,7 +337,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-as
-/usr/share/locale/as_IN*
+%{_localedir}/as_IN*
 
 ### ast
 %package -n locales-ast
@@ -360,7 +360,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ast
-/usr/share/locale/ast_ES*
+%{_localedir}/ast_ES*
 
 ### az
 %package -n locales-az
@@ -383,7 +383,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-az
-/usr/share/locale/az_AZ*
+%{_localedir}/az_AZ*
 
 ### be
 %package -n locales-be
@@ -406,7 +406,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-be
-/usr/share/locale/be_BY*
+%{_localedir}/be_BY*
 
 ### bem
 %package	bem
@@ -429,7 +429,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		bem
-/usr/share/locale/bem_ZM*
+%{_localedir}/bem_ZM*
 
 ### ber
 %package -n locales-ber
@@ -452,8 +452,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ber
-/usr/share/locale/ber_DZ*
-/usr/share/locale/ber_MA*
+%{_localedir}/ber_DZ*
+%{_localedir}/ber_MA*
 
 ### bg
 # translation: Mariana Kokosharova <kokosharova@dir.bg>
@@ -484,7 +484,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bg
-/usr/share/locale/bg_BG*
+%{_localedir}/bg_BG*
 
 ### bn
 %package -n locales-bn
@@ -507,8 +507,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bn
-/usr/share/locale/bn_BD*
-/usr/share/locale/bn_IN*
+%{_localedir}/bn_BD*
+%{_localedir}/bn_IN*
 
 ### bo
 %package -n locales-bo
@@ -531,8 +531,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bo
-/usr/share/locale/bo_CN*
-/usr/share/locale/bo_IN*
+%{_localedir}/bo_CN*
+%{_localedir}/bo_IN*
 
 ### br
 # Translation by Jañ-Mai Drapier (jan-mai-drapier@mail.dotcom.fr)
@@ -570,7 +570,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-br
-/usr/share/locale/br_FR*
+%{_localedir}/br_FR*
 
 ### bs
 %package -n locales-bs
@@ -593,7 +593,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-bs
-/usr/share/locale/bs_BA*
+%{_localedir}/bs_BA*
 
 ### ca
 %package -n locales-ca
@@ -639,10 +639,10 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ca
-/usr/share/locale/ca_AD*
-/usr/share/locale/ca_ES*
-/usr/share/locale/ca_FR*
-/usr/share/locale/ca_IT*
+%{_localedir}/ca_AD*
+%{_localedir}/ca_ES*
+%{_localedir}/ca_FR*
+%{_localedir}/ca_IT*
 
 ### crh
 %package -n locales-crh
@@ -665,7 +665,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-crh
-/usr/share/locale/crh_UA
+%{_localedir}/crh_UA
 
 ### cs
 # translation by <pavel@SnowWhite.inet.cz>
@@ -695,7 +695,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-cs
-/usr/share/locale/cs_CZ*
+%{_localedir}/cs_CZ*
 
 ### cv
 %package -n locales-cv
@@ -718,7 +718,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-cv
-/usr/share/locale/cv_RU*
+%{_localedir}/cv_RU*
 
 ### cy
 %package -n locales-cy
@@ -747,7 +747,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-cy
-/usr/share/locale/cy_GB*
+%{_localedir}/cy_GB*
 
 ### da
 # danish translation by Erik Martino <martino@daimi.au.dk>
@@ -778,7 +778,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-da
-/usr/share/locale/da_DK*
+%{_localedir}/da_DK*
 
 ### de
 %package -n locales-de
@@ -815,11 +815,11 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-de
-/usr/share/locale/de_AT*
-/usr/share/locale/de_BE*
-/usr/share/locale/de_CH*
-/usr/share/locale/de_DE*
-/usr/share/locale/de_LU*
+%{_localedir}/de_AT*
+%{_localedir}/de_BE*
+%{_localedir}/de_CH*
+%{_localedir}/de_DE*
+%{_localedir}/de_LU*
 
 ### dv
 %package -n locales-dv
@@ -842,7 +842,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-dv
-/usr/share/locale/dv_MV
+%{_localedir}/dv_MV
 
 ### dz
 %package -n locales-dz
@@ -865,7 +865,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-dz
-/usr/share/locale/dz_BT*
+%{_localedir}/dz_BT*
 
 ### el
 # translations from "Theodore J. Soldatos" <theodore@eexi.gr>
@@ -898,8 +898,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-el
-/usr/share/locale/el_CY*
-/usr/share/locale/el_GR*
+%{_localedir}/el_CY*
+%{_localedir}/el_GR*
 
 ### en
 %package -n locales-en
@@ -926,24 +926,24 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-en
-/usr/share/locale/en_AG*
-/usr/share/locale/en_AU*
-/usr/share/locale/en_BE*
-/usr/share/locale/en_BW*
-/usr/share/locale/en_CA*
-/usr/share/locale/en_DK*
-/usr/share/locale/en_GB*
-/usr/share/locale/en_HK*
-/usr/share/locale/en_IE*
-/usr/share/locale/en_IN*
-/usr/share/locale/en_NG*
-/usr/share/locale/en_NZ*
-/usr/share/locale/en_PH*
-/usr/share/locale/en_SG*
-/usr/share/locale/en_US*
-/usr/share/locale/en_ZA*
-/usr/share/locale/en_ZM*
-/usr/share/locale/en_ZW*
+%{_localedir}/en_AG*
+%{_localedir}/en_AU*
+%{_localedir}/en_BE*
+%{_localedir}/en_BW*
+%{_localedir}/en_CA*
+%{_localedir}/en_DK*
+%{_localedir}/en_GB*
+%{_localedir}/en_HK*
+%{_localedir}/en_IE*
+%{_localedir}/en_IN*
+%{_localedir}/en_NG*
+%{_localedir}/en_NZ*
+%{_localedir}/en_PH*
+%{_localedir}/en_SG*
+%{_localedir}/en_US*
+%{_localedir}/en_ZA*
+%{_localedir}/en_ZM*
+%{_localedir}/en_ZW*
 
 ### eo
 # translation by diestel@rzaix340.rz.uni-leipzig.de (Wolfram Diestel)
@@ -974,7 +974,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-eo
-/usr/share/locale/eo_XX*
+%{_localedir}/eo_XX*
 
 ### es
 %package -n locales-es
@@ -1009,29 +1009,29 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-es
-/usr/share/locale/es@tradicional
-/usr/share/locale/es_AR*
-/usr/share/locale/es_BO*
-/usr/share/locale/es_CL*
-/usr/share/locale/es_CO*
-/usr/share/locale/es_CR*
-/usr/share/locale/es_DO*
-/usr/share/locale/es_EC*
-/usr/share/locale/es_ES*
-/usr/share/locale/es_GT*
-/usr/share/locale/es_HN*
-/usr/share/locale/es_MX*
-/usr/share/locale/es_NI*
-/usr/share/locale/es_PA*
-/usr/share/locale/es_PE*
-/usr/share/locale/es_PR*
-/usr/share/locale/es_PY*
-/usr/share/locale/es_SV*
-/usr/share/locale/es_US*
-/usr/share/locale/es_UY*
-/usr/share/locale/es_VE*
+%{_localedir}/es@tradicional
+%{_localedir}/es_AR*
+%{_localedir}/es_BO*
+%{_localedir}/es_CL*
+%{_localedir}/es_CO*
+%{_localedir}/es_CR*
+%{_localedir}/es_DO*
+%{_localedir}/es_EC*
+%{_localedir}/es_ES*
+%{_localedir}/es_GT*
+%{_localedir}/es_HN*
+%{_localedir}/es_MX*
+%{_localedir}/es_NI*
+%{_localedir}/es_PA*
+%{_localedir}/es_PE*
+%{_localedir}/es_PR*
+%{_localedir}/es_PY*
+%{_localedir}/es_SV*
+%{_localedir}/es_US*
+%{_localedir}/es_UY*
+%{_localedir}/es_VE*
 # Aragonese
-/usr/share/locale/an_ES*
+%{_localedir}/an_ES*
 
 ### et
 # translation from: Ekke Einberg <ekke@data.ee>
@@ -1063,7 +1063,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-et
-/usr/share/locale/et_EE*
+%{_localedir}/et_EE*
 
 ### eu
 %package -n locales-eu
@@ -1110,7 +1110,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-eu
-/usr/share/locale/eu_ES*
+%{_localedir}/eu_ES*
 
 ### fa
 %package -n locales-fa
@@ -1141,7 +1141,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fa
-/usr/share/locale/fa_IR*
+%{_localedir}/fa_IR*
 
 ### fi
 # translations by Jarkko Vaaraniemi <jvaarani@ees2.oulu.fi>
@@ -1171,7 +1171,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fi
-/usr/share/locale/fi_FI*
+%{_localedir}/fi_FI*
 
 ### ff
 %package	ff
@@ -1194,7 +1194,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		ff
-/usr/share/locale/ff_SN*
+%{_localedir}/ff_SN*
 
 ### fo
 %package -n locales-fo
@@ -1223,7 +1223,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fo
-/usr/share/locale/fo_FO*
+%{_localedir}/fo_FO*
 
 ### fr
 %package -n locales-fr
@@ -1262,11 +1262,11 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fr
-/usr/share/locale/fr_BE*
-/usr/share/locale/fr_CA*
-/usr/share/locale/fr_CH*
-/usr/share/locale/fr_FR*
-/usr/share/locale/fr_LU*
+%{_localedir}/fr_BE*
+%{_localedir}/fr_CA*
+%{_localedir}/fr_CH*
+%{_localedir}/fr_FR*
+%{_localedir}/fr_LU*
 
 ### fur
 %package -n locales-fur
@@ -1289,7 +1289,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fur
-/usr/share/locale/fur_IT*
+%{_localedir}/fur_IT*
 
 ### fy
 %package -n locales-fy
@@ -1312,8 +1312,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-fy
-/usr/share/locale/fy_DE*
-/usr/share/locale/fy_NL*
+%{_localedir}/fy_DE*
+%{_localedir}/fy_NL*
 
 ### ga
 %package -n locales-ga
@@ -1343,7 +1343,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ga
-/usr/share/locale/ga_IE*
+%{_localedir}/ga_IE*
 
 ### gd
 # translation by Caoimhin O Donnaile [caoimhin@SMO.UHI.AC.UK]
@@ -1375,7 +1375,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gd
-/usr/share/locale/gd_GB*
+%{_localedir}/gd_GB*
 
 ### gl
 # translation from Emilio <nigrann@sandra.ctv.es>
@@ -1413,7 +1413,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gl
-/usr/share/locale/gl_ES*
+%{_localedir}/gl_ES*
 
 ### gu
 %package -n locales-gu
@@ -1436,7 +1436,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gu
-/usr/share/locale/gu_IN*
+%{_localedir}/gu_IN*
 
 ### gv
 # translation by Brian Stowell <bstowell@MAILSERVICE.MCB.NET>
@@ -1467,7 +1467,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-gv
-/usr/share/locale/gv_GB*
+%{_localedir}/gv_GB*
 
 ### ha
 %package -n locales-ha
@@ -1491,7 +1491,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ha
-/usr/share/locale/ha_NG*
+%{_localedir}/ha_NG*
 
 ### he (formerly iw)
 %package -n locales-he
@@ -1527,8 +1527,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-he
-/usr/share/locale/he_IL*
-/usr/share/locale/iw_IL*
+%{_localedir}/he_IL*
+%{_localedir}/iw_IL*
 
 ### hi
 %package -n locales-hi
@@ -1551,7 +1551,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hi
-/usr/share/locale/hi_IN*
+%{_localedir}/hi_IN*
 
 ### hne
 %package -n locales-hne
@@ -1574,7 +1574,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hne
-/usr/share/locale/hne_IN
+%{_localedir}/hne_IN
 
 ### hr
 # translations by Vedran Rodic <vrodic@udig.hr>
@@ -1605,7 +1605,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hr
-/usr/share/locale/hr_HR*
+%{_localedir}/hr_HR*
 
 ### hsb
 %package -n locales-hsb
@@ -1629,7 +1629,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hsb
-/usr/share/locale/hsb_DE*
+%{_localedir}/hsb_DE*
 
 ### ht
 %package -n locales-ht
@@ -1652,7 +1652,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ht
-/usr/share/locale/ht_HT
+%{_localedir}/ht_HT
 
 ### hu
 %package -n locales-hu
@@ -1681,7 +1681,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hu
-/usr/share/locale/hu_HU*
+%{_localedir}/hu_HU*
 
 ### hy
 # translations by Eugene Sevinian <sevinian@crdlx2.yerphi.am>
@@ -1712,7 +1712,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-hy
-/usr/share/locale/hy_AM*
+%{_localedir}/hy_AM*
 
 ### id (formerly in)
 # translations by Mohammad DAMT <mdamt@cakraweb.com>
@@ -1741,7 +1741,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-id
-/usr/share/locale/id_ID*
+%{_localedir}/id_ID*
 
 ### ig
 %package -n locales-ig
@@ -1765,7 +1765,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ig
-/usr/share/locale/ig_NG*
+%{_localedir}/ig_NG*
 
 ### ik
 %package -n locales-ik
@@ -1788,7 +1788,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ik
-/usr/share/locale/ik_CA*
+%{_localedir}/ik_CA*
 
 ### is
 # Gudmundur Erlingsson <gudmuner@lexis.hi.is>
@@ -1819,7 +1819,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-is
-/usr/share/locale/is_IS*
+%{_localedir}/is_IS*
 
 ### it
 %package -n locales-it
@@ -1849,8 +1849,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-it
-/usr/share/locale/it_CH*
-/usr/share/locale/it_IT*
+%{_localedir}/it_CH*
+%{_localedir}/it_IT*
 
 ### iu
 %package -n locales-iu
@@ -1873,7 +1873,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-iu
-/usr/share/locale/iu_CA*
+%{_localedir}/iu_CA*
 
 ### ja
 # translation by "Evan D.A. Geisinger" <evan.geisinger@etak.com>
@@ -1905,7 +1905,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ja
-/usr/share/locale/ja_JP*
+%{_localedir}/ja_JP*
 
 ### ka
 %package -n locales-ka
@@ -1935,7 +1935,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ka
-/usr/share/locale/ka_GE*
+%{_localedir}/ka_GE*
 
 ### kk
 %package -n locales-kk
@@ -1959,7 +1959,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kk
-/usr/share/locale/kk_KZ*
+%{_localedir}/kk_KZ*
 
 ### kl
 %package -n locales-kl
@@ -1982,7 +1982,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kl
-/usr/share/locale/kl_GL*
+%{_localedir}/kl_GL*
 
 ### km
 %package -n locales-km
@@ -2005,7 +2005,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-km
-/usr/share/locale/km_KH*
+%{_localedir}/km_KH*
 
 ### kn
 %package -n locales-kn
@@ -2028,7 +2028,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kn
-/usr/share/locale/kn_IN*
+%{_localedir}/kn_IN*
 
 ### ko
 # translation by Soo-Jin Lee <NothingSpecial@rocketmail.com>
@@ -2058,7 +2058,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ko
-/usr/share/locale/ko_KR*
+%{_localedir}/ko_KR*
 
 ### kok
 %package -n locales-kok
@@ -2082,7 +2082,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kok
-/usr/share/locale/kok_IN*
+%{_localedir}/kok_IN*
 
 ### ks
 %package -n locales-ks
@@ -2105,8 +2105,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ks
-/usr/share/locale/ks_IN
-/usr/share/locale/ks_IN@devanagari
+%{_localedir}/ks_IN
+%{_localedir}/ks_IN@devanagari
 
 ### ku
 %package -n locales-ku
@@ -2136,7 +2136,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ku
-/usr/share/locale/ku_TR*
+%{_localedir}/ku_TR*
 
 ### kw
 # translations by Andrew Climo-Thompson <andrew@clas.demon.co.uk>
@@ -2168,7 +2168,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-kw
-/usr/share/locale/kw_GB*
+%{_localedir}/kw_GB*
 
 ### ky
 %package -n locales-ky
@@ -2191,7 +2191,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ky
-/usr/share/locale/ky_KG*
+%{_localedir}/ky_KG*
 
 ### lb
 %package	lb
@@ -2214,7 +2214,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		lb
-/usr/share/locale/lb_LU*
+%{_localedir}/lb_LU*
 
 ### lg
 %package -n locales-lg
@@ -2238,7 +2238,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lg
-/usr/share/locale/lg_UG*
+%{_localedir}/lg_UG*
 
 ### li
 %package -n locales-li
@@ -2261,8 +2261,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-li
-/usr/share/locale/li_BE*
-/usr/share/locale/li_NL*
+%{_localedir}/li_BE*
+%{_localedir}/li_NL*
 
 ### lij
 %package	lij
@@ -2285,7 +2285,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		lij
-/usr/share/locale/lij_IT*
+%{_localedir}/lij_IT*
 
 ### lo
 %package -n locales-lo
@@ -2308,7 +2308,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lo
-/usr/share/locale/lo_LA*
+%{_localedir}/lo_LA*
 
 ### lt
 %package -n locales-lt
@@ -2337,7 +2337,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lt
-/usr/share/locale/lt_LT*
+%{_localedir}/lt_LT*
 
 ### lv
 # translation done by Vitauts Stochka <vit@dpu.lv>
@@ -2369,7 +2369,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-lv
-/usr/share/locale/lv_LV*
+%{_localedir}/lv_LV*
 
 ### mai
 %package -n locales-mai
@@ -2392,7 +2392,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mai
-/usr/share/locale/mai_IN
+%{_localedir}/mai_IN
 
 ### mg
 %package -n locales-mg
@@ -2416,7 +2416,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mg
-/usr/share/locale/mg_MG*
+%{_localedir}/mg_MG*
 
 ### mhr
 %package	mhr
@@ -2439,7 +2439,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		mhr
-/usr/share/locale/mhr_RU*
+%{_localedir}/mhr_RU*
 
 
 ### mi
@@ -2471,7 +2471,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mi
-/usr/share/locale/mi_NZ*
+%{_localedir}/mi_NZ*
 
 ### mk
 %package -n locales-mk
@@ -2493,7 +2493,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mk
-/usr/share/locale/mk_MK*
+%{_localedir}/mk_MK*
 
 ### ml
 %package -n locales-ml
@@ -2515,7 +2515,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ml
-/usr/share/locale/ml_IN*
+%{_localedir}/ml_IN*
 
 ### mn
 %package -n locales-mn
@@ -2537,7 +2537,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mn
-/usr/share/locale/mn_MN*
+%{_localedir}/mn_MN*
 
 ### mr
 %package -n locales-mr
@@ -2560,7 +2560,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mr
-/usr/share/locale/mr_IN*
+%{_localedir}/mr_IN*
 
 ### ms
 %package -n locales-ms
@@ -2582,7 +2582,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ms
-/usr/share/locale/ms_MY*
+%{_localedir}/ms_MY*
 
 ### mt
 # translation by Ramon Casha <rcasha@waldonet.net.mt>
@@ -2613,7 +2613,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-mt
-/usr/share/locale/mt_MT*
+%{_localedir}/mt_MT*
 
 ### my
 %package -n locales-my
@@ -2636,7 +2636,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-my
-/usr/share/locale/my_MM
+%{_localedir}/my_MM
 
 ### nds
 %package -n locales-nds
@@ -2673,8 +2673,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nds
-/usr/share/locale/nds_DE*
-/usr/share/locale/nds_NL*
+%{_localedir}/nds_DE*
+%{_localedir}/nds_NL*
 
 ### ne
 %package -n locales-ne
@@ -2697,7 +2697,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ne
-/usr/share/locale/ne_NP*
+%{_localedir}/ne_NP*
 
 ### nl
 %package -n locales-nl
@@ -2734,9 +2734,9 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nl
-/usr/share/locale/nl_AW*
-/usr/share/locale/nl_BE*
-/usr/share/locale/nl_NL*
+%{_localedir}/nl_AW*
+%{_localedir}/nl_BE*
+%{_localedir}/nl_NL*
 
 ### no
 # translations by peter@datadok.no
@@ -2769,8 +2769,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-no
-/usr/share/locale/nb_NO*
-/usr/share/locale/nn_NO*
+%{_localedir}/nb_NO*
+%{_localedir}/nn_NO*
 
 ### nr
 %package -n locales-nr
@@ -2793,7 +2793,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nr
-/usr/share/locale/nr_ZA*
+%{_localedir}/nr_ZA*
 
 ### nso
 %package -n locales-nso
@@ -2817,7 +2817,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-nso
-/usr/share/locale/nso_ZA*
+%{_localedir}/nso_ZA*
 
 ### oc
 %package -n locales-oc
@@ -2847,7 +2847,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-oc
-/usr/share/locale/oc_FR*
+%{_localedir}/oc_FR*
 
 ### or
 %package -n locales-or
@@ -2870,7 +2870,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-or
-/usr/share/locale/or_IN
+%{_localedir}/or_IN
 
 ### os
 %package	os
@@ -2893,7 +2893,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		os
-/usr/share/locale/os_RU*
+%{_localedir}/os_RU*
 
 ### pa
 %package -n locales-pa
@@ -2916,8 +2916,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-pa
-/usr/share/locale/pa_IN*
-/usr/share/locale/pa_PK*
+%{_localedir}/pa_IN*
+%{_localedir}/pa_PK*
 
 ### pap
 %package -n locales-pap
@@ -2942,7 +2942,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-pap
-/usr/share/locale/pap_AN*
+%{_localedir}/pap_AN*
 
 ### pl
 %package	pl
@@ -2965,8 +2965,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		pl
-/usr/share/locale/csb_PL*
-/usr/share/locale/pl_PL*
+%{_localedir}/csb_PL*
+%{_localedir}/pl_PL*
 
 ### ps
 %package -n locales-ps
@@ -2989,7 +2989,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ps
-/usr/share/locale/ps_AF
+%{_localedir}/ps_AF
 
 ### pt
 %package -n locales-pt
@@ -3022,8 +3022,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-pt
-/usr/share/locale/pt_BR*
-/usr/share/locale/pt_PT*
+%{_localedir}/pt_BR*
+%{_localedir}/pt_PT*
 
 ### ro
 # translation from "Mihai" <mihai@ambra.ro>
@@ -3054,7 +3054,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ro
-/usr/share/locale/ro_RO*
+%{_localedir}/ro_RO*
 
 ### ru
 %package -n locales-ru
@@ -3086,8 +3086,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ru
-/usr/share/locale/ru_RU*
-/usr/share/locale/ru_UA*
+%{_localedir}/ru_RU*
+%{_localedir}/ru_UA*
 
 ### rw
 %package -n locales-rw
@@ -3111,7 +3111,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-rw
-/usr/share/locale/rw_RW*
+%{_localedir}/rw_RW*
 
 ### sa
 %package -n locales-sa
@@ -3134,7 +3134,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sa
-/usr/share/locale/sa_IN
+%{_localedir}/sa_IN
 
 ### sc
 %package -n locales-sc
@@ -3157,7 +3157,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sc
-/usr/share/locale/sc_IT*
+%{_localedir}/sc_IT*
 
 ### sd
 %package -n locales-sd
@@ -3180,8 +3180,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sd
-/usr/share/locale/sd_IN
-/usr/share/locale/sd_IN@devanagari
+%{_localedir}/sd_IN
+%{_localedir}/sd_IN@devanagari
 
 ### se
 %package -n locales-se
@@ -3205,7 +3205,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-se
-/usr/share/locale/se_NO*
+%{_localedir}/se_NO*
 
 ### shs
 %package -n locales-shs
@@ -3228,7 +3228,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-shs
-/usr/share/locale/shs_CA
+%{_localedir}/shs_CA
 
 ### si
 %package -n locales-si
@@ -3252,7 +3252,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-si
-/usr/share/locale/si_LK*
+%{_localedir}/si_LK*
 
 ### sk
 %package -n locales-sk
@@ -3281,7 +3281,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sk
-/usr/share/locale/sk_SK*
+%{_localedir}/sk_SK*
 
 ### sl
 # Translations from Roman Maurer <roman.maurer@fmf.uni-lj.si>
@@ -3313,7 +3313,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sl
-/usr/share/locale/sl_SI*
+%{_localedir}/sl_SI*
 
 ### sr
 %package	sr
@@ -3336,8 +3336,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		sr
-/usr/share/locale/sr_ME*
-/usr/share/locale/sr_RS*
+%{_localedir}/sr_ME*
+%{_localedir}/sr_RS*
 
 ### so
 %package -n locales-so
@@ -3360,10 +3360,10 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-so
-/usr/share/locale/so_DJ*
-/usr/share/locale/so_ET*
-/usr/share/locale/so_KE*
-/usr/share/locale/so_SO*
+%{_localedir}/so_DJ*
+%{_localedir}/so_ET*
+%{_localedir}/so_KE*
+%{_localedir}/so_SO*
 
 ### sq
 %package -n locales-sq
@@ -3386,8 +3386,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sq
-/usr/share/locale/sq_AL*
-/usr/share/locale/sq_MK*
+%{_localedir}/sq_AL*
+%{_localedir}/sq_MK*
 
 ### ss
 %package -n locales-ss
@@ -3410,7 +3410,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ss
-/usr/share/locale/ss_ZA*
+%{_localedir}/ss_ZA*
 
 ### st
 %package -n locales-st
@@ -3433,7 +3433,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-st
-/usr/share/locale/st_ZA*
+%{_localedir}/st_ZA*
 
 ### sv
 # translation by Erik Almqvist <erik.almqvist@vrg.se>
@@ -3463,8 +3463,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sv
-/usr/share/locale/sv_FI*
-/usr/share/locale/sv_SE*
+%{_localedir}/sv_FI*
+%{_localedir}/sv_SE*
 
 ### sw
 %package	sw
@@ -3487,9 +3487,9 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		sw
-/usr/share/locale/sw_KE*
-/usr/share/locale/sw_TZ*
-/usr/share/locale/sw_XX*
+%{_localedir}/sw_KE*
+%{_localedir}/sw_TZ*
+%{_localedir}/sw_XX*
 
 ### ta
 %package -n locales-ta
@@ -3513,7 +3513,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ta
-/usr/share/locale/ta_IN*
+%{_localedir}/ta_IN*
 
 ### te
 %package -n locales-te
@@ -3536,7 +3536,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-te
-/usr/share/locale/te_IN*
+%{_localedir}/te_IN*
 
 ### tg
 %package -n locales-tg
@@ -3559,7 +3559,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tg
-/usr/share/locale/tg_TJ*
+%{_localedir}/tg_TJ*
 
 ### th
 %package	th
@@ -3582,7 +3582,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		th
-/usr/share/locale/th_TH*
+%{_localedir}/th_TH*
 
 ### tk
 %package -n locales-tk
@@ -3605,7 +3605,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tk
-/usr/share/locale/tk_TM*
+%{_localedir}/tk_TM*
 
 ### fil
 # note: previously named "locales-ph"
@@ -3632,8 +3632,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tl
-/usr/share/locale/fil_PH*
-/usr/share/locale/tl_PH*
+%{_localedir}/fil_PH*
+%{_localedir}/tl_PH*
 
 ### tn
 %package -n locales-tn
@@ -3656,7 +3656,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tn
-/usr/share/locale/tn_ZA*
+%{_localedir}/tn_ZA*
 
 ### tr
 # translation from Gorkem Cetin <e077245@narwhal.cc.metu.edu.tr>
@@ -3687,8 +3687,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tr
-/usr/share/locale/tr_CY*
-/usr/share/locale/tr_TR*
+%{_localedir}/tr_CY*
+%{_localedir}/tr_TR*
 
 ### ts
 %package -n locales-ts
@@ -3711,7 +3711,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ts
-/usr/share/locale/ts_ZA*
+%{_localedir}/ts_ZA*
 
 ### tt
 %package -n locales-tt
@@ -3734,7 +3734,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tt
-/usr/share/locale/tt_RU*
+%{_localedir}/tt_RU*
 
 ### ug
 %package -n locales-ug
@@ -3758,7 +3758,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ug
-/usr/share/locale/ug_CN*
+%{_localedir}/ug_CN*
 
 ### uk
 %package -n locales-uk
@@ -3795,7 +3795,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-uk
-/usr/share/locale/uk_UA*
+%{_localedir}/uk_UA*
 
 ### ur
 %package -n locales-ur
@@ -3822,7 +3822,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ur
-/usr/share/locale/ur_PK*
+%{_localedir}/ur_PK*
 
 ### uz
 %package -n locales-uz
@@ -3854,7 +3854,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-uz
-/usr/share/locale/uz_UZ*
+%{_localedir}/uz_UZ*
 
 ### ve
 %package -n locales-ve
@@ -3877,7 +3877,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-ve
-/usr/share/locale/ve_ZA*
+%{_localedir}/ve_ZA*
 
 ### vi
 # translations by <DaiQuy.nguyen@ulg.ac.be>
@@ -3909,7 +3909,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-vi
-/usr/share/locale/vi_VN*
+%{_localedir}/vi_VN*
 
 ### wa
 # translations from Lorint Hendschel <LorintHendschel@skynet.be>
@@ -3946,7 +3946,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-wa
-/usr/share/locale/wa_BE*
+%{_localedir}/wa_BE*
 
 ### wae
 %package	wae
@@ -3969,7 +3969,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		wae
-/usr/share/locale/wae_CH*
+%{_localedir}/wae_CH*
 
 ### wo
 %package -n locales-wo
@@ -3992,7 +3992,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-wo
-/usr/share/locale/wo_SN
+%{_localedir}/wo_SN
 
 ### xh
 %package -n locales-xh
@@ -4015,7 +4015,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-xh
-/usr/share/locale/xh_ZA*
+%{_localedir}/xh_ZA*
 
 ### yi
 %package -n locales-yi
@@ -4042,7 +4042,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-yi
-/usr/share/locale/yi_US*
+%{_localedir}/yi_US*
 
 ### yo
 %package -n locales-yo
@@ -4066,7 +4066,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-yo
-/usr/share/locale/yo_NG*
+%{_localedir}/yo_NG*
 
 ### yue
 %package	yue
@@ -4089,7 +4089,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files		yue
-/usr/share/locale/yue_HK*
+%{_localedir}/yue_HK*
 
 ### zh
 # translation (zh_TW) from <informer@linux1.cgu.edu.tw>
@@ -4131,11 +4131,11 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-zh
-/usr/share/locale/nan_TW@latin
-/usr/share/locale/zh_CN*
-/usr/share/locale/zh_HK*
-/usr/share/locale/zh_SG*
-/usr/share/locale/zh_TW*
+%{_localedir}/nan_TW@latin
+%{_localedir}/zh_CN*
+%{_localedir}/zh_HK*
+%{_localedir}/zh_SG*
+%{_localedir}/zh_TW*
 
 ### zu
 %package -n locales-zu
@@ -4158,7 +4158,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-zu
-/usr/share/locale/zu_ZA*
+%{_localedir}/zu_ZA*
 
 %prep
 %setup -qcT
@@ -4201,7 +4201,7 @@ do
 done
 
 %build
-LOCALEDIR=root%{_datadir}/locale
+LOCALEDIR=root%{_localedir}
 install -d $LOCALEDIR
 
 # making default charset pseudo-locales
@@ -4304,9 +4304,9 @@ install -m644 %{SOURCE4} -D %{buildroot}%{_sysconfdir}/sysconfig/locales
 
 cp -a root/* %{buildroot}
 
-perl %{SOURCE5} %{buildroot}%{_datadir}/locale
+perl %{SOURCE5} %{buildroot}%{_localedir}
 
-pushd %{buildroot}%{_datadir}/locale
+pushd %{buildroot}%{_localedir}
 for i in `echo ??_??* ???_??*`; do
 	LC_ALL=C perl %{SOURCE6} $i
 done
