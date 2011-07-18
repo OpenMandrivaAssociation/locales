@@ -21,10 +21,9 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.13
+%define glibc_ver 2.14
 %define glibc_epoch 6
 %define version   %{glibc_ver}
-%define release   %mkrel 2
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -38,7 +37,7 @@
 Summary:	Base files for localization
 Name:		locales
 Version:	%{glibc_ver}
-Release:	2
+Release:	1
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
@@ -48,12 +47,13 @@ Source1:	iso14651_hack
 # scripts/config files to install/uninstall a locale
 Source2:	locale_install.sh
 Source3:	locale_uninstall.sh
-Source4:	locales
+Source4:	locales.sysconfig
+Source5:	locales-hardlink.pl
+Source6:	locales-softlink.pl
 
 # this one is on glibc, however there is the politic issue
 # of the naming of Taiwan 
-Source6:	zh_TW_2
-
+Source15:	zh_TW_2
 # locales data
 Source16:	sw_XX
 Source17:	ku_TR
@@ -122,199 +122,6 @@ You also need to install the specific locales-?? for the
 language(s) you want. Then the user need to set the
 LANG variable to their preferred language in their
 ~/.profile configuration file.
-
-%prep
-
-%build
-rm -rf $RPM_BUILD_ROOT
-
-mkdir -p $RPM_BUILD_ROOT/usr/bin/
-install -m 755 %{SOURCE2} ${RPM_BUILD_ROOT}%{loc_add}
-install -m 755 %{SOURCE3} ${RPM_BUILD_ROOT}%{loc_del}
-
-mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/sysconfig
-install -m 644 %{_sourcedir}/locales $RPM_BUILD_ROOT/%{_sysconfdir}/sysconfig/
-
-mkdir -p $RPM_BUILD_ROOT/usr/share/locale
-LOCALEDIR=$RPM_BUILD_ROOT/usr/share/locale
-
-rm -rf locales-%{version}
-mkdir -p locales-%{version} ; cd locales-%{version}
-
-cp $RPM_SOURCE_DIR/iso14651_hack .
-for i in `grep '^#LIST_LOCALES=' iso14651_hack | cut -d= -f2 | tr ':' ' '`
-do
-	cat iso14651_hack | sed "s/#hack-$i#//" > iso14651_$i
-done
-
-# for turkic languages (upperwasing/lowercasing of iwithdot/dotlessi)
-cat /usr/share/i18n/locales/i18n | \
-	sed 's/<U0069>,<U0049>/<U0069>,<U0130>/' | \
-	sed 's/<U0049>,<U0069>/<U0049>,<U0131>/' > i18n_tr
-
-		
-# copy various unhabitual charsets and other stuff
-for DEF_CHARSET in \
-	es@tradicional
-do
-	cp $RPM_SOURCE_DIR/$DEF_CHARSET .
-done
-
-# special handling for PRC
-%if %build_for_PRC
-	cp $RPM_SOURCE_DIR/zh_TW_2 zh_TW
-%endif
-
-# copy local locales unavailable in glibc
-for loc in eo_XX es@tradicional nds_DE@traditional sw_XX
-do
-	cp %{_sourcedir}/$loc .
-done
-
-# copy modified glibc locales
-for loc in ar_SA az_AZ bs_BA dz_BT es_ES es_US es_CO km_KH ku_TR ky_KG sq_AL \
-           tg_TJ tr_TR vi_VN wa_BE yi_US zh_CN
-do
-	cp %{_sourcedir}/$loc .
-done
-
-# making default charset pseudo-locales
-# those will be symlinked (for LC_CTYPE, LC_COLLATE mainly) from
-# a lot of other locales, thus saving space
-for DEF_CHARSET in UTF-8 ISO-8859-1 ISO-8859-2 ISO-8859-3 ISO-8859-4 \
-	 ISO-8859-5 ISO-8859-7 ISO-8859-9 \
-	 ISO-8859-13 ISO-8859-14 ISO-8859-15 KOI8-R KOI8-U CP1251 
-do
-	# find the charset definition
-    if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET ]; then
-    	if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET.gz ]; then
-			cp $RPM_SOURCE_DIR/$DEF_CHARSET .
-			DEF_CHARSET=$RPM_SOURCE_DIR/$DEF_CHARSET
-		fi
-	fi
-	# don't use en_DK because of LC_MONETARY
-	localedef -c -f $DEF_CHARSET -i en_US $LOCALEDIR/`basename $DEF_CHARSET` || :
-done
-
-# fix for Arabic yes/no expr
-for i in /usr/share/i18n/locales/ar_??
-do
-	if [ ! -r "$RPM_SOURCE_DIR/`basename $i`" ]; then
-		cat $i | \
-		sed 's/^\(yesexpr.*\)<U0646>/\1<U0646><U0079><U0059>/' | \
-		sed 's/^\(noexpr.*\)<U0644>/\1<U0644><U006E><U004E>/' > \
-		./`basename $i`
-	fi
-done
-
-# fix for locales using monday as first week day
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=3035
-for i in /usr/share/i18n/locales/be_BY /usr/share/i18n/locales/cy_GB \
-	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_GR \
-	/usr/share/i18n/locales/es_CL \
-	/usr/share/i18n/locales/es_MX /usr/share/i18n/locales/fr_?? \
-	/usr/share/i18n/locales/fy_NL /usr/share/i18n/locales/it_?? \
-	/usr/share/i18n/locales/lt_LT /usr/share/i18n/locales/mi_NZ \
-	/usr/share/i18n/locales/nl_BE /usr/share/i18n/locales/nl_NL \
-	/usr/share/i18n/locales/pt_PT /usr/share/i18n/locales/ru_UA \
-	/usr/share/i18n/locales/se_NO /usr/share/i18n/locales/sv_FI \
-	/usr/share/i18n/locales/*_ES vi_VN
-do
-	LOCALENAME=`basename $i`
-	if [ -r $RPM_SOURCE_DIR/$i ]; then
-		DEF_LOCALE_FILE="$RPM_SOURCE_DIR/$i"
-	else
-		DEF_LOCALE_FILE="/usr/share/i18n/locales/$LOCALENAME"
-	fi
-	if ! grep '^week\>' $DEF_LOCALE_FILE > /dev/null && \
-	   ! grep '^first_weekday\>' $DEF_LOCALE_FILE > /dev/null && \
-	   ! grep '^first_workday\>' $DEF_LOCALE_FILE > /dev/null
-	then
-		cat $DEF_LOCALE_FILE | sed \
-			's/\(END LC_TIME\)/week 7;19971201;4\nfirst_weekday 1\nfirst_workday 1\n\1/' > \
-		./$LOCALENAME
-	fi
-done
-
-%make -f %{_sourcedir}/Makefile DESTDIR=$RPM_BUILD_ROOT
-
-localedef -c -f ISO-8859-15 -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional
-localedef -c -f ISO-8859-1  -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional.ISO-8859-1
-localedef -c -f UTF-8       -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional.UTF-8
-localedef -c -f UTF-8       -i sw_XX              $LOCALEDIR/sw_XX
-localedef -c -f UTF-8       -i eo_XX              $LOCALEDIR/eo_XX
-localedef -c -f UTF-8       -i wal_ET             $LOCALEDIR/wal_ET || :
-
-# create the default locales for languages whith multiple locales
-localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional
-
-#=========================================================
-#
-# special non-UTF-8 locales for compatibility
-#
-
-# Esperanto
-localedef -c -f ISO-8859-3 -i eo_XX $LOCALEDIR/eo_XX.ISO-8859-3
-
-# en_BE is required for conformance to LI18NUX2000/OpenI18N
-# (http://www.openi18n.org/docs/pdf/OpenI18N1.3.pdf)
-for i in $LOCALEDIR/en_IE* ; do
-	mkdir $LOCALEDIR/en_BE`basename $i | cut -b6- `
-	cp -var $i/* $LOCALEDIR/en_BE`basename $i | cut -b6- `
-	for j in LC_MONETARY LC_TELEPHONE LC_ADDRESS
-	do
-		cp -var $LOCALEDIR/nl_BE`basename $i | cut -b6- `/$j \
-			$LOCALEDIR/en_BE`basename $i | cut -b6- `
-	done
-done
-
-#=========================================================
-
-# replace all identique files with hard links.
-# script from Alastair McKinstry, 2000-07-03
-cat > hardlink.pl << EOF
-#!/usr/bin/perl
-@files = \`find \$ARGV[0] -type f -a -not -name "LC_C*" \`;
-
-foreach \$fi (@files) {
-  chop (\$fi);
-  (\$sum,\$name) = split(/ /,\`md5sum -b  \$fi\`);
-  if (  \$orig{\$sum} eq "" ) {
-    \$orig{\$sum} =\$fi;
-  } else {
-    \`ln -f \$orig{\$sum} \$fi\`;
-  }
-}
-EOF
-chmod a+x hardlink.pl
-./hardlink.pl $RPM_BUILD_ROOT/usr/share/locale
-
-# make LC_CTYPE and LC_COLLATE symlinks
-cat > softlink.pl << EOF
-#!/usr/bin/perl
-@files = \`find [A-Z]* \$ARGV[0]* -type f -a -name "LC_C*" \`;
-
-foreach \$fi (@files) {
-  chop (\$fi);
-  (\$sum,\$name) = split(/ /,\`md5sum -b  \$fi\`);
-  if (  \$orig{\$sum} eq "" ) {
-    \$orig{\$sum} =\$fi;
-  } else {
-    \`rm \$fi\`;
-    \`ln -s ../\$orig{\$sum} \$fi\`;
-  }
-}
-EOF
-chmod a+x softlink.pl
-(
- cd $RPM_BUILD_ROOT/usr/share/locale ;
- for i in `echo ??_??* ???_??*`
- do
-	LC_ALL=C $RPM_BUILD_DIR/locales-%{version}/softlink.pl $i
- done
-)
-
-cd ..
 
 %post
 %{loc_add} "ENCODINGS"
@@ -4070,3 +3877,155 @@ fi
 
 %files -n locales-zu
 /usr/share/locale/zu_ZA*
+
+%prep
+%setup -qcT
+
+cp %{SOURCE0} %{SOURCE1} .
+for i in `grep '^#LIST_LOCALES=' iso14651_hack | cut -d= -f2 | tr ':' ' '`
+do
+	cat iso14651_hack | sed "s/#hack-$i#//" > iso14651_$i
+done
+
+# for turkic languages (upperwasing/lowercasing of iwithdot/dotlessi)
+cat /usr/share/i18n/locales/i18n | \
+	sed 's/<U0069>,<U0049>/<U0069>,<U0130>/' | \
+	sed 's/<U0049>,<U0069>/<U0049>,<U0131>/' > i18n_tr
+
+		
+# copy various unhabitual charsets and other stuff
+for DEF_CHARSET in \
+	es@tradicional
+do
+	cp %{_sourcedir}/$DEF_CHARSET .
+done
+
+# special handling for PRC
+%if %build_for_PRC
+	cp %{_sourcedir}/zh_TW_2 zh_TW
+%endif
+
+# copy local locales unavailable in glibc
+for loc in eo_XX es@tradicional nds_DE@traditional sw_XX
+do
+	cp %{_sourcedir}/$loc .
+done
+
+# copy modified glibc locales
+for loc in ar_SA az_AZ bs_BA dz_BT es_ES es_US es_CO km_KH ku_TR ky_KG sq_AL \
+           tg_TJ tr_TR vi_VN wa_BE yi_US zh_CN
+do
+	cp %{_sourcedir}/$loc .
+done
+
+%build
+LOCALEDIR=root%{_datadir}/locale
+install -d $LOCALEDIR
+
+# making default charset pseudo-locales
+# those will be symlinked (for LC_CTYPE, LC_COLLATE mainly) from
+# a lot of other locales, thus saving space
+for DEF_CHARSET in UTF-8 ISO-8859-1 ISO-8859-2 ISO-8859-3 ISO-8859-4 \
+	 ISO-8859-5 ISO-8859-7 ISO-8859-9 \
+	 ISO-8859-13 ISO-8859-14 ISO-8859-15 KOI8-R KOI8-U CP1251 
+do
+	# find the charset definition
+    if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET ]; then
+    	if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET.gz ]; then
+			cp %{_sourcedir}/$DEF_CHARSET .
+			DEF_CHARSET=%{_sourcedir}/$DEF_CHARSET
+		fi
+	fi
+	# don't use en_DK because of LC_MONETARY
+	localedef -c -f $DEF_CHARSET -i en_US $LOCALEDIR/`basename $DEF_CHARSET` || :
+done
+
+# fix for Arabic yes/no expr
+for i in /usr/share/i18n/locales/ar_??
+do
+	if [ ! -r "%{_sourcedir}/`basename $i`" ]; then
+		cat $i | \
+		sed 's/^\(yesexpr.*\)<U0646>/\1<U0646><U0079><U0059>/' | \
+		sed 's/^\(noexpr.*\)<U0644>/\1<U0644><U006E><U004E>/' > \
+		./`basename $i`
+	fi
+done
+
+# fix for locales using monday as first week day
+# http://sources.redhat.com/bugzilla/show_bug.cgi?id=3035
+for i in /usr/share/i18n/locales/be_BY /usr/share/i18n/locales/cy_GB \
+	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_GR \
+	/usr/share/i18n/locales/es_CL \
+	/usr/share/i18n/locales/es_MX /usr/share/i18n/locales/fr_?? \
+	/usr/share/i18n/locales/fy_NL /usr/share/i18n/locales/it_?? \
+	/usr/share/i18n/locales/lt_LT /usr/share/i18n/locales/mi_NZ \
+	/usr/share/i18n/locales/nl_BE /usr/share/i18n/locales/nl_NL \
+	/usr/share/i18n/locales/pt_PT /usr/share/i18n/locales/ru_UA \
+	/usr/share/i18n/locales/se_NO /usr/share/i18n/locales/sv_FI \
+	/usr/share/i18n/locales/*_ES vi_VN
+do
+	LOCALENAME=`basename $i`
+	if [ -r %{_sourcedir}/$i ]; then
+		DEF_LOCALE_FILE="%{_sourcedir}/$i"
+	else
+		DEF_LOCALE_FILE="/usr/share/i18n/locales/$LOCALENAME"
+	fi
+	if ! grep '^week\>' $DEF_LOCALE_FILE > /dev/null && \
+	   ! grep '^first_weekday\>' $DEF_LOCALE_FILE > /dev/null && \
+	   ! grep '^first_workday\>' $DEF_LOCALE_FILE > /dev/null
+	then
+		cat $DEF_LOCALE_FILE | sed \
+			's/\(END LC_TIME\)/week 7;19971201;4\nfirst_weekday 1\nfirst_workday 1\n\1/' > \
+		./$LOCALENAME
+	fi
+done
+
+%make DESTDIR=root
+
+localedef -c -f ISO-8859-15 -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional
+localedef -c -f ISO-8859-1  -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional.ISO-8859-1
+localedef -c -f UTF-8       -i nds_DE@traditional $LOCALEDIR/nds_DE@traditional.UTF-8
+localedef -c -f UTF-8       -i sw_XX              $LOCALEDIR/sw_XX
+localedef -c -f UTF-8       -i eo_XX              $LOCALEDIR/eo_XX
+localedef -c -f UTF-8       -i wal_ET             $LOCALEDIR/wal_ET || :
+
+# create the default locales for languages whith multiple locales
+localedef -c -f ISO-8859-15 -i ./es@tradicional $LOCALEDIR/es@tradicional
+
+#=========================================================
+#
+# special non-UTF-8 locales for compatibility
+#
+
+# Esperanto
+localedef -c -f ISO-8859-3 -i eo_XX $LOCALEDIR/eo_XX.ISO-8859-3
+
+# en_BE is required for conformance to LI18NUX2000/OpenI18N
+# (http://www.openi18n.org/docs/pdf/OpenI18N1.3.pdf)
+for i in $LOCALEDIR/en_IE* ; do
+	mkdir $LOCALEDIR/en_BE`basename $i | cut -b6- `
+	cp -var $i/* $LOCALEDIR/en_BE`basename $i | cut -b6- `
+	for j in LC_MONETARY LC_TELEPHONE LC_ADDRESS
+	do
+		cp -var $LOCALEDIR/nl_BE`basename $i | cut -b6- `/$j \
+			$LOCALEDIR/en_BE`basename $i | cut -b6- `
+	done
+done
+
+#=========================================================
+
+%install
+install -m755 %{SOURCE2} -D %{buildroot}%{loc_add}
+install -m755 %{SOURCE3} -D %{buildroot}%{loc_del}
+
+install -m644 %{SOURCE4} -D %{buildroot}%{_sysconfdir}/sysconfig/locales
+
+cp -a root/* %{buildroot}
+
+perl %{SOURCE5} %{buildroot}%{_datadir}/locale
+
+pushd %{buildroot}%{_datadir}/locale
+for i in `echo ??_??* ???_??*`; do
+	LC_ALL=C perl %{SOURCE6} $i
+done
+popd
