@@ -408,6 +408,29 @@ fi
 %files -n locales-be
 /usr/share/locale/be_BY*
 
+### bem
+%package	bem
+Summary:	Base files for localization (Bemba)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	bem
+These are the base files for Bemba language localization; you need
+it to correctly display 8bits Bemba characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Bemba language conventions.
+
+%post		bem
+%{loc_add} bem_ZM
+
+%preun		bem
+if [ "$1" = "0" ]; then
+	%{loc_del} bem_ZM
+fi
+
+%files		bem
+/usr/share/locale/bem_ZM*
+
 ### ber
 %package -n locales-ber
 Summary: Base files for localization (Berber)
@@ -416,7 +439,7 @@ Requires: locales = %{version}-%{release}
 
 %description -n locales-ber
 These are the base files for Berber (Amazigh) language localization; you need
-it to correctly display 8bits amazigh characters, and for proper
+it to correctly display 8bits Amazigh characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Amazigh language conventions.
 
@@ -894,7 +917,7 @@ Contains: en_CA en_DK en_GB en_IE en_US
 
 %post -n locales-en
 %{loc_add} en_AG en_AU en_BE en_BW en_CA en_DK en_GB en_HK en_IE en_IN en_NG \
-           en_NZ en_PH en_SG en_US en_ZA en_ZW
+           en_NZ en_PH en_SG en_US en_ZA en_ZM en_ZW
 
 %preun -n locales-en
 if [ "$1" = "0" ]; then
@@ -919,6 +942,7 @@ fi
 /usr/share/locale/en_SG*
 /usr/share/locale/en_US*
 /usr/share/locale/en_ZA*
+/usr/share/locale/en_ZM*
 /usr/share/locale/en_ZW*
 
 ### eo
@@ -1148,6 +1172,29 @@ fi
 
 %files -n locales-fi
 /usr/share/locale/fi_FI*
+
+### ff
+%package	ff
+Summary:	Base files for localization (Fulah)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	ff
+These are the base files for Fulah language localization; you need
+it to correctly display 8bits Fulah characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Fulah language conventions.
+
+%post		ff
+%{loc_add} ff_SN
+
+%preun		ff
+if [ "$1" = "0" ]; then
+	%{loc_del} ff_SN
+fi
+
+%files		ff
+/usr/share/locale/ff_SN*
 
 ### fo
 %package -n locales-fo
@@ -2146,6 +2193,29 @@ fi
 %files -n locales-ky
 /usr/share/locale/ky_KG*
 
+### lb
+%package	lb
+Summary:	Base files for localization (Luxembourgish)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	lb
+These are the base files for Luxembourgish language localization; you need
+it to correctly display 8bits Luxembourgish characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Luxembourgish language conventions.
+
+%post		lb
+%{loc_add} lb_LU
+
+%preun		lb
+if [ "$1" = "0" ]; then
+	%{loc_del} lb_LU
+fi
+
+%files		lb
+/usr/share/locale/lb_LU*
+
 ### lg
 %package -n locales-lg
 Summary: Base files for localization (Luganda)
@@ -2193,6 +2263,29 @@ fi
 %files -n locales-li
 /usr/share/locale/li_BE*
 /usr/share/locale/li_NL*
+
+### lij
+%package	lij
+Summary:	Base files for localization (Ligurian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	lij
+These are the base files for Ligurian language localization; you need
+it to correctly display 8bits Ligurian characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Ligurian language conventions.
+
+%post		lij
+%{loc_add} lij_IT
+
+%preun		lij
+if [ "$1" = "0" ]; then
+	%{loc_del} lij_IT
+fi
+
+%files		lij
+/usr/share/locale/lij_IT*
 
 ### lo
 %package -n locales-lo
@@ -2324,6 +2417,30 @@ fi
 
 %files -n locales-mg
 /usr/share/locale/mg_MG*
+
+### mhr
+%package	mhr
+Summary:	Base files for localization (Mari)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	mhr
+These are the base files for Mari language localization; you need
+it to correctly display 8bits Mari characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Mari language conventions.
+
+%post		mhr
+%{loc_add} mhr_RU
+
+%preun		mhr
+if [ "$1" = "0" ]; then
+	%{loc_del} mhr_RU
+fi
+
+%files		mhr
+/usr/share/locale/mhr_RU*
+
 
 ### mi
 # Maori translation provided by Gasson <gasson@clear.net.nz>
@@ -2755,6 +2872,29 @@ fi
 %files -n locales-or
 /usr/share/locale/or_IN
 
+### os
+%package	os
+Summary:	Base files for localization (Ossetian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	os
+These are the base files for Ossetian language localization; you need
+it to correctly display 8bits Ossetian characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Ossetian language conventions.
+
+%post		os
+%{loc_add} os_RU
+
+%preun		os
+if [ "$1" = "0" ]; then
+	%{loc_del} os_RU
+fi
+
+%files		os
+/usr/share/locale/os_RU*
+
 ### pa
 %package -n locales-pa
 Summary: Base files for localization (Punjabi)
@@ -2802,8 +2942,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-pap
-/usr/share/locale/csb_PL*
-/usr/share/locale/pl_PL*
+/usr/share/locale/pap_AN*
 
 ### ps
 %package -n locales-ps
@@ -3199,8 +3338,8 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sq
-/usr/share/locale/sr_ME*
-/usr/share/locale/sr_RS*
+/usr/share/locale/sq_AL*
+/usr/share/locale/sq_MK*
 
 ### ss
 %package -n locales-ss
@@ -3276,7 +3415,32 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-sv
-/usr/share/locale/sw_XX*
+/usr/share/locale/sv_FI*
+/usr/share/locale/sv_SE*
+
+### sw
+%package	sw
+Summary:	Base files for localization (Swahili)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	sw
+These are the base files for Swahili language localization; you need
+it to correctly display 8bits Swahili characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Swahili language conventions.
+
+%post		sw
+%{loc_add} sw_KE SW_TZ
+
+%preun		sw
+if [ "$1" = "0" ]; then
+	%{loc_del} sw_KE sw_TZ
+fi
+
+%files		sw
+/usr/share/locale/sw_KE*
+/usr/share/locale/sw_TZ*
 
 ### ta
 %package -n locales-ta
@@ -3346,7 +3510,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %files -n locales-tg
-/usr/share/locale/th_TH*
+/usr/share/locale/tg_TJ*
 
 ### tk
 %package -n locales-tk
@@ -3712,6 +3876,29 @@ fi
 %files -n locales-wa
 /usr/share/locale/wa_BE*
 
+### wae
+%package	wae
+Summary:	Base files for localization (Walser)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	wae
+These are the base files for Walser language localization; you need
+it to correctly display 8bits Walser characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Walser language conventions.
+
+%post		wae
+%{loc_add} wae_CH
+
+%preun		wae
+if [ "$1" = "0" ]; then
+	%{loc_del} wae_CH
+fi
+
+%files		wae
+/usr/share/locale/wae_CH*
+
 ### wo
 %package -n locales-wo
 Summary: Base files for localization (Wolof)
@@ -3808,6 +3995,29 @@ fi
 
 %files -n locales-yo
 /usr/share/locale/yo_NG*
+
+### yue
+%package	yue
+Summary:	Base files for localization (Yue Chinese (Cantonese))
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	yue
+These are the base files for Yue Chinese (Cantonese) language localization;
+you need it to correctly display 8bits Walser characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Yue Chinese (Cantonese) language conventions.
+
+%post		yue
+%{loc_add} yue_HK
+
+%preun		yue
+if [ "$1" = "0" ]; then
+	%{loc_del} yue_HK
+fi
+
+%files		yue
+/usr/share/locale/yue_HK*
 
 ### zh
 # translation (zh_TW) from <informer@linux1.cgu.edu.tw>
