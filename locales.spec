@@ -2944,6 +2944,30 @@ fi
 %files -n locales-pap
 /usr/share/locale/pap_AN*
 
+### pl
+%package	pl
+Summary:	Base files for localization (Polish)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	pl
+These are the base files for Polish language localization; you need
+it to correctly display 8bits Polish characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Polish language conventions.
+
+%post		pl
+%{loc_add} csb_PL pl_PL
+
+%preun		pl
+if [ "$1" = "0" ]; then
+	%{loc_del} csb_PL pl_PL
+fi
+
+%files		pl
+/usr/share/locale/csb_PL*
+/usr/share/locale/pl_PL*
+
 ### ps
 %package -n locales-ps
 Summary: Base files for localization (Pashto)
@@ -3291,6 +3315,30 @@ fi
 %files -n locales-sl
 /usr/share/locale/sl_SI*
 
+### sr
+%package	sr
+Summary:	Base files for localization (Serbian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	sr
+These are the base files for Serbian language localization; you need
+it to correctly display 8bits Serbian characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Serbian language conventions.
+
+%post		sr
+%{loc_add} sr_ME sr_RS
+
+%preun		sr
+if [ "$1" = "0" ]; then
+	%{loc_del} sr_ME sr_RS
+fi
+
+%files		sr
+/usr/share/locale/sr_ME*
+/usr/share/locale/sr_RS*
+
 ### so
 %package -n locales-so
 Summary: Base files for localization (Somali)
@@ -3431,16 +3479,17 @@ alphabetical sorting and representation of dates and numbers according
 to Swahili language conventions.
 
 %post		sw
-%{loc_add} sw_KE SW_TZ
+%{loc_add} sw_KE SW_TZ sw_XX
 
 %preun		sw
 if [ "$1" = "0" ]; then
-	%{loc_del} sw_KE sw_TZ
+	%{loc_del} sw_KE sw_TZ sw_XX
 fi
 
 %files		sw
 /usr/share/locale/sw_KE*
 /usr/share/locale/sw_TZ*
+/usr/share/locale/sw_XX*
 
 ### ta
 %package -n locales-ta
@@ -3511,6 +3560,29 @@ fi
 
 %files -n locales-tg
 /usr/share/locale/tg_TJ*
+
+### th
+%package	th
+Summary:	Base files for localization (Thai)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	sw
+These are the base files for Thai language localization; you need
+it to correctly display 8bits Thai characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Thai language conventions.
+
+%post		th
+%{loc_add} th_TH
+
+%preun		th
+if [ "$1" = "0" ]; then
+	%{loc_del} th_TH
+fi
+
+%files		th
+/usr/share/locale/th_TH*
 
 ### tk
 %package -n locales-tk
