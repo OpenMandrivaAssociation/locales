@@ -39,7 +39,7 @@ Summary:	Base files for localization
 Name:		locales
 Version:	%{glibc_ver}
 Release:	2
-License:	GPL
+License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
 # updated to include unicode 5.0 introduced latin/cyrullic/greek letters
