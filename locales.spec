@@ -21,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.14
+%define glibc_ver 2.14.90
 %define glibc_epoch 6
 %define version   %{glibc_ver}
 # FIXME: please check on next build those we really need
@@ -4295,6 +4295,8 @@ for i in $LOCALEDIR/en_IE* ; do
 done
 
 #=========================================================
+# XXX: duplicate of nb_NO (remove from glibc?)
+rm -rf $LOCALEDIR/no_NO*
 
 %install
 install -m755 %{SOURCE2} -D %{buildroot}%{loc_add}
