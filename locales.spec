@@ -21,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.14.90
+%define glibc_ver 2.15
 %define glibc_epoch 6
 %define version   %{glibc_ver}
 # FIXME: please check on next build those we really need
@@ -998,14 +998,14 @@ y para la representación correcta de los números y fechas según
 las convenciones del castellano.
 
 %post -n locales-es
-%{loc_add} an_ES es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES es_GT es_HN \
-           es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US es_UY es_VE
+%{loc_add} an_ES es_AR es_BO es_CL es_CO es_CR es_CU es_DO es_EC es_ES es_GT \
+           es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US es_UY es_VE
 
 %preun -n locales-es
 if [ "$1" = "0" ]; then
-	%{loc_del} an_ES es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES es_GT \
-	           es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US es_UY \
-	           es_VE
+	%{loc_del} an_ES es_AR es_BO es_CL es_CO es_CR es_DO es_EC es_ES es_CU \
+                   es_GT es_HN es_MX es_NI es_PA es_PE es_PR es_PY es_SV es_US \
+                   es_UY es_VE
 fi
 
 %files -n locales-es
@@ -1015,6 +1015,7 @@ fi
 %{_localedir}/es_CL*
 %{_localedir}/es_CO*
 %{_localedir}/es_CR*
+%{_localedir}/es_CU*
 %{_localedir}/es_DO*
 %{_localedir}/es_EC*
 %{_localedir}/es_ES*
@@ -1543,15 +1544,18 @@ alphabetical sorting and representation of dates and numbers according
 to Hindi language conventions.
 
 %post -n locales-hi
-%{loc_add} hi_IN
+%{loc_add} bho_IN brx_IN hi_IN ur_IN
 
 %preun -n locales-hi
 if [ "$1" = "0" ]; then
-	%{loc_del} hi_IN
+	%{loc_del} bho_IN brx_IN hi_IN ur_IN
 fi
 
 %files -n locales-hi
+%{_localedir}/bho_IN*
+%{_localedir}/brx_IN*
 %{_localedir}/hi_IN*
+%{_localedir}/ur_IN*
 
 ### hne
 %package -n locales-hne
@@ -3505,15 +3509,16 @@ alphabetical sorting and representation of dates and numbers according
 to Tamil language conventions.
 
 %post -n locales-ta
-%{loc_add} ta_IN
+%{loc_add} ta_IN ta_LK
 
 %preun -n locales-ta
 if [ "$1" = "0" ]; then
-	%{loc_del} ta_IN
+	%{loc_del} ta_INta_LK
 fi
 
 %files -n locales-ta
 %{_localedir}/ta_IN*
+%{_localedir}/ta_LK*
 
 ### te
 %package -n locales-te
@@ -3759,6 +3764,29 @@ fi
 
 %files -n locales-ug
 %{_localedir}/ug_CN*
+
+### unm
+%package -n locales-unm
+Summary: Base files for localization (Unami)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-unm
+These are the base files for Unami language localization; you need
+it to correctly display 8bits Unami characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Unami language conventions.
+
+%post -n locales-unm
+%{loc_add} unm_US
+
+%preun -n locales-unm
+if [ "$1" = "0" ]; then
+	%{loc_del} unm_US
+fi
+
+%files -n locales-unm
+%{_localedir}/unm_US*
 
 ### uk
 %package -n locales-uk
