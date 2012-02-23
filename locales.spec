@@ -177,7 +177,7 @@ fi
 # translation by Schalk Cronje <schalkc@ntaba.co.za>
 %package -n locales-af
 Summary: Base files for localization (Afrikaans)
-Summary(af): Hierdie is die basislêers vir Afrikaanse lokalisasie
+#Summary(af): Hierdie is die basislêers vir Afrikaanse lokalisasie
 Group: System/Internationalization
 URL: http://www.af.org.za/aflaai/linux-i18n/
 Requires: locales = %{version}-%{release}
@@ -188,11 +188,11 @@ it to correctly display 8bits Afrikaans characters, and for proper
 alfabetical sorting and representation of dates and numbers according
 to Afrikaans language conventions.
 
-%description -n locales-af -l af
-Hierdie is die basislêers vir Afrikaanse lokalisasie. U benodig dit om die
-Afrikaanse 8-bis karakters korrek te vertoon, vir korrekte alfabetiese
-sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
-vertoon.
+#%#description -n locales-af -l af
+#Hierdie is die basislêers vir Afrikaanse lokalisasie. U benodig dit om die
+#Afrikaanse 8-bis karakters korrek te vertoon, vir korrekte alfabetiese
+#sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
+#vertoon.
 
 %post -n locales-af
 %{loc_add} af_ZA
@@ -540,8 +540,8 @@ fi
 Summary: Base files for localization (Breton)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(fr): Fichiers de base pour la localisation en langue bretonne.
-Summary(br): Kement-mañ a zo restroù diazez evit broelañ diouzh ar brezhoneg.
+Summary(fr): Fichiers de base pour la localisation en langue bretonne
+Summary(br): Kement-mañ a zo restroù diazez evit broelañ diouzh ar brezhoneg
 
 %description -n locales-br
 These are the base files for Breton language localization; you need
@@ -981,7 +981,7 @@ fi
 Summary: Base files for localization (Spanish)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(es): Ficheros de base para la localización (castellano)
+#Summary(es): Ficheros de base para la localización (castellano)
 Provides: locales-an = %{version}-%{release}
 
 %description -n locales-es
@@ -990,12 +990,12 @@ it to correctly display 8bits spanish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to spanish language conventions.
 
-%description -n locales-es -l es
-Este paquete incluye las definiciones de locales para el castellano.
-Este paquete contiene lo necesario para la visualisación correcta de
-los caracteres 8bits del idioma español, para el orden alfabético 
-y para la representación correcta de los números y fechas según 
-las convenciones del castellano.
+#%#description -n locales-es -l es
+#Este paquete incluye las definiciones de locales para el castellano.
+#Este paquete contiene lo necesario para la visualisación correcta de
+#los caracteres 8bits del idioma español, para el orden alfabético 
+#y para la representación correcta de los números y fechas según 
+#las convenciones del castellano.
 
 %post -n locales-es
 %{loc_add} an_ES es_AR es_BO es_CL es_CO es_CR es_CU es_DO es_EC es_ES es_GT \
@@ -1038,7 +1038,7 @@ fi
 # translation from: Ekke Einberg <ekke@data.ee>
 %package -n locales-et
 Summary: Base files for localization (Estonian)
-Summary(et): Siin on vajalikud failid Linuxi eestindamiseks.
+Summary(et): Siin on vajalikud failid Linuxi eestindamiseks
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2746,7 +2746,7 @@ fi
 # translations by peter@datadok.no
 %package -n locales-no
 Summary: Base files for localization (Norwegian)
-Summary(nb): Dette er basisfilene for lokalisering til norsk språk
+#Summary(nb): Dette er basisfilene for lokalisering til norsk språk
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Provides: locales-nn = %{version}-%{release}
@@ -2758,11 +2758,11 @@ it to correctly display 8bits Norwegian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Norwegian language conventions.
 
-%description -n locales-no -l nb
-Dette er basisfilene for lokalisering til norsk språk. Du trenger dette
-for å vise norske 8-bitstegn på riktig måte og for å få riktig sortering
-etter alfabetet og visning av datoer og tall i samsvar med norske
-konvensjoner.
+#%#description -n locales-no -l nb
+#Dette er basisfilene for lokalisering til norsk språk. Du trenger dette
+#for å vise norske 8-bitstegn på riktig måte og for å få riktig sortering
+#etter alfabetet og visning av datoer og tall i samsvar med norske
+#konvensjoner.
 
 %post -n locales-no
 %{loc_add} nb_NO nn_NO
@@ -2998,7 +2998,7 @@ fi
 ### pt
 %package -n locales-pt
 Summary: Base files for localization (Portuguese)
-Summary(pt): Estes são os arquivos básicos para a localização (Português)
+#Summary(pt): Estes são os arquivos básicos para a localização (Português)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Provides: locales-pt_BR = %{version}-%{release}
@@ -3010,12 +3010,12 @@ it to correctly display 8bits Portuguese characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Portuguese language conventions.
 
-%description -n locales-pt -l pt
-Estes são os arquivos básicos para a localização lingüística em português;
-eles são necessários para que o sistema mostre corretamente caracteres
-portugueses de 8 bits, e para que tenha as apropriadas ordenações
-alfabéticas e representação de datas e números de acordo com as convenções
-da língua portuguesa.
+#%#description -n locales-pt -l pt
+#Estes são os arquivos básicos para a localização lingüística em português;
+#eles são necessários para que o sistema mostre corretamente caracteres
+#portugueses de 8 bits, e para que tenha as apropriadas ordenações
+#alfabéticas e representação de datas e números de acordo com as convenções
+#da língua portuguesa.
 
 %post -n locales-pt
 %{loc_add} pt_BR pt_PT
@@ -3866,12 +3866,12 @@ it to correctly display 8bits Uzbek characters, and for proper
 alphabetical sorting and representation of dates and numbers
 according to Uzbek language conventions.
 
-%description -n locales-uz -l uz
-Ushbu asos fayllar Linuxni o'zbekchaga locallashtirish
-uchun qo'llaniladi; siz bularni 8 bit o'zbek
-harflarini to'g'ri ko'rish va tartiblashda qollanasiz.
-O'zbekistonda joriy bo'lgan vaqt, son va valytani
-belgilash qoidalari ham shu fayllarda joylashgan.
+#%#description -n locales-uz -l uz
+#Ushbu asos fayllar Linuxni o'zbekchaga locallashtirish
+#uchun qo'llaniladi; siz bularni 8 bit o'zbek
+#harflarini to'g'ri ko'rish va tartiblashda qollanasiz.
+#O'zbekistonda joriy bo'lgan vaqt, son va valytani
+#belgilash qoidalari ham shu fayllarda joylashgan.
 
 %post -n locales-uz
 %{loc_add} uz_UZ
