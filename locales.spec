@@ -209,7 +209,7 @@ fi
 # translation by Daniel Yacob <Yacob@EthiopiaOnline.Net>
 %package -n locales-am
 Summary: Base files for localization (Amharic)
-Summary(am): ለlocalization (አማርኛ) መሰረት ፋይሎች
+#Summary(am): ለlocalization (አማርኛ) መሰረት ፋይሎች
 Group: System/Internationalization
 URL: http://www.ethiopic.org/
 Requires: locales = %{version}-%{release}
@@ -227,10 +227,10 @@ it to correctly display 8bits Amharic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Amharic language conventions.
 
-%description -n locales-am -l am
-እነዚህ ያማርኛ ቋንቋ localization  መሰረት ፋይሎች ናቸው።
-ያማርኛ ፊደላትንለማየት፣ የፊደላት ቅደም ተከተልን ለመጠበቅ፣
-ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
+#%#description -n locales-am -l am
+#እነዚህ ያማርኛ ቋንቋ localization  መሰረት ፋይሎች ናቸው።
+#ያማርኛ ፊደላትንለማየት፣ የፊደላት ቅደም ተከተልን ለመጠበቅ፣
+#ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
 
 %post -n locales-am
 %{loc_add} am_ET byn_ER gez_ER gez_ET om_ET om_KE sid_ET ti_ER ti_ET tig_ER \
