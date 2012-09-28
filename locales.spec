@@ -21,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.15
+%define glibc_ver 2.16.90
 %define glibc_epoch 6
 %define version   %{glibc_ver}
 # FIXME: please check on next build those we really need
@@ -820,6 +820,29 @@ fi
 %{_localedir}/de_CH*
 %{_localedir}/de_DE*
 %{_localedir}/de_LU*
+
+### doi
+%package -n locales-doi
+Summary: Base files for localization (Dogri)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-doi
+These are the base files for Dogri language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Dogri language conventions.
+
+%post -n locales-doi
+%{loc_add} doi_IN
+
+%preun -n locales-doi
+if [ "$1" = "0" ]; then
+	%{loc_del} doi_IN
+fi
+
+%files -n locales-doi
+%{_localedir}/doi_IN
 
 ### dv
 %package -n locales-dv
@@ -2375,6 +2398,29 @@ fi
 %files -n locales-lv
 %{_localedir}/lv_LV*
 
+### mag
+%package -n locales-mag
+Summary: Base files for localization (Magahi)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-mag
+These are the base files for Magahi language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Magahi language conventions.
+
+%post -n locales-mag
+%{loc_add} mag_IN
+
+%preun -n locales-mag
+if [ "$1" = "0" ]; then
+	%{loc_del} mag_IN
+fi
+
+%files -n locales-mag
+%{_localedir}/mag_IN
+
 ### mai
 %package -n locales-mai
 Summary: Base files for localization (Maithili)
@@ -2542,6 +2588,29 @@ fi
 
 %files -n locales-mn
 %{_localedir}/mn_MN*
+
+### mni
+%package -n locales-mni
+Summary: Base files for localization (Manipuri)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-mni
+These are the base files for Manipuri language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Manipuri language conventions.
+
+%post -n locales-mni
+%{loc_add} mni_IN
+
+%preun -n locales-mni
+if [ "$1" = "0" ]; then
+	%{loc_del} mni_IN
+fi
+
+%files -n locales-mni
+%{_localedir}/mni_IN
 
 ### mr
 %package -n locales-mr
@@ -3139,6 +3208,29 @@ fi
 
 %files -n locales-sa
 %{_localedir}/sa_IN
+
+### sat
+%package -n locales-sat
+Summary: Base files for localization (Santali)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-sat
+These are the base files for Santali language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Santali language conventions.
+
+%post -n locales-sat
+%{loc_add} sat_IN
+
+%preun -n locales-sat
+if [ "$1" = "0" ]; then
+	%{loc_del} sat_IN
+fi
+
+%files -n locales-sat
+%{_localedir}/sat_IN
 
 ### sc
 %package -n locales-sc
