@@ -1,3 +1,5 @@
+%define rpm_check_works			0
+
 #
 # this spec file builds all the locales into rpm packages.
 # it is separate from the glibc spec, so that it is possible to rebuild
@@ -188,11 +190,13 @@ it to correctly display 8bits Afrikaans characters, and for proper
 alfabetical sorting and representation of dates and numbers according
 to Afrikaans language conventions.
 
-#%#description -n locales-af -l af
-#Hierdie is die basislêers vir Afrikaanse lokalisasie. U benodig dit om die
-#Afrikaanse 8-bis karakters korrek te vertoon, vir korrekte alfabetiese
-#sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
-#vertoon.
+%if %{rpm_check_works}
+%description -n locales-af -l af
+Hierdie is die basislêers vir Afrikaanse lokalisasie. U benodig dit om die
+Afrikaanse 8-bis karakters korrek te vertoon, vir korrekte alfabetiese
+sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
+vertoon.
+%endif
 
 %post -n locales-af
 %{loc_add} af_ZA
@@ -227,10 +231,12 @@ it to correctly display 8bits Amharic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Amharic language conventions.
 
-#%#description -n locales-am -l am
-#እነዚህ ያማርኛ ቋንቋ localization  መሰረት ፋይሎች ናቸው።
-#ያማርኛ ፊደላትንለማየት፣ የፊደላት ቅደም ተከተልን ለመጠበቅ፣
-#ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
+%if %{rpm_check_works}
+%description -n locales-am -l am
+እነዚህ ያማርኛ ቋንቋ localization  መሰረት ፋይሎች ናቸው።
+ያማርኛ ፊደላትንለማየት፣ የፊደላት ቅደም ተከተልን ለመጠበቅ፣
+ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
+%endif
 
 %post -n locales-am
 %{loc_add} am_ET byn_ER gez_ER gez_ET om_ET om_KE sid_ET ti_ER ti_ET tig_ER \
@@ -280,11 +286,13 @@ switching when displaying nor the isolate-initial-medial-final shapes
 of letters; it is to the xterm, application or virtual console driver
 to do that.
 
+%if %{rpm_check_works}
 %description -n locales-ar -l ar
 هذه هي الملفات اللازمة لإعتماد اللغة العربية في نظام لينكس.
 لاحظ أن هذا البرنامجلايقوم بعملية تحويل اتجاه الكتابة من اليمن إلى
 اليسار والعكس، ولكن يوفر الاساسيات الضرورية لعرض وتصنيف وترتيب الاحرف
 العربية، بما في ذلك إظهار التاريخ و غيره.
+%endif
 
 %post -n locales-ar
 %{loc_add} ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB ar_LY ar_MA \
@@ -469,11 +477,13 @@ it to correctly display 8bits Bulgarian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Bulgarian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-bg -l bg
 Тези файлове съдържат основните регионални характеристики на българския език;
 теса необходими за правилното представяне на 8 - битовите букви на кирилицата
 на екрана, за правилната азбучна подредба и за представяне на датата и числата
 в съответствие на правилата на българския език.
+%endif
 
 %post -n locales-bg
 %{loc_add} bg_BG
@@ -549,6 +559,7 @@ it to correctly display 8bits Breton characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Breton language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-br -l fr
 Ce paquet contient les définitions de locales en langue brétonne.
 Il permet aux applications de savoir quels caractères sont affichables et
@@ -560,6 +571,7 @@ Kement-mañ a zo restroù diazez evit broelañ diouzh ar Vrezhoneg; ret eo
 evit diskwel ent reizh arouezennoù breizhat 8bit, rummañ dre al
 lizherenneg, taolennañ an deizadoù hag an niveroù hervez kendivizadoù ar
 brezhoneg.
+%endif
 
 %post -n locales-br
 %{loc_add} br_FR
@@ -610,6 +622,7 @@ it to correctly display 8bits Catalan characters, and for proper
 representation of dates, numbers and alphabetical order according to
 Catalan language conventions
 
+%if %{rpm_check_works}
 %description -n locales-ca -l ca
 Aquests són els arxius bàsics per a l'adaptació del sistema a les
 peculiaritats de la llengua catalana; són necessaris perquè les
@@ -629,6 +642,7 @@ Ce paquet contient les définitions de locales en langue catalane.
 Il permet aux applications de savoir quels caractères sont affichables et
 donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates des nombres.
+%endif
 
 %post -n locales-ca
 %{loc_add} ca_AD ca_ES ca_FR ca_IT
@@ -681,10 +695,12 @@ it to correctly display 8bits Czech characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Czech language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-cs -l cs
 Zde jsou soubory nutné pro správnou českou lokalizaci; potřebujete je
 pro správné zobrazování českých 8bitových znaků a pro správné české
 třídění a reprezentaci data a čísel podle českých konvencí.
+%endif
 
 %post -n locales-cs
 %{loc_add} cs_CZ
@@ -733,10 +749,12 @@ it to correctly display 8bits Welsh characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Welsh language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-cy -l cy
 Dyma'r ffeiliau sylfaenol i'r lleoliaeth Cymraeg; mae angen rhain er mwyn
 dangos yn iawn y cymeriadau Cymraeg 8-bit, a threfniant y wyddor,
 dyddiadau a rhifau yn ôl yr arfer Cymraeg.
+%endif
 
 %post -n locales-cy
 %{loc_add} cy_GB
@@ -763,11 +781,12 @@ it to correctly display 8bits Danish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Danish language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-da -l da
 Her er de basale filer for dansk sprog tilpasning. De er nødvendige for
 at vise de danske 8bit tegn, sortere alfabetisk og repræsentere datoer
 og tal korrekt ifølge dansk retskrivning.
-
+%endif
 
 %post -n locales-da
 %{loc_add} da_DK
@@ -794,6 +813,7 @@ it to correctly display 8bits German characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to German language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-de -l fr
 Ce paquet contient les définitions de locales en langue allemande.
 Il permet aux applications de savoir quels caractères sont affichables et
@@ -805,6 +825,7 @@ Dies sind die Basisdateien für die deutsche Sprachanpassung; sie
 werden für die korrekte Darstellung deutscher 8-Bit-Zeichen,
 die deutsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt.
+%endif
 
 %post -n locales-de
 %{loc_add} de_AT de_BE de_CH de_DE de_LU
@@ -906,11 +927,13 @@ it to correctly display 8bits Greek characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Greek language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-el -l el
 Αυτά είναι τα βασικά αρχεία για υποστήριξη ελληνικής γλώσσας. Τα χρειάζεστε
 για τη σωστή απεικόνιση 8bit ελληνικών χαρακτήρων, καθώς και για την σωστή
 ταξινόμηση και απεικόνιση ημερομηνιών και αριθμών σύμφωνα με τις συμβάσεις
 της ελληνικής γλώσσας.
+%endif
 
 %post -n locales-el
 %{loc_add} el_CY el_GR
@@ -982,11 +1005,13 @@ it to correctly display 8bits esperanto characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to esperanto language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-eo -l eo
 Tiuj ĉi estas la bazaj dosieroj por la esperantlingva lokaĵo; vi bezonas
 ilin por ĝuste vidi 8-bitajn Esperanto-signojn kaj por ĝusta
 alfabeta ordo, datindikoj kaj nombroj konvene al la konvencioj
 en esperanta medio.
+%endif
 
 %post -n locales-eo
 %{loc_add} eo_XX
@@ -1013,12 +1038,14 @@ it to correctly display 8bits spanish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to spanish language conventions.
 
-#%#description -n locales-es -l es
-#Este paquete incluye las definiciones de locales para el castellano.
-#Este paquete contiene lo necesario para la visualisación correcta de
-#los caracteres 8bits del idioma español, para el orden alfabético 
-#y para la representación correcta de los números y fechas según 
-#las convenciones del castellano.
+%if %{rpm_check_works}
+%description -n locales-es -l es
+Este paquete incluye las definiciones de locales para el castellano.
+Este paquete contiene lo necesario para la visualisación correcta de
+los caracteres 8bits del idioma español, para el orden alfabético 
+y para la representación correcta de los números y fechas según 
+las convenciones del castellano.
+%endif
 
 %post -n locales-es
 %{loc_add} an_ES es_AR es_BO es_CL es_CO es_CR es_CU es_DO es_EC es_ES es_GT \
@@ -1071,12 +1098,14 @@ it to correctly display 8bits Estonian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Estonian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-et -l et
 Siin on vajalikud failid Linuxi eestindamiseks. Need on vajalikud
 8-bitiliste eesti sümbolite
 korrektseks esitamiseks ning õige tähestikulise järjestuse jaoks. Samuti
 numbrite ja kuupäevade
 eesti keele reeglitele vastavaks esituseks.
+%endif
 
 %post -n locales-et
 %{loc_add} et_EE
@@ -1105,6 +1134,7 @@ it to correctly display 8bits Basque characters, and for proper
 representation of dates and numbers according to Basque language
 conventions.
 
+%if %{rpm_check_works}
 %description -n locales-eu -l eu
 Linux-ek euskaraz badaki !
 Hauek dira euskarazko egokitzapenerako oinarrizko artxiboak; euskarazko
@@ -1124,6 +1154,7 @@ Ce paquet contient les définitions de locales en euskara batua.
 Il permet aux applications de savoir quels caractères sont affichables et
 donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates des nombres.
+%endif
 
 %post -n locales-eu
 %{loc_add} eu_ES
@@ -1153,8 +1184,10 @@ switching when displaying nor the isolate-initial-medial-final shapes
 of letters; it is to the xterm, application or virtual console driver
 to do that.
 
+%if %{rpm_check_works}
 %description -n locales-fa -l fa
 اینها پرونده‌های اساسی زبان فارسی می‌باشند؛ شما برای نمایش درست ۸ بیت حروف فارسی، ترتیب مناسب الفبا، معرفی تاریخ و اعداد بر اساس قواعد زبان فارسی به آنها احتیاج دارید. توجه داشته باشید که این پاکت تعویض نگارش از راست به چپ و از چپ به راست را عهده‌دار نمی‌باشد و نه حتی ترکیب نهایی حروف را؛ این عمل را پایانه‌ی اکس، برنامه یا کارگزار کنسول مجازی انجام می‌دهند.
+%endif
 
 %post -n locales-fa
 %{loc_add} fa_IR
@@ -1181,10 +1214,12 @@ it to correctly display 8bits Finnish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Finnish language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-fi -l fi
 Tässä on perustiedot Linuxin suomentamiseen. Tarvitset sitä suomalaisten
 8-bittisten merkkien oikeaan esittämiseen, ja oikeaan aakkostamiseen ja
 päivien ja numeroiden esitykseen suomenkielen käytännön mukaan.
+%endif
 
 %post -n locales-fi
 %{loc_add} fi_FI
@@ -1233,10 +1268,12 @@ it to correctly display 8bits Faroese characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Faroese language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-fo -l fo
 Hetta eru fílurnar tær tørvar til eina tillaging til føroyskt mál. Tær eru
 neyðugar fyri at vísa føroyskar 8-bit stavir, fyri at fáa rætt stavrað og
 vísa dagfestingar og tøl sambært føroyska siðvenju.
+%endif
 
 %post -n locales-fo
 %{loc_add} fo_FO
@@ -1263,6 +1300,7 @@ it to correctly display 8bits french characters, and for proper
 alfabetical sorting and representation of dates and numbers 
 according to french language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-fr -l fr
 Ce paquet contient les définitions de locales en langue française.
 Il permet aux applications de savoir quels caractères sont affichables
@@ -1276,6 +1314,7 @@ Dies sind die Basisdateien für die französische Sprachanpassung; sie
 werden für die korrekte Darstellung deutscher 8-Bit-Zeichen,
 die französische Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt.
+%endif
 
 %post -n locales-fr
 %{loc_add} fr_BE fr_CA fr_CH fr_FR fr_LU
@@ -1352,11 +1391,13 @@ it to correctly display 8bits gaelic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-ga -l ga
 Seo iad na bunchomhaid do leagan áitiúil na Gaeilge; ní mór duit
 iad a fháil chun tacar carachtar 8ngiotán a thaispeáint i gceart,
 agus sórtáil in ord aibitre agus dátaí agus uimhreacha a chur i
 láthair de réir coinbhinsiúnaigh na Gaeilge.
+%endif
 
 %post -n locales-ga
 %{loc_add} ga_IE
@@ -1384,11 +1425,13 @@ it to correctly display 8bits gaelic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-gd -l gd
 Seo na faidhlichean bunaiteach air son "locale" na Gàidhlig.
 Tha feum orra gus caractairean 8-bit fhaicinn, gus faclan a
 chur ann an òrd na h-aibidile, agus gus àireamhan is cinn-latha
 a riochdachadh a-réir nòs na Gàidhlig.
+%endif
 
 %post -n locales-gd
 %{loc_add} gd_GB
@@ -1416,6 +1459,7 @@ it to correctly display 8bits Galician characters, and for proper
 representation of dates and numbers according to Galician language
 conventions.
 
+%if %{rpm_check_works}
 %description -n locales-gl -l gl
 Este paquete inclúe as definicións de locais para o galego. Este paquete
 contén o preciso para a representacion correcta dos caracteres de 8 bits
@@ -1427,6 +1471,7 @@ Este paquete contiene lo necesario para la visualisación correcta de
 los caracteres 8bits del gallego, para el orden alfabético
 y para la representación correcta de los números y fechas según
 las convenciones del gallego.
+%endif
 
 %post -n locales-gl
 %{loc_add} gl_ES
@@ -1476,11 +1521,13 @@ it to correctly display 8bits gaelic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-gv -l gv
 T'ad shoh ny coadanyn undinagh ry-hoi ynnydaghey chengaghyn Gaelagh; ta
 feme ayd orroo dy haishbyney karracteyryn Gaelagh 8-bit dy kiart, as son
 reaghey-abbyrlit cooie as taishbyney-daaytyn as earrooyn coardail rish
 reillyn-chengey Gaelagh.
+%endif
 
 %post -n locales-gv
 %{loc_add} gv_GB
@@ -1533,6 +1580,7 @@ Note that this package doesn't handle right-to-left and left-to-right
 switching when displaying; it is to the xterm, application or virtual
 console driver to do that.
 
+%if %{rpm_check_works}
 %description -n locales-he -l he
 אלו הקבצים הבסיסיים לשימוש בעברית, אתה צריך את
 החבילה הזאת בכדי להציג עברית של 8 ביטים,
@@ -1541,6 +1589,7 @@ console driver to do that.
 שהחבילה הזאת אינה מטפטל בהמרה מימין לשמאל 
 או משמאל לימין, על הישום או המסוף, בין אם של
 X11 או המסוף וירטואלי, לעשות כן.
+%endif
 
 %post -n locales-he
 %{loc_add} he_IL iw_IL
@@ -1617,11 +1666,13 @@ it to correctly display 8bits Croatian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Croatian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-hr -l hr
 Ovo su osnovne datoteke za lokalizaciju na Hrvatski jezik; potrebne su
 da bi se pravilno prikazali 8 bitni Hrvatski znakovi, za pravilno
 sortiranje po abecedi i prikaz datuma i brojeva po pravilima
 Hrvatskog jezika.
+%endif
 
 %post -n locales-hr
 %{loc_add} hr_HR
@@ -1694,10 +1745,12 @@ You need it to correctly display sort, for sorting order and
 proper representation of dates and numbers according 
 to Hungarian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-hu -l hu
 Ezek a szükséges fájlok a magyarításhoz. Szükség van rá a
 magyar helyesírás szabályainak megfelelő sorbarendezéshez,
 számok és dátumok megjelenítéséhez.
+%endif
 
 %post -n locales-hu
 %{loc_add} hu_HU
@@ -1724,11 +1777,13 @@ You need it to correctly display 8bit Armenian chars,
 for sorting order and proper representation of dates and
 numbers according to Armenian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-hy -l hy
 Այստեղ ներկայացված են հայացման հիմնական փաթեթները (ֆայլերը)։
 Դրանք անհրաժեշտ են տվյալների ճշգրիտ խմբավորման եւ ամսաթվերի ու
 թվային արժեքների պատշաճ ներկայցման համար համաձայն հայոց լեզվի
 կանոնների։
+%endif
 
 %post -n locales-hy
 %{loc_add} hy_AM
@@ -1754,10 +1809,12 @@ These are the base files for Indonesian language localization.
 You need it to correctly display sort, for proper representation
 of dates and numbers according to Indonesian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-id -l id
 Ini adalah file untuk lokalisasi sistem ke dalam Bahasa Indonesia.
 File ini dibutuhkan bila Anda ingin menampilkan tanggal dan penomoran
 yang sesuai dengan kaidah Bahasa Indonesia.
+%endif
 
 %post -n locales-id
 %{loc_add} id_ID
@@ -1831,11 +1888,13 @@ it to correctly display 8bits Icelandic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Icelandic language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-is -l is
 Hér eru grunnskrár fyrir íslenska staðfærslu. Þú þarft á þessum skrám að
 halda ef 8 bita séríslenskir stafir eiga að birtast réttir, til að fá
 rétta stafrófsröð og til að dagsetningar og tölur birtist eins og
 venja er í íslensku.
+%endif
 
 %post -n locales-is
 %{loc_add} is_IS
@@ -1861,11 +1920,13 @@ it to correctly display 8bits Italian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Italian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-it -l it
 Questi sono i files di base per l'adattamento della lingua italiana. Vi
 servono per visualizzare correttamente i caratteri a 8bit in italiano,
 per l'ordinamento alfabetico corretto e per la rappresentazione delle
 date e dei numeri in forma italiana.
+%endif
 
 %post -n locales-it
 %{loc_add} it_CH it_IT
@@ -1916,12 +1977,14 @@ These are the base files for Japanese language localization; you need
 it to correctly display 8bits and 7bits japanese codes, and for proper
 representation of dates and numbers according to japanese language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-ja -l ja
 これは日本語ロカライゼーション用基礎ファイル集です。これがないと，
 ７・８ビット文字コードの表示もできず、日本式日付き表現・数値表現ができない。
 ただし、要注意点として：１６ビット文字コードが使えなかったので、
 このロカール（地域特有設定データ集）が完璧・正式に「正確」とはいいきれない。
 （多少「誤魔化し」を利かせて作ったからです）。
+%endif
 
 %post -n locales-ja
 %{loc_add} ja_JP
@@ -1947,11 +2010,13 @@ it to correctly display 8bits Georgian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Georgian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-ka -l ka
 საბაზო ფაილები ქართულის ლოკალიზებისათვის.
 საჭიროა 8 ბიტიანი ფონტებით ქართული ანბანის სწორი ჩვენებისა
 და სორტირებისათვის. აგრეთვე - თარიღის, ფულის ნიშნებისა და
 რიცხვითი მნიშვნელობების მართებული წარმოდგენისათვის.
+%endif
 
 %post -n locales-ka
 %{loc_add} ka_GE
@@ -2071,10 +2136,12 @@ These are the base files for Korean language localization; you need
 it to correctly display 8bits and 7bits japanese codes, and for proper
 representation of dates and numbers according to korean language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-ko -l ko
 이것들은 한국어에만 국한된 기초화일들이다 당신은 한국어규정에
 의한 적절한 날짜와 숫자들의 표시를 8바이트와 7바이트의 한국어
 코드로 정확히 배열하는데 그것이 필요하다.
+%endif
 
 %post -n locales-ko
 %{loc_add} ko_KR
@@ -2148,11 +2215,13 @@ it to correctly display 8bits Kurdish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Kurdish language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-ku -l ku
 Vâhan rûpelen-tâmarê ji bo cîhnaskirînâ zîmanê kurdi, ji bo qû herfên
 kurd â 8bits ân vêrin ditin, vâ rûpel-tamar bî vê gêrege ji bo alfabêya
 kurdi, dîrok, seat, hêjmar û edetê malbatâ zîmanê kurdin vêre naskirin
 bi haliyê systême
+%endif
 
 %post -n locales-ku
 %{loc_add} ku_TR
@@ -2180,11 +2249,13 @@ it to correctly display 8bits cornish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Cornish language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-kw -l kw
 Otomma'n fylennow sel dhe Gernewekhe an system; 'ma ethom anodho
 dhe dhysplegya lythrennow Kernewek 8-ryf dhe wyr, ha sortya yn ordyr
 abecedery gwyw ha dysquesdhes dedhyow ha nyverow herwyth rewlys
 a'n tavas Kernewek.
+%endif
 
 %post -n locales-kw
 %{loc_add} kw_GB
@@ -2350,10 +2421,12 @@ it to correctly display 8bits Lithuanian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Lithuanian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-lt -l lt
 Baziniai failai skirti lokalės lituanizacijai; reikalingi korektiš
 kam lietuviškų, 8 bitų simbolių atvaizdavimui, alfabetiniam rūšiavimui
 bei datos ir skaičių atvaizdavimui.
+%endif
 
 %post -n locales-lt
 %{loc_add} lt_LT
@@ -2380,12 +2453,13 @@ it to correctly display 8bits Latvian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Latvian language conventions.
 
-
+%if %{rpm_check_works}
 %description -n locales-lv -l lv
 Šie ir latviešu valodas lokalizācijas pamatfaili; tie jums ir
 nepieciešami, lai pareizi attēlotu 8bitu latviešu burtus, veiktu
 pareizu kārtošanu pēc alfabēta, kā arī attēlotu datumus un skaitļus
 saskaņā ar latviešu valodā pieņemtajām normām.
+%endif
 
 %post -n locales-lv
 %{loc_add} lv_LV
@@ -2506,11 +2580,13 @@ it to correctly display 8bits Maori characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Maori language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-mi -l mi
 Ko ēnei ngā kōnae papa mō te whakaā-rohe reo Maori; he mea kē tēnei kei
 whakaatuhia i ngā pū Māori mati kaupapa-ā-rua e waru kia tika ai, ā, mō te
 whakatakotoranga hoki o ngā wā me ngā nama kia tika ai anō e ai ki ngā aro
 whānui reo Māori.
+%endif
 
 %post -n locales-mi
 %{loc_add} mi_NZ
@@ -2671,11 +2747,13 @@ it to correctly display 8bits Maltese characters, and for proper
 alphabetical sorting and representation of dates and numbers according\
 to Maltese language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-mt -l mt
 Dawn huma l-files ewlenin għat-traduzzjoni għal-lingwa Maltija;
 għandek bżonnhom biex turi l-ittri 8-bit Maltin sew, biex tissortja
 alfabetikament, u biex turi dati u numri skond il-konvenzjonijiet
 tal-lingwa Maltija.
+%endif
 
 %post -n locales-mt
 %{loc_add} mt_MT
@@ -2725,6 +2803,7 @@ localization; you need it to correctly display 8bits Lower Saxon characters,
 and for proper alphabetical sorting and representation of dates and numbers
 according to Lower Saxon language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-nds -l nds
 Dit send de Grundspikjaloden fe' de plautdietsche Sproaktoopaussinj.
 Dee woaren jebrukt om de 8-bit'sche plautdietsche Teakjens noh Droat
@@ -2736,6 +2815,7 @@ Dies sind die Basisdateien für die plautdietsche Sprachanpassung; sie
 werden für die korrekte Darstellung plautdietscher 8-Bit-Zeichen,
 die plautdietsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
 benötigt
+%endif
 
 %post -n locales-nds
 %{loc_add} nds_DE nds_NL
@@ -2786,6 +2866,7 @@ it to correctly display 8bits Dutch characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Dutch language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-nl -l fr
 Ce paquet contient les définitions de locales en langue néerlandaise.
 Il permet aux applications de savoir quels caractères sont affichables et
@@ -2797,6 +2878,7 @@ Dit zijn de basisbestanden nodig voor de Nederlandse taalmodule; ze zijn
 noodzakelijk om de 8bits Nederlandse karakters correct weer te geven en
 voor een juiste alfabetische sortering en weergave van data en nummers
 volgens de Nederlandse Taalconventies
+%endif
 
 %post -n locales-nl
 %{loc_add} nl_AW nl_BE nl_NL
@@ -2827,11 +2909,13 @@ it to correctly display 8bits Norwegian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Norwegian language conventions.
 
-#%#description -n locales-no -l nb
-#Dette er basisfilene for lokalisering til norsk språk. Du trenger dette
-#for å vise norske 8-bitstegn på riktig måte og for å få riktig sortering
-#etter alfabetet og visning av datoer og tall i samsvar med norske
-#konvensjoner.
+%if %{rpm_check_works}
+%description -n locales-no -l nb
+Dette er basisfilene for lokalisering til norsk språk. Du trenger dette
+for å vise norske 8-bitstegn på riktig måte og for å få riktig sortering
+etter alfabetet og visning av datoer og tall i samsvar med norske
+konvensjoner.
+%endif
 
 %post -n locales-no
 %{loc_add} nb_NO nn_NO
@@ -2905,11 +2989,13 @@ it to correctly display 8bits Occitan characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Occitan language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-oc -l oc
 Aicí avem empaquetat los fichièrs de basa per la lengua occitana : los
 programas n'an de besonh per afichar corrèctament los caractèrs dins lo
 fenestron, classar l'òrdre alfabetic e atanben comptar los jorns 
 e los meses en occitan.
+%endif
 
 %post -n locales-oc
 %{loc_add} oc_FR
@@ -3079,12 +3165,14 @@ it to correctly display 8bits Portuguese characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Portuguese language conventions.
 
-#%#description -n locales-pt -l pt
-#Estes são os arquivos básicos para a localização lingüística em português;
-#eles são necessários para que o sistema mostre corretamente caracteres
-#portugueses de 8 bits, e para que tenha as apropriadas ordenações
-#alfabéticas e representação de datas e números de acordo com as convenções
-#da língua portuguesa.
+%if %{rpm_check_works}
+%description -n locales-pt -l pt
+Estes são os arquivos básicos para a localização lingüística em português;
+eles são necessários para que o sistema mostre corretamente caracteres
+portugueses de 8 bits, e para que tenha as apropriadas ordenações
+alfabéticas e representação de datas e números de acordo com as convenções
+da língua portuguesa.
+%endif
 
 %post -n locales-pt
 %{loc_add} pt_BR pt_PT
@@ -3112,11 +3200,13 @@ it to correctly display 8bits Romanian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Romanian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-ro -l ro
 Acestea sînt fisierele de baza pentru localizarea în limba româna; sînt
 necesare pentru afisarea corecta a caracterelor românesti pe 8 biti precum
 si pentru sortarea alfabetica si reprezentarea datelor si numerelor conform
 cu conventiile din limba româna.
+%endif
 
 %post -n locales-ro
 %{loc_add} ro_RO
@@ -3142,6 +3232,7 @@ it to correctly display 8bits cyrillic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Russian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-ru -l ru
 Эти файлы содержат основные региональные установки
 для русского языка; они необходимы для правильного
@@ -3149,6 +3240,7 @@ to Russian language conventions.
 для правильной алфавитной сортировки и для
 представления дат и чисел в соответствии с правилами
 русского языка.
+%endif
 
 %post -n locales-ru
 %{loc_add} ru_RU ru_UA
@@ -3363,10 +3455,12 @@ it to correctly display 8bits Slovak characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Slovak language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-sk -l sk
 Tu sú súbory potrebné pre správnu slovenskú lokalizáciu; potrebujete ich pre
 korektné zobrazovanie slovenských 8bitových znakov a pre správne triedenie a
 reprezentáciu dátumu a čísel podľa konvencií slovenského jazyka.
+%endif
 
 %post -n locales-sk
 %{loc_add} sk_SK
@@ -3393,12 +3487,14 @@ it to correctly display 8bits Slovenian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Slovenian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-sl -l sl
 To so osnovne datoteke za lokalizacijo Linuxa na slovenski
 jezik; potrebujete jih za pravilni prikaz 8-bitnih
 slovenskih znakov in za pravilno urejanje po abecedi ter
 predstavitev datumov in številk glede na pravila
 slovenskega jezika.
+%endif
 
 %post -n locales-sl
 %{loc_add} sl_SI
@@ -3545,10 +3641,12 @@ it to correctly display 8bits Swedish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Swedish language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-sv -l sv
 Detta är huvudfilerna för svenskt språkstöd. De behövs för att korrekt visa
 svenska 8 bitars tecken och för korrekt alfabetisk sortering. De gör även
 att datum och nummerformat visas på svenskt vis.
+%endif
 
 %post -n locales-sv
 %{loc_add} sv_FI sv_SE
@@ -3769,11 +3867,13 @@ it to correctly display 8bits Turkish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Turkish language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-tr -l tr
 Bu dosyalar, Türkçe yerelleştirmesi için gerekli temel bileşenleri içerir.
 8bit türkçe karakterleri görmek, Türk diline uygun olarak alfabe, tarih ve
 sayı gösterimlerini ve sıralamalarını yapabilmek için bu dosyalara
 ihtiyacınız vardır.
+%endif
 
 %post -n locales-tr
 %{loc_add} tr_CY tr_TR
@@ -3894,6 +3994,7 @@ it to correctly display 8bits Ukrainian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Ukrainian language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-uk -l ru
 Базовые файлы для Украинской локализации; нужны для корректного
 представления 8-ми битных Украинских символов, а также для правильной
@@ -3905,6 +4006,7 @@ to Ukrainian language conventions.
 відображення 8-ми бітних символів українського алфавіту і також для
 правильного сортування і подання дати і чисел у відповідності до
 стандартів української мови.
+%endif
 
 %post -n locales-uk
 %{loc_add} uk_UA
@@ -3958,12 +4060,14 @@ it to correctly display 8bits Uzbek characters, and for proper
 alphabetical sorting and representation of dates and numbers
 according to Uzbek language conventions.
 
-#%#description -n locales-uz -l uz
-#Ushbu asos fayllar Linuxni o'zbekchaga locallashtirish
-#uchun qo'llaniladi; siz bularni 8 bit o'zbek
-#harflarini to'g'ri ko'rish va tartiblashda qollanasiz.
-#O'zbekistonda joriy bo'lgan vaqt, son va valytani
-#belgilash qoidalari ham shu fayllarda joylashgan.
+%if %{rpm_check_works}
+%description -n locales-uz -l uz
+Ushbu asos fayllar Linuxni o'zbekchaga locallashtirish
+uchun qo'llaniladi; siz bularni 8 bit o'zbek
+harflarini to'g'ri ko'rish va tartiblashda qollanasiz.
+O'zbekistonda joriy bo'lgan vaqt, son va valytani
+belgilash qoidalari ham shu fayllarda joylashgan.
+%endif
 
 %post -n locales-uz
 %{loc_add} uz_UZ
@@ -4013,12 +4117,14 @@ it to correctly display 8bits Vietnamese characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Vietnamese language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-vi -l vi
 Đây là các file cơ sở cho tiếng Việt.
 Bạn cần những file này để có thể
 biểu diễn chính xác các kí tự tiếng Việt 8 bits,
 để sắp xếp và trình bày ngày tháng và số
 một cách chính xác theo đúng qui ước ngôn ngữ tiếng Việt.
+%endif
 
 %post -n locales-vi
 %{loc_add} vi_VN
@@ -4046,6 +4152,7 @@ it to correctly display 8bits Walloon characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Walloon language conventions.
 
+%if %{rpm_check_works}
 %description -n locales-wa -l wa
 Vochal les maisses fitchîs pol lingaedje walon. Vos nd avoz dandjî po
 hågner les caracteres walons ecôdés so ût bits, po l' arindjmint
@@ -4056,6 +4163,7 @@ Ce paquet contient les définitions de locales en langue walone.
 Il permet aux applications de savoir quels caractères sont affichables et
 donc afficher correctemment les caractères accentués et l'ordre alphabetique;
 il contient aussi les definitions des representations des dates et des nombres.
+%endif
 
 %post -n locales-wa
 %{loc_add} wa_BE
@@ -4233,14 +4341,17 @@ representation of dates and numbers according to chinese language conventions.
 Set the LANG variable to "zh_CN" to use simplified chinese (GuoBiao encoding)
 or to "zh_TW.Big5" to use traditional characters (Big5 encoding)
 
+%if %{rpm_check_works}
 %description -n locales-zh -l zh_CN
 本档包含了中文地方化(localization)的基本档案; 你需要这些档案才能正确的
 显示中文的日期。将环境变数 "LANG" 设定为 "zh_CN" 可以显示简体中文(国标
 码),设定为 "zh_TW" 则可显示繁体中文(大五码)。 
+
 %description -n locales-zh -l zh_TW
 本檔包含了中文地方化(localization)的基本檔案; 你需要這些檔案才能正確的
 顯示中文的日期。將環境變數 "LANG" 設定為 "zh_CN" 可以顯示簡體中文(國標
 碼),設定為 "zh_TW" 則可顯示繁體中文(大五碼)。 
+%endif
 
 %post -n locales-zh
 %{loc_add} nan_TW@latin zh_CN zh_HK zh_SG zh_TW
