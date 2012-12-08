@@ -1,0 +1,134 @@
+comment_char %
+escape_char  /
+%
+% Kiswahili Language Locale for 
+% Source: 
+% Contact: 
+% Email: 
+% Language: sw
+% Territory: ?? (Tanzania, Kenya, Zaire, Uganda)
+% Revision: 0.2
+% Date: 2004-08-01
+% Users: general
+% Repertoiremap: mnemonic,ds
+% Charset: UTF-8
+% Distribution and use is free, also
+% for commercial purposes.
+
+LC_IDENTIFICATION
+title      "Kiswahili locale for "
+source     ""
+address    ""
+contact    ""
+email      "pablo@mandriva.com"
+tel        ""
+fax        ""
+language   "Kiswahili"
+territory  ""
+revision   "0.2"
+date       "2004-08-01"
+%
+category  "sw_XX:2000";LC_IDENTIFICATION
+category  "sw_XX:2000";LC_CTYPE
+category  "sw_XX:2000";LC_COLLATE
+category  "sw_XX:2000";LC_TIME
+category  "sw_XX:2000";LC_NUMERIC
+category  "sw_XX:2000";LC_MONETARY
+category  "sw_XX:2000";LC_MESSAGES
+category  "sw_XX:2000";LC_PAPER
+category  "sw_XX:2000";LC_NAME
+category  "sw_XX:2000";LC_ADDRESS
+category  "sw_XX:2000";LC_TELEPHONE
+
+END LC_IDENTIFICATION
+
+%%%%%%%%%%%%%%%%
+% TODO: check LC_MONETARY, LC_NUMERIC, LC_MESSAGES, LC_COLLATE
+% 	check time and date formats
+%%%%%%%%%%%%%%%%
+
+LC_COLLATE
+copy "en_DK"
+END LC_COLLATE
+
+LC_CTYPE
+copy "en_DK"
+END LC_CTYPE
+
+LC_MONETARY
+copy "en_US"
+END LC_MONETARY
+
+LC_NUMERIC
+copy "en_US"
+END LC_NUMERIC
+
+LC_TIME
+abday   "<U004A><U0070><U0069>";"<U004A><U0074><U0061>";/
+        "<U004A><U006E><U0065>";"<U004A><U0074><U006E>";/
+        "<U0041><U006C><U0068>";"<U0049><U006A><U0075>";/
+        "<U004A><U006D><U006F>"
+day     "<U004A><U0075><U006D><U0061><U0070><U0069><U006C><U0069>";/
+        "<U004A><U0075><U006D><U0061><U0074><U0061><U0074><U0075>";/
+        "<U004A><U0075><U006D><U0061><U006E><U006E><U0065>";/
+        "<U004A><U0075><U006D><U0061><U0074><U0061><U006E><U006F>";/
+        "<U0041><U006C><U0068><U0061><U006D><U0069><U0073><U0069>";/
+        "<U0049><U006A><U0075><U006D><U0061><U0061>";/
+        "<U004A><U0075><U006D><U0061><U006D><U006F><U0073><U0069>"
+abmon   "<U004A><U0061><U006E>";"<U0046><U0065><U0062>";/
+        "<U004D><U0061><U0063>";"<U0041><U0070><U0072>";/
+        "<U004D><U0065><U0069>";"<U004A><U0075><U006E>";/
+        "<U004A><U0075><U006C>";"<U0041><U0075><U0067>";/
+        "<U0053><U0065><U0070>";"<U004F><U006B><U0074>";/
+        "<U004E><U006F><U0076>";"<U0044><U0069><U0073>"
+mon     "<U004A><U0061><U006E><U0075><U0061><U0072><U0069>";/
+        "<U0046><U0065><U0062><U0072><U0075><U0061><U0072><U0069>";/
+        "<U004D><U0061><U0063><U0068><U0069>";/
+        "<U0041><U0070><U0072><U0069><U006C><U0069>";/
+        "<U004D><U0065><U0069>";/
+        "<U004A><U0075><U006E><U0069>";/
+        "<U004A><U0075><U006C><U0061><U0069>";/
+        "<U0041><U0075><U0067><U006F><U0073><U0074><U0069>";/
+        "<U0053><U0065><U0070><U0074><U0065><U006D><U0062><U0061>";/
+        "<U004F><U006B><U0074><U006F><U0062><U0061>";/
+        "<U004E><U006F><U0076><U0065><U006D><U0062><U0061>";/
+        "<U0044><U0069><U0073><U0065><U006D><U0062><U0061>"
+%
+d_t_fmt     "<U0025><U0061><U0020><U0025><U0064><U0020><U0025><U0062><U0020><U0025><U0059><U0020><U0025><U0072><U0020><U0025><U005A>"
+d_fmt       "<U0025><U006D><U002F><U0025><U0064><U002F><U0025><U0079>"
+t_fmt       "<U0025><U0072>"
+am_pm       "<U0041><U004D>";"<U0050><U004D>"
+t_fmt_ampm  "<U0025><U0049><U003A><U0025><U004D><U003A><U0025><U0053><U0020><U0025><U0070>"
+END LC_TIME
+
+% FIXME
+LC_MESSAGES
+copy "en_US"
+END LC_MESSAGES
+
+% Default paper: A4
+LC_PAPER
+height 297
+width 210
+END LC_PAPER
+
+% Metric System (ISO 1000)
+LC_MEASUREMENT
+measurement 1
+END LC_MEASUREMENT
+
+% FIXME
+LC_NAME
+copy "en_US"
+END LC_NAME
+
+% FIXME
+LC_ADDRESS
+copy "en_US"
+END LC_ADDRESS
+
+% FIXME
+LC_TELEPHONE
+copy "en_US"
+END LC_TELEPHONE
+

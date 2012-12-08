@@ -1,5 +1,3 @@
-%define rpm_check_works			0
-
 #
 # this spec file builds all the locales into rpm packages.
 # it is separate from the glibc spec, so that it is possible to rebuild
@@ -23,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.16.90
+%define glibc_ver 2.15
 %define glibc_epoch 6
 %define version   %{glibc_ver}
 # FIXME: please check on next build those we really need
@@ -35,6 +33,9 @@
 # shorthands for the post scripts
 %define loc_add /usr/bin/locale_install.sh
 %define loc_del /usr/bin/locale_uninstall.sh
+
+%define _enable_debug_packages	%{nil}
+%define debug_package		%{nil}
 
 Summary:	Base files for localization
 Name:		locales
@@ -52,6 +53,7 @@ Source3:	locale_uninstall.sh
 Source4:	locales.sysconfig
 Source5:	locales-hardlink.pl
 Source6:	locales-softlink.pl
+Source7:	%{name}.rpmlintrc
 
 # this one is on glibc, however there is the politic issue
 # of the naming of Taiwan 
@@ -190,13 +192,11 @@ it to correctly display 8bits Afrikaans characters, and for proper
 alfabetical sorting and representation of dates and numbers according
 to Afrikaans language conventions.
 
-%if %{rpm_check_works}
-%description -n locales-af -l af
-Hierdie is die basislêers vir Afrikaanse lokalisasie. U benodig dit om die
-Afrikaanse 8-bis karakters korrek te vertoon, vir korrekte alfabetiese
-sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
-vertoon.
-%endif
+#%#description -n locales-af -l af
+#Hierdie is die basislêers vir Afrikaanse lokalisasie. U benodig dit om die
+#Afrikaanse 8-bis karakters korrek te vertoon, vir korrekte alfabetiese
+#sorterting en ook om datums en getalle in die Afrikaanse standaardvorm te
+#vertoon.
 
 %post -n locales-af
 %{loc_add} af_ZA
@@ -231,12 +231,10 @@ it to correctly display 8bits Amharic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Amharic language conventions.
 
-%if %{rpm_check_works}
-%description -n locales-am -l am
-እነዚህ ያማርኛ ቋንቋ localization  መሰረት ፋይሎች ናቸው።
-ያማርኛ ፊደላትንለማየት፣ የፊደላት ቅደም ተከተልን ለመጠበቅ፣
-ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
-%endif
+#%#description -n locales-am -l am
+#እነዚህ ያማርኛ ቋንቋ localization  መሰረት ፋይሎች ናቸው።
+#ያማርኛ ፊደላትንለማየት፣ የፊደላት ቅደም ተከተልን ለመጠበቅ፣
+#ቀኖችንና ቍጥሮችንበቋንቋው ስርዓት ለማስቀመጥ ያስፈልጋሉ።
 
 %post -n locales-am
 %{loc_add} am_ET byn_ER gez_ER gez_ET om_ET om_KE sid_ET ti_ER ti_ET tig_ER \
@@ -272,7 +270,7 @@ fi
 # translation by Wajdi Al-Jedaibi <wajdi@acm.org>
 %package -n locales-ar
 Summary: Base files for localization (Arabic)
-Summary(ar): هذه هي الملفات اللازمة لإعتماد اللغة العربية في نظام لينكس.
+#Summary(ar): هذه هي الملفات اللازمة لإعتماد اللغة العربية في نظام لينكس.
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -285,14 +283,6 @@ Note that this package doesn't handle right-to-left and left-to-right
 switching when displaying nor the isolate-initial-medial-final shapes
 of letters; it is to the xterm, application or virtual console driver
 to do that.
-
-%if %{rpm_check_works}
-%description -n locales-ar -l ar
-هذه هي الملفات اللازمة لإعتماد اللغة العربية في نظام لينكس.
-لاحظ أن هذا البرنامجلايقوم بعملية تحويل اتجاه الكتابة من اليمن إلى
-اليسار والعكس، ولكن يوفر الاساسيات الضرورية لعرض وتصنيف وترتيب الاحرف
-العربية، بما في ذلك إظهار التاريخ و غيره.
-%endif
 
 %post -n locales-ar
 %{loc_add} ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB ar_LY ar_MA \
@@ -467,7 +457,7 @@ fi
 # translation: Mariana Kokosharova <kokosharova@dir.bg>
 %package -n locales-bg
 Summary: Base files for localization (Bulgarian)
-Summary(bg): съдържат основните регионални характеристики на българския език
+#Summary(bg): съдържат основните регионални характеристики на българския език
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -476,14 +466,6 @@ These are the base files for Bulgarian language localization; you need
 it to correctly display 8bits Bulgarian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Bulgarian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-bg -l bg
-Тези файлове съдържат основните регионални характеристики на българския език;
-теса необходими за правилното представяне на 8 - битовите букви на кирилицата
-на екрана, за правилната азбучна подредба и за представяне на датата и числата
-в съответствие на правилата на българския език.
-%endif
 
 %post -n locales-bg
 %{loc_add} bg_BG
@@ -550,28 +532,14 @@ fi
 Summary: Base files for localization (Breton)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(fr): Fichiers de base pour la localisation en langue bretonne
-Summary(br): Kement-mañ a zo restroù diazez evit broelañ diouzh ar brezhoneg
+#Summary(fr): Fichiers de base pour la localisation en langue bretonne
+#Summary(br): Kement-mañ a zo restroù diazez evit broelañ diouzh ar brezhoneg
 
 %description -n locales-br
 These are the base files for Breton language localization; you need
 it to correctly display 8bits Breton characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Breton language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-br -l fr
-Ce paquet contient les définitions de locales en langue brétonne.
-Il permet aux applications de savoir quels caractères sont affichables et
-donc afficher correctemment les caractères accentués et l'ordre alphabetique;
-il contient aussi les definitions des representations des dates et des nombres.
-
-%description -n locales-br -l br
-Kement-mañ a zo restroù diazez evit broelañ diouzh ar Vrezhoneg; ret eo
-evit diskwel ent reizh arouezennoù breizhat 8bit, rummañ dre al
-lizherenneg, taolennañ an deizadoù hag an niveroù hervez kendivizadoù ar
-brezhoneg.
-%endif
 
 %post -n locales-br
 %{loc_add} br_FR
@@ -612,37 +580,15 @@ fi
 Summary: Base files for localization (Catalan)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(ca): Arxius bàsics per a l'adaptació al català
-Summary(es): Archivos de base para la localización en idioma catalán
-Summary(fr): Fichiers de base pour la localisation en langue catalane
+#Summary(ca): Arxius bàsics per a l'adaptació al català
+#Summary(es): Archivos de base para la localización en idioma catalán
+#Summary(fr): Fichiers de base pour la localisation en langue catalane
 
 %description -n locales-ca
 These are the base files for Catalan language localization; you need
 it to correctly display 8bits Catalan characters, and for proper
 representation of dates, numbers and alphabetical order according to
 Catalan language conventions
-
-%if %{rpm_check_works}
-%description -n locales-ca -l ca
-Aquests són els arxius bàsics per a l'adaptació del sistema a les
-peculiaritats de la llengua catalana; són necessaris perquè les
-vocals accentuades, la ce trencada, etc. apareguin correctament, i
-perquè les dates, els nombres i l'ordre alfabètic s'adaptin a les
-convencions de la dita llengua.
-
-%description -n locales-ca -l es
-Este paquete incluye las definiciones de locales para el catalán.
-Este paquete contiene lo necesario para la visualisación correcta de
-los caracteres 8bits del catalán, para el orden alfabético
-y para la representación correcta de los números y fechas según
-las convenciones del catalán.
-
-%description -n locales-ca -l fr
-Ce paquet contient les définitions de locales en langue catalane.
-Il permet aux applications de savoir quels caractères sont affichables et
-donc afficher correctemment les caractères accentués et l'ordre alphabetique;
-il contient aussi les definitions des representations des dates des nombres.
-%endif
 
 %post -n locales-ca
 %{loc_add} ca_AD ca_ES ca_FR ca_IT
@@ -687,20 +633,13 @@ fi
 Summary: Base files for localization (Czech)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(cs): Základní soubory pro lokalizaci (čeština)
+#Summary(cs): Základní soubory pro lokalizaci (čeština)
 
 %description -n locales-cs
 These are the base files for Czech language localization; you need
 it to correctly display 8bits Czech characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Czech language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-cs -l cs
-Zde jsou soubory nutné pro správnou českou lokalizaci; potřebujete je
-pro správné zobrazování českých 8bitových znaků a pro správné české
-třídění a reprezentaci data a čísel podle českých konvencí.
-%endif
 
 %post -n locales-cs
 %{loc_add} cs_CZ
@@ -739,7 +678,7 @@ fi
 ### cy
 %package -n locales-cy
 Summary: Base files for localization (Welsh)
-Summary(cy): Dyma'r ffeiliau sylfaenol i'r lleoliaeth Cymraeg
+#Summary(cy): Dyma'r ffeiliau sylfaenol i'r lleoliaeth Cymraeg
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -748,13 +687,6 @@ These are the base files for Welsh language localization; you need
 it to correctly display 8bits Welsh characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Welsh language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-cy -l cy
-Dyma'r ffeiliau sylfaenol i'r lleoliaeth Cymraeg; mae angen rhain er mwyn
-dangos yn iawn y cymeriadau Cymraeg 8-bit, a threfniant y wyddor,
-dyddiadau a rhifau yn ôl yr arfer Cymraeg.
-%endif
 
 %post -n locales-cy
 %{loc_add} cy_GB
@@ -771,7 +703,7 @@ fi
 # danish translation by Erik Martino <martino@daimi.au.dk>
 %package -n locales-da
 Summary: Base files for localization (Danish)
-Summary(da): Her er de basale filer for dansk sprog tilpasning
+#Summary(da): Her er de basale filer for dansk sprog tilpasning
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -780,13 +712,6 @@ These are the base files for Danish language localization; you need
 it to correctly display 8bits Danish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Danish language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-da -l da
-Her er de basale filer for dansk sprog tilpasning. De er nødvendige for
-at vise de danske 8bit tegn, sortere alfabetisk og repræsentere datoer
-og tal korrekt ifølge dansk retskrivning.
-%endif
 
 %post -n locales-da
 %{loc_add} da_DK
@@ -804,28 +729,14 @@ fi
 Summary: Base files for localization (German)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(fr): Fichiers de base pour la localisation en langue allemande
-Summary(de): Basisdateien für die Lokalisierung (deutsch)
+#Summary(fr): Fichiers de base pour la localisation en langue allemande
+#Summary(de): Basisdateien für die Lokalisierung (deutsch)
 
 %description -n locales-de
 These are the base files for German language localization; you need
 it to correctly display 8bits German characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to German language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-de -l fr
-Ce paquet contient les définitions de locales en langue allemande.
-Il permet aux applications de savoir quels caractères sont affichables et
-donc afficher correctemment les caractères accentués et l'ordre alphabetique;
-il contient aussi les definitions des representations des dates des nombres.
-
-%description -n locales-de -l de
-Dies sind die Basisdateien für die deutsche Sprachanpassung; sie
-werden für die korrekte Darstellung deutscher 8-Bit-Zeichen,
-die deutsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
-benötigt.
-%endif
 
 %post -n locales-de
 %{loc_add} de_AT de_BE de_CH de_DE de_LU
@@ -841,29 +752,6 @@ fi
 %{_localedir}/de_CH*
 %{_localedir}/de_DE*
 %{_localedir}/de_LU*
-
-### doi
-%package -n locales-doi
-Summary: Base files for localization (Dogri)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-
-%description -n locales-doi
-These are the base files for Dogri language localization.
-You need it to correctly display sort, for sorting order and
-proper representation of dates and numbers according
-to Dogri language conventions.
-
-%post -n locales-doi
-%{loc_add} doi_IN
-
-%preun -n locales-doi
-if [ "$1" = "0" ]; then
-	%{loc_del} doi_IN
-fi
-
-%files -n locales-doi
-%{_localedir}/doi_IN
 
 ### dv
 %package -n locales-dv
@@ -919,21 +807,13 @@ Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Obsoletes: locales-gr
 Provides: locales-gr = %{version}-%{release}
-Summary(el): Βασικά αρχεία τοπικών ρυθμίσεων (Ελληνικά)
+#Summary(el): Βασικά αρχεία τοπικών ρυθμίσεων (Ελληνικά)
 
 %description -n locales-el
 These are the base files for Greek language localization; you need
 it to correctly display 8bits Greek characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Greek language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-el -l el
-Αυτά είναι τα βασικά αρχεία για υποστήριξη ελληνικής γλώσσας. Τα χρειάζεστε
-για τη σωστή απεικόνιση 8bit ελληνικών χαρακτήρων, καθώς και για την σωστή
-ταξινόμηση και απεικόνιση ημερομηνιών και αριθμών σύμφωνα με τις συμβάσεις
-της ελληνικής γλώσσας.
-%endif
 
 %post -n locales-el
 %{loc_add} el_CY el_GR
@@ -997,21 +877,13 @@ fi
 Summary: Base files for localization (Esperanto)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(eo): Bazaj dosieroj por lokaĵo (Esperanto)
+#Summary(eo): Bazaj dosieroj por lokaĵo (Esperanto)
 
 %description -n locales-eo
 These are the base files for Esperanto language localization; you need
 it to correctly display 8bits esperanto characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to esperanto language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-eo -l eo
-Tiuj ĉi estas la bazaj dosieroj por la esperantlingva lokaĵo; vi bezonas
-ilin por ĝuste vidi 8-bitajn Esperanto-signojn kaj por ĝusta
-alfabeta ordo, datindikoj kaj nombroj konvene al la konvencioj
-en esperanta medio.
-%endif
 
 %post -n locales-eo
 %{loc_add} eo_XX
@@ -1038,14 +910,12 @@ it to correctly display 8bits spanish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to spanish language conventions.
 
-%if %{rpm_check_works}
-%description -n locales-es -l es
-Este paquete incluye las definiciones de locales para el castellano.
-Este paquete contiene lo necesario para la visualisación correcta de
-los caracteres 8bits del idioma español, para el orden alfabético 
-y para la representación correcta de los números y fechas según 
-las convenciones del castellano.
-%endif
+#%#description -n locales-es -l es
+#Este paquete incluye las definiciones de locales para el castellano.
+#Este paquete contiene lo necesario para la visualisación correcta de
+#los caracteres 8bits del idioma español, para el orden alfabético 
+#y para la representación correcta de los números y fechas según 
+#las convenciones del castellano.
 
 %post -n locales-es
 %{loc_add} an_ES es_AR es_BO es_CL es_CO es_CR es_CU es_DO es_EC es_ES es_GT \
@@ -1088,7 +958,7 @@ fi
 # translation from: Ekke Einberg <ekke@data.ee>
 %package -n locales-et
 Summary: Base files for localization (Estonian)
-Summary(et): Siin on vajalikud failid Linuxi eestindamiseks
+#Summary(et): Siin on vajalikud failid Linuxi eestindamiseks
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1097,15 +967,6 @@ These are the base files for Estonian language localization; you need
 it to correctly display 8bits Estonian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Estonian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-et -l et
-Siin on vajalikud failid Linuxi eestindamiseks. Need on vajalikud
-8-bitiliste eesti sümbolite
-korrektseks esitamiseks ning õige tähestikulise järjestuse jaoks. Samuti
-numbrite ja kuupäevade
-eesti keele reeglitele vastavaks esituseks.
-%endif
 
 %post -n locales-et
 %{loc_add} et_EE
@@ -1123,9 +984,9 @@ fi
 Summary: Base files for localization (Basque)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(eu): Euskarazko egokitzapenerako oinarrizko artxiboak
-Summary(es): Archivos de base para la localización en euskara
-Summary(fr): Fichiers de base pour la localisation en euskara (langue basque)
+#Summary(eu): Euskarazko egokitzapenerako oinarrizko artxiboak
+#Summary(es): Archivos de base para la localización en euskara
+#Summary(fr): Fichiers de base pour la localisation en euskara (langue basque)
 
 %description -n locales-eu
 Linux-ek euskaraz badaki !
@@ -1133,28 +994,6 @@ These are the base files for Basque language localization; you need
 it to correctly display 8bits Basque characters, and for proper
 representation of dates and numbers according to Basque language
 conventions.
-
-%if %{rpm_check_works}
-%description -n locales-eu -l eu
-Linux-ek euskaraz badaki !
-Hauek dira euskarazko egokitzapenerako oinarrizko artxiboak; euskarazko
-8 biteko karaktereak zuzen ikusi ahal izateko zein zenbakiak
-eta datak euskararen arauen arabera era egokian agertarazteko behar dira.
-
-%description -n locales-eu -l es
-Linux-ek euskaraz badaki !
-Este paquete incluye las definiciones de locales para el euskara.
-Este paquete contiene lo necesario para la visualisación correcta de
-los caracteres 8bits del euskara, para el orden alfabético
-y para la representación correcta de los números y fechas según
-las convenciones del euskara.
-
-%description -n locales-eu -l fr
-Ce paquet contient les définitions de locales en euskara batua.
-Il permet aux applications de savoir quels caractères sont affichables et
-donc afficher correctemment les caractères accentués et l'ordre alphabetique;
-il contient aussi les definitions des representations des dates des nombres.
-%endif
 
 %post -n locales-eu
 %{loc_add} eu_ES
@@ -1170,7 +1009,7 @@ fi
 ### fa
 %package -n locales-fa
 Summary: Base files for localization (Farsi)
-Summary(fa): پرونده‌های اساسی محلی‌سازی (فارسی)
+#Summary(fa): پرونده‌های اساسی محلی‌سازی (فارسی)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1183,11 +1022,6 @@ Note that this package doesn't handle right-to-left and left-to-right
 switching when displaying nor the isolate-initial-medial-final shapes
 of letters; it is to the xterm, application or virtual console driver
 to do that.
-
-%if %{rpm_check_works}
-%description -n locales-fa -l fa
-اینها پرونده‌های اساسی زبان فارسی می‌باشند؛ شما برای نمایش درست ۸ بیت حروف فارسی، ترتیب مناسب الفبا، معرفی تاریخ و اعداد بر اساس قواعد زبان فارسی به آنها احتیاج دارید. توجه داشته باشید که این پاکت تعویض نگارش از راست به چپ و از چپ به راست را عهده‌دار نمی‌باشد و نه حتی ترکیب نهایی حروف را؛ این عمل را پایانه‌ی اکس، برنامه یا کارگزار کنسول مجازی انجام می‌دهند.
-%endif
 
 %post -n locales-fa
 %{loc_add} fa_IR
@@ -1204,7 +1038,7 @@ fi
 # translations by Jarkko Vaaraniemi <jvaarani@ees2.oulu.fi>
 %package -n locales-fi
 Summary: Base files for localization (Finnish)
-Summary(fi): Tässä on perustiedot Linuxin suomentamiseen.
+#Summary(fi): Tässä on perustiedot Linuxin suomentamiseen.
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1213,13 +1047,6 @@ These are the base files for Finnish language localization; you need
 it to correctly display 8bits Finnish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Finnish language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-fi -l fi
-Tässä on perustiedot Linuxin suomentamiseen. Tarvitset sitä suomalaisten
-8-bittisten merkkien oikeaan esittämiseen, ja oikeaan aakkostamiseen ja
-päivien ja numeroiden esitykseen suomenkielen käytännön mukaan.
-%endif
 
 %post -n locales-fi
 %{loc_add} fi_FI
@@ -1258,7 +1085,7 @@ fi
 ### fo
 %package -n locales-fo
 Summary: Base files for localization (Faroese)
-Summary(fo): Hetta eru fílurnar tær tørvar til eina tillaging til føroyskt mál
+#Summary(fo): Hetta eru fílurnar tær tørvar til eina tillaging til føroyskt mál
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1267,13 +1094,6 @@ These are the base files for Faroese language localization; you need
 it to correctly display 8bits Faroese characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Faroese language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-fo -l fo
-Hetta eru fílurnar tær tørvar til eina tillaging til føroyskt mál. Tær eru
-neyðugar fyri at vísa føroyskar 8-bit stavir, fyri at fáa rætt stavrað og
-vísa dagfestingar og tøl sambært føroyska siðvenju.
-%endif
 
 %post -n locales-fo
 %{loc_add} fo_FO
@@ -1291,30 +1111,14 @@ fi
 Summary: Base files for localization (French)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(fr): Fichiers de base pour la localisation (français)
-Summary(de): Basisdateien für die Lokalisierung (Französisch)
+#Summary(fr): Fichiers de base pour la localisation (français)
+#Summary(de): Basisdateien für die Lokalisierung (Französisch)
 
 %description -n locales-fr
 These are the base files for French language localization; you need
 it to correctly display 8bits french characters, and for proper
 alfabetical sorting and representation of dates and numbers 
 according to french language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-fr -l fr
-Ce paquet contient les définitions de locales en langue française.
-Il permet aux applications de savoir quels caractères sont affichables
-et donc afficher correctemment les caractères accentués et l'ordre
-alphabetique; il contient aussi les definitions des representations
-des dates des nombres et des symboles monétaires en Belgique, Canada,
-Suisse, France et Luxembourg.
-
-%description -n locales-fr -l de
-Dies sind die Basisdateien für die französische Sprachanpassung; sie
-werden für die korrekte Darstellung deutscher 8-Bit-Zeichen,
-die französische Sortierreihenfolge sowie Datums- und Zahlendarstellung
-benötigt.
-%endif
 
 %post -n locales-fr
 %{loc_add} fr_BE fr_CA fr_CH fr_FR fr_LU
@@ -1381,7 +1185,7 @@ fi
 ### ga
 %package -n locales-ga
 Summary: Base files for localization (Irish)
-Summary(ga): Bunchomaid do leagan áitiúil (Gaeilge)
+#Summary(ga): Bunchomaid do leagan áitiúil (Gaeilge)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1390,14 +1194,6 @@ These are the base files for Irish Gaelic language localization; you need
 it to correctly display 8bits gaelic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-ga -l ga
-Seo iad na bunchomhaid do leagan áitiúil na Gaeilge; ní mór duit
-iad a fháil chun tacar carachtar 8ngiotán a thaispeáint i gceart,
-agus sórtáil in ord aibitre agus dátaí agus uimhreacha a chur i
-láthair de réir coinbhinsiúnaigh na Gaeilge.
-%endif
 
 %post -n locales-ga
 %{loc_add} ga_IE
@@ -1415,7 +1211,7 @@ fi
 # and Cecil Ward [cecil.ward@FREE4ALL.CO.UK]
 %package -n locales-gd
 Summary: Base files for localization (Scottish Gaelic)
-Summary(gd): Faidhlichean bunaiteach airson localization (Gaidhlig na h-Alba)
+#Summary(gd): Faidhlichean bunaiteach airson localization (Gaidhlig na h-Alba)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1424,14 +1220,6 @@ These are the base files for Scottish Gaelic language localization; you need
 it to correctly display 8bits gaelic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-gd -l gd
-Seo na faidhlichean bunaiteach air son "locale" na Gàidhlig.
-Tha feum orra gus caractairean 8-bit fhaicinn, gus faclan a
-chur ann an òrd na h-aibidile, agus gus àireamhan is cinn-latha
-a riochdachadh a-réir nòs na Gàidhlig.
-%endif
 
 %post -n locales-gd
 %{loc_add} gd_GB
@@ -1450,28 +1238,14 @@ fi
 Summary: Base files for localization (Galician)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(gl): Arquivos da base para definición de locais para o galego.
-Summary(es): Archivos de base para la localización en idioma gallego
+#Summary(gl): Arquivos da base para definición de locais para o galego.
+#Summary(es): Archivos de base para la localización en idioma gallego
 
 %description -n locales-gl
 These are the base files for Galician language localization; you need
 it to correctly display 8bits Galician characters, and for proper
 representation of dates and numbers according to Galician language
 conventions.
-
-%if %{rpm_check_works}
-%description -n locales-gl -l gl
-Este paquete inclúe as definicións de locais para o galego. Este paquete
-contén o preciso para a representacion correcta dos caracteres de 8 bits
-da fala galega, dos números e datas segundo as convencións do galego.
-
-%description -n locales-gl -l es
-Este paquete incluye las definiciones de locales para el gallego.
-Este paquete contiene lo necesario para la visualisación correcta de
-los caracteres 8bits del gallego, para el orden alfabético
-y para la representación correcta de los números y fechas según
-las convenciones del gallego.
-%endif
 
 %post -n locales-gl
 %{loc_add} gl_ES
@@ -1511,7 +1285,7 @@ fi
 # translation by Brian Stowell <bstowell@MAILSERVICE.MCB.NET>
 %package -n locales-gv
 Summary: Base files for localization (Manx Gaelic)
-Summary(gv): Coadanyn undinagh son ynnydaghey (Gaelg)
+#Summary(gv): Coadanyn undinagh son ynnydaghey (Gaelg)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1520,14 +1294,6 @@ These are the base files for Manx Gaelic language localization; you need
 it to correctly display 8bits gaelic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to gaelic language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-gv -l gv
-T'ad shoh ny coadanyn undinagh ry-hoi ynnydaghey chengaghyn Gaelagh; ta
-feme ayd orroo dy haishbyney karracteyryn Gaelagh 8-bit dy kiart, as son
-reaghey-abbyrlit cooie as taishbyney-daaytyn as earrooyn coardail rish
-reillyn-chengey Gaelagh.
-%endif
 
 %post -n locales-gv
 %{loc_add} gv_GB
@@ -1567,7 +1333,7 @@ fi
 ### he (formerly iw)
 %package -n locales-he
 Summary: Base files for localization (Hebrew)
-Summary(he): המקום מכיל עמדות ללופויזציה בעברית 
+#Summary(he): המקום מכיל עמדות ללופויזציה בעברית 
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1579,17 +1345,6 @@ according to Hebrew language conventions.
 Note that this package doesn't handle right-to-left and left-to-right
 switching when displaying; it is to the xterm, application or virtual
 console driver to do that.
-
-%if %{rpm_check_works}
-%description -n locales-he -l he
-אלו הקבצים הבסיסיים לשימוש בעברית, אתה צריך את
-החבילה הזאת בכדי להציג עברית של 8 ביטים,
-לסידור לפי האלף בית, ולהצגה נכונה של מספרים
-ותאריכים בהתאם ולקובל בשפה העברית. שים לב
-שהחבילה הזאת אינה מטפטל בהמרה מימין לשמאל 
-או משמאל לימין, על הישום או המסוף, בין אם של
-X11 או המסוף וירטואלי, לעשות כן.
-%endif
 
 %post -n locales-he
 %{loc_add} he_IL iw_IL
@@ -1658,21 +1413,13 @@ fi
 Summary: Base files for localization (Croatian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(hr): Osnovne datoteke za lokalizaciju (Hrvatski)
+#Summary(hr): Osnovne datoteke za lokalizaciju (Hrvatski)
 
 %description -n locales-hr
 These are the base files for Croatian language localization; you need
 it to correctly display 8bits Croatian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Croatian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-hr -l hr
-Ovo su osnovne datoteke za lokalizaciju na Hrvatski jezik; potrebne su
-da bi se pravilno prikazali 8 bitni Hrvatski znakovi, za pravilno
-sortiranje po abecedi i prikaz datuma i brojeva po pravilima
-Hrvatskog jezika.
-%endif
 
 %post -n locales-hr
 %{loc_add} hr_HR
@@ -1737,20 +1484,13 @@ fi
 Summary: Base files for localization (Hungarian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(hu): Szükséges fájlok a magyarításhoz
+#Summary(hu): Szükséges fájlok a magyarításhoz
 
 %description -n locales-hu
 These are the base files for Hungarian language localization.
 You need it to correctly display sort, for sorting order and
 proper representation of dates and numbers according 
 to Hungarian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-hu -l hu
-Ezek a szükséges fájlok a magyarításhoz. Szükség van rá a
-magyar helyesírás szabályainak megfelelő sorbarendezéshez,
-számok és dátumok megjelenítéséhez.
-%endif
 
 %post -n locales-hu
 %{loc_add} hu_HU
@@ -1769,21 +1509,13 @@ fi
 Summary: Base files for localization (Armenian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(hy): Ամփոփում. Հայացման հիմնական փաթեթները (ֆայլերը)
+#Summary(hy): Ամփոփում. Հայացման հիմնական փաթեթները (ֆայլերը)
 
 %description -n locales-hy
 These are the base files for Armenian language localization.
 You need it to correctly display 8bit Armenian chars, 
 for sorting order and proper representation of dates and
 numbers according to Armenian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-hy -l hy
-Այստեղ ներկայացված են հայացման հիմնական փաթեթները (ֆայլերը)։
-Դրանք անհրաժեշտ են տվյալների ճշգրիտ խմբավորման եւ ամսաթվերի ու
-թվային արժեքների պատշաճ ներկայցման համար համաձայն հայոց լեզվի
-կանոնների։
-%endif
 
 %post -n locales-hy
 %{loc_add} hy_AM
@@ -1802,19 +1534,12 @@ fi
 Summary: Base files for localization (Indonesian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(id): File Utama untuk lokalisasi (dalam Bahasa Indonesia)
+#Summary(id): File Utama untuk lokalisasi (dalam Bahasa Indonesia)
 
 %description -n locales-id
 These are the base files for Indonesian language localization.
 You need it to correctly display sort, for proper representation
 of dates and numbers according to Indonesian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-id -l id
-Ini adalah file untuk lokalisasi sistem ke dalam Bahasa Indonesia.
-File ini dibutuhkan bila Anda ingin menampilkan tanggal dan penomoran
-yang sesuai dengan kaidah Bahasa Indonesia.
-%endif
 
 %post -n locales-id
 %{loc_add} id_ID
@@ -1880,21 +1605,13 @@ fi
 Summary: Base files for localization (Icelandic)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(is): Hér eru grunnskrár fyrir íslenska staðfærslu.
+#Summary(is): Hér eru grunnskrár fyrir íslenska staðfærslu.
 
 %description -n locales-is
 These are the base files for Icelandic language localization; you need
 it to correctly display 8bits Icelandic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Icelandic language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-is -l is
-Hér eru grunnskrár fyrir íslenska staðfærslu. Þú þarft á þessum skrám að
-halda ef 8 bita séríslenskir stafir eiga að birtast réttir, til að fá
-rétta stafrófsröð og til að dagsetningar og tölur birtist eins og
-venja er í íslensku.
-%endif
 
 %post -n locales-is
 %{loc_add} is_IS
@@ -1910,7 +1627,7 @@ fi
 ### it
 %package -n locales-it
 Summary: Base files for localization (Italian)
-Summary(it): I files di base per l'adattamento della lingua italiana
+#Summary(it): I files di base per l'adattamento della lingua italiana
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -1919,14 +1636,6 @@ These are the base files for Italian language localization; you need
 it to correctly display 8bits Italian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Italian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-it -l it
-Questi sono i files di base per l'adattamento della lingua italiana. Vi
-servono per visualizzare correttamente i caratteri a 8bit in italiano,
-per l'ordinamento alfabetico corretto e per la rappresentazione delle
-date e dei numeri in forma italiana.
-%endif
 
 %post -n locales-it
 %{loc_add} it_CH it_IT
@@ -1967,7 +1676,7 @@ fi
 # translation by "Evan D.A. Geisinger" <evan.geisinger@etak.com>
 %package -n locales-ja
 Summary: Base files for localization (Japanese)
-Summary(ja): これは日本語ロカライゼーション用基礎ファイル集です。
+#Summary(ja): これは日本語ロカライゼーション用基礎ファイル集です。
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Obsoletes: libwcsmbs
@@ -1976,15 +1685,6 @@ Obsoletes: libwcsmbs
 These are the base files for Japanese language localization; you need
 it to correctly display 8bits and 7bits japanese codes, and for proper
 representation of dates and numbers according to japanese language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-ja -l ja
-これは日本語ロカライゼーション用基礎ファイル集です。これがないと，
-７・８ビット文字コードの表示もできず、日本式日付き表現・数値表現ができない。
-ただし、要注意点として：１６ビット文字コードが使えなかったので、
-このロカール（地域特有設定データ集）が完璧・正式に「正確」とはいいきれない。
-（多少「誤魔化し」を利かせて作ったからです）。
-%endif
 
 %post -n locales-ja
 %{loc_add} ja_JP
@@ -2002,21 +1702,13 @@ fi
 Summary: Base files for localization (Georgian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(ka): საბაზო ფაილები ქართულის ლოკალიზებისათვის.
+#Summary(ka): საბაზო ფაილები ქართულის ლოკალიზებისათვის.
 
 %description -n locales-ka
 These are the base files for Georgian language localization; you need
 it to correctly display 8bits Georgian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Georgian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-ka -l ka
-საბაზო ფაილები ქართულის ლოკალიზებისათვის.
-საჭიროა 8 ბიტიანი ფონტებით ქართული ანბანის სწორი ჩვენებისა
-და სორტირებისათვის. აგრეთვე - თარიღის, ფულის ნიშნებისა და
-რიცხვითი მნიშვნელობების მართებული წარმოდგენისათვის.
-%endif
 
 %post -n locales-ka
 %{loc_add} ka_GE
@@ -2126,7 +1818,7 @@ fi
 # translation by Soo-Jin Lee <NothingSpecial@rocketmail.com>
 %package -n locales-ko
 Summary: Base files for localization (Korean)
-Summary(ko): 이것들은 한국어에만 국한된 기초화일들이다
+#Summary(ko): 이것들은 한국어에만 국한된 기초화일들이다
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Obsoletes: libwcsmbs
@@ -2135,13 +1827,6 @@ Obsoletes: libwcsmbs
 These are the base files for Korean language localization; you need
 it to correctly display 8bits and 7bits japanese codes, and for proper
 representation of dates and numbers according to korean language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-ko -l ko
-이것들은 한국어에만 국한된 기초화일들이다 당신은 한국어규정에
-의한 적절한 날짜와 숫자들의 표시를 8바이트와 7바이트의 한국어
-코드로 정확히 배열하는데 그것이 필요하다.
-%endif
 
 %post -n locales-ko
 %{loc_add} ko_KR
@@ -2205,7 +1890,7 @@ fi
 ### ku
 %package -n locales-ku
 Summary: Base files for localization (Kurdish)
-Summary(ku): Rûpel-tâmar ji bo naskirinâ cîh (Kurdi)
+#Summary(ku): Rûpel-tâmar ji bo naskirinâ cîh (Kurdi)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2214,14 +1899,6 @@ These are the base files for Kurdish language localization; you need
 it to correctly display 8bits Kurdish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Kurdish language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-ku -l ku
-Vâhan rûpelen-tâmarê ji bo cîhnaskirînâ zîmanê kurdi, ji bo qû herfên
-kurd â 8bits ân vêrin ditin, vâ rûpel-tamar bî vê gêrege ji bo alfabêya
-kurdi, dîrok, seat, hêjmar û edetê malbatâ zîmanê kurdin vêre naskirin
-bi haliyê systême
-%endif
 
 %post -n locales-ku
 %{loc_add} ku_TR
@@ -2239,7 +1916,7 @@ fi
 # Laurie Climo <lj.climo@ukonline.co.uk> & Marion Gunn <mgunn@ucd.ie>
 %package -n locales-kw
 Summary: Base files for localization (Cornish)
-Summary(kw): Fylennow sel dhe gernewekhe
+#Summary(kw): Fylennow sel dhe gernewekhe
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2248,14 +1925,6 @@ These are the base files for Cornish language localization; you need
 it to correctly display 8bits cornish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Cornish language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-kw -l kw
-Otomma'n fylennow sel dhe Gernewekhe an system; 'ma ethom anodho
-dhe dhysplegya lythrennow Kernewek 8-ryf dhe wyr, ha sortya yn ordyr
-abecedery gwyw ha dysquesdhes dedhyow ha nyverow herwyth rewlys
-a'n tavas Kernewek.
-%endif
 
 %post -n locales-kw
 %{loc_add} kw_GB
@@ -2411,7 +2080,7 @@ fi
 ### lt
 %package -n locales-lt
 Summary: Base files for localization (Lithuanian)
-Summary(lt): Failai skirti lokalės lituanizacijai
+#Summary(lt): Failai skirti lokalės lituanizacijai
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2420,13 +2089,6 @@ These are the base files for Lithuanian language localization; you need
 it to correctly display 8bits Lithuanian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Lithuanian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-lt -l lt
-Baziniai failai skirti lokalės lituanizacijai; reikalingi korektiš
-kam lietuviškų, 8 bitų simbolių atvaizdavimui, alfabetiniam rūšiavimui
-bei datos ir skaičių atvaizdavimui.
-%endif
 
 %post -n locales-lt
 %{loc_add} lt_LT
@@ -2443,7 +2105,7 @@ fi
 # translation done by Vitauts Stochka <vit@dpu.lv>
 %package -n locales-lv
 Summary: Base files for localization (Latvian)
-Summary(lv): Lokalizācijas pamatfaili (Latviešu)
+#Summary(lv): Lokalizācijas pamatfaili (Latviešu)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2452,14 +2114,6 @@ These are the base files for Latvian language localization; you need
 it to correctly display 8bits Latvian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Latvian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-lv -l lv
-Šie ir latviešu valodas lokalizācijas pamatfaili; tie jums ir
-nepieciešami, lai pareizi attēlotu 8bitu latviešu burtus, veiktu
-pareizu kārtošanu pēc alfabēta, kā arī attēlotu datumus un skaitļus
-saskaņā ar latviešu valodā pieņemtajām normām.
-%endif
 
 %post -n locales-lv
 %{loc_add} lv_LV
@@ -2471,29 +2125,6 @@ fi
 
 %files -n locales-lv
 %{_localedir}/lv_LV*
-
-### mag
-%package -n locales-mag
-Summary: Base files for localization (Magahi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-
-%description -n locales-mag
-These are the base files for Magahi language localization.
-You need it to correctly display sort, for sorting order and
-proper representation of dates and numbers according
-to Magahi language conventions.
-
-%post -n locales-mag
-%{loc_add} mag_IN
-
-%preun -n locales-mag
-if [ "$1" = "0" ]; then
-	%{loc_del} mag_IN
-fi
-
-%files -n locales-mag
-%{_localedir}/mag_IN
 
 ### mai
 %package -n locales-mai
@@ -2570,7 +2201,7 @@ fi
 # Maori translation provided by Gasson <gasson@clear.net.nz>
 %package -n locales-mi
 Summary: Base files for localization (Maori)
-Summary(mi): Ko ngā kōnae papa mō te whakaā-rohe (Māori)
+#Summary(mi): Ko ngā kōnae papa mō te whakaā-rohe (Māori)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2579,14 +2210,6 @@ These are the base files for Maori language localization; you need it for
 it to correctly display 8bits Maori characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Maori language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-mi -l mi
-Ko ēnei ngā kōnae papa mō te whakaā-rohe reo Maori; he mea kē tēnei kei
-whakaatuhia i ngā pū Māori mati kaupapa-ā-rua e waru kia tika ai, ā, mō te
-whakatakotoranga hoki o ngā wā me ngā nama kia tika ai anō e ai ki ngā aro
-whānui reo Māori.
-%endif
 
 %post -n locales-mi
 %{loc_add} mi_NZ
@@ -2665,29 +2288,6 @@ fi
 %files -n locales-mn
 %{_localedir}/mn_MN*
 
-### mni
-%package -n locales-mni
-Summary: Base files for localization (Manipuri)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-
-%description -n locales-mni
-These are the base files for Manipuri language localization.
-You need it to correctly display sort, for sorting order and
-proper representation of dates and numbers according
-to Manipuri language conventions.
-
-%post -n locales-mni
-%{loc_add} mni_IN
-
-%preun -n locales-mni
-if [ "$1" = "0" ]; then
-	%{loc_del} mni_IN
-fi
-
-%files -n locales-mni
-%{_localedir}/mni_IN
-
 ### mr
 %package -n locales-mr
 Summary: Base files for localization (Marathi)
@@ -2737,7 +2337,7 @@ fi
 # translation by Ramon Casha <rcasha@waldonet.net.mt>
 %package -n locales-mt
 Summary: Base files for localization (Maltese)
-Summary(mt): Files ewlenin għat-traduzzjoni (Maltin)
+#Summary(mt): Files ewlenin għat-traduzzjoni (Maltin)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2746,14 +2346,6 @@ These are the base files for Maltese language localization; you need
 it to correctly display 8bits Maltese characters, and for proper
 alphabetical sorting and representation of dates and numbers according\
 to Maltese language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-mt -l mt
-Dawn huma l-files ewlenin għat-traduzzjoni għal-lingwa Maltija;
-għandek bżonnhom biex turi l-ittri 8-bit Maltin sew, biex tissortja
-alfabetikament, u biex turi dati u numri skond il-konvenzjonijiet
-tal-lingwa Maltija.
-%endif
 
 %post -n locales-mt
 %{loc_add} mt_MT
@@ -2792,8 +2384,8 @@ fi
 ### nds
 %package -n locales-nds
 Summary: Base files for localization (Lower Saxon)
-Summary(de): Basisdateien für die Lokalisierung (Plautdietsch)
-Summary(nds): Grundspikjaloden fe' Sproaktoopaussinj (Plautdietsch)
+#Summary(de): Basisdateien für die Lokalisierung (Plautdietsch)
+#Summary(nds): Grundspikjaloden fe' Sproaktoopaussinj (Plautdietsch)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -2802,20 +2394,6 @@ These are the base files for Lower Saxon language
 localization; you need it to correctly display 8bits Lower Saxon characters,
 and for proper alphabetical sorting and representation of dates and numbers
 according to Lower Saxon language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-nds -l nds
-Dit send de Grundspikjaloden fe' de plautdietsche Sproaktoopaussinj.
-Dee woaren jebrukt om de 8-bit'sche plautdietsche Teakjens noh Droat
-ut to drekjen, aules jescheit noh'm Aulfabeet to sortieren, un uk de Dotums
-un Nummasch soo auntojäwen soo's daut jeweehnlich em Plautdietschen jeiht.
-
-%description -n locales-nds -l de
-Dies sind die Basisdateien für die plautdietsche Sprachanpassung; sie
-werden für die korrekte Darstellung plautdietscher 8-Bit-Zeichen,
-die plautdietsche Sortierreihenfolge sowie Datums- und Zahlendarstellung
-benötigt
-%endif
 
 %post -n locales-nds
 %{loc_add} nds_DE nds_NL
@@ -2857,28 +2435,14 @@ fi
 Summary: Base files for localization (Dutch)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(fr): Fichiers de base pour la localisation en langue néerlandaise
-Summary(nl): Dit zijn de basisbestanden nodig voor de Nederlandse taal
+#Summary(fr): Fichiers de base pour la localisation en langue néerlandaise
+#Summary(nl): Dit zijn de basisbestanden nodig voor de Nederlandse taal
 
 %description -n locales-nl
 These are the base files for Dutch language localization; you need
 it to correctly display 8bits Dutch characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Dutch language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-nl -l fr
-Ce paquet contient les définitions de locales en langue néerlandaise.
-Il permet aux applications de savoir quels caractères sont affichables et
-donc afficher correctemment les caractères accentués et l'ordre alphabetique;
-il contient aussi les definitions des representations des dates des nombres.
-
-%description -n locales-nl -l nl
-Dit zijn de basisbestanden nodig voor de Nederlandse taalmodule; ze zijn
-noodzakelijk om de 8bits Nederlandse karakters correct weer te geven en
-voor een juiste alfabetische sortering en weergave van data en nummers
-volgens de Nederlandse Taalconventies
-%endif
 
 %post -n locales-nl
 %{loc_add} nl_AW nl_BE nl_NL
@@ -2909,13 +2473,11 @@ it to correctly display 8bits Norwegian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Norwegian language conventions.
 
-%if %{rpm_check_works}
-%description -n locales-no -l nb
-Dette er basisfilene for lokalisering til norsk språk. Du trenger dette
-for å vise norske 8-bitstegn på riktig måte og for å få riktig sortering
-etter alfabetet og visning av datoer og tall i samsvar med norske
-konvensjoner.
-%endif
+#%#description -n locales-no -l nb
+#Dette er basisfilene for lokalisering til norsk språk. Du trenger dette
+#for å vise norske 8-bitstegn på riktig måte og for å få riktig sortering
+#etter alfabetet og visning av datoer og tall i samsvar med norske
+#konvensjoner.
 
 %post -n locales-no
 %{loc_add} nb_NO nn_NO
@@ -2981,21 +2543,13 @@ fi
 Summary: Base files for localization (Occitan)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(oc): fichièrs de basa per localisar (occitan)
+#Summary(oc): fichièrs de basa per localisar (occitan)
 
 %description -n locales-oc
 These are the base files for Occitan language localization; you need
 it to correctly display 8bits Occitan characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Occitan language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-oc -l oc
-Aicí avem empaquetat los fichièrs de basa per la lengua occitana : los
-programas n'an de besonh per afichar corrèctament los caractèrs dins lo
-fenestron, classar l'òrdre alfabetic e atanben comptar los jorns 
-e los meses en occitan.
-%endif
 
 %post -n locales-oc
 %{loc_add} oc_FR
@@ -3165,14 +2719,12 @@ it to correctly display 8bits Portuguese characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Portuguese language conventions.
 
-%if %{rpm_check_works}
-%description -n locales-pt -l pt
-Estes são os arquivos básicos para a localização lingüística em português;
-eles são necessários para que o sistema mostre corretamente caracteres
-portugueses de 8 bits, e para que tenha as apropriadas ordenações
-alfabéticas e representação de datas e números de acordo com as convenções
-da língua portuguesa.
-%endif
+#%#description -n locales-pt -l pt
+#Estes são os arquivos básicos para a localização lingüística em português;
+#eles são necessários para que o sistema mostre corretamente caracteres
+#portugueses de 8 bits, e para que tenha as apropriadas ordenações
+#alfabéticas e representação de datas e números de acordo com as convenções
+#da língua portuguesa.
 
 %post -n locales-pt
 %{loc_add} pt_BR pt_PT
@@ -3190,7 +2742,7 @@ fi
 # translation from "Mihai" <mihai@ambra.ro>
 %package -n locales-ro
 Summary: Base files for localization (Romanian)
-Summary(ro): Acestea sînt fisierele pentru române localizarea
+#Summary(ro): Acestea sînt fisierele pentru române localizarea
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -3199,14 +2751,6 @@ These are the base files for Romanian language localization; you need
 it to correctly display 8bits Romanian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Romanian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-ro -l ro
-Acestea sînt fisierele de baza pentru localizarea în limba româna; sînt
-necesare pentru afisarea corecta a caracterelor românesti pe 8 biti precum
-si pentru sortarea alfabetica si reprezentarea datelor si numerelor conform
-cu conventiile din limba româna.
-%endif
 
 %post -n locales-ro
 %{loc_add} ro_RO
@@ -3224,23 +2768,13 @@ fi
 Summary: Base files for localization (Russian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(ru): Основные файлы региональных установок (для России)
+#Summary(ru): Основные файлы региональных установок (для России)
 
 %description -n locales-ru
 These are the base files for Russian language localization; you need
 it to correctly display 8bits cyrillic characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Russian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-ru -l ru
-Эти файлы содержат основные региональные установки
-для русского языка; они необходимы для правильного
-представления 8-битных букв кириллицы на экране,
-для правильной алфавитной сортировки и для
-представления дат и чисел в соответствии с правилами
-русского языка.
-%endif
 
 %post -n locales-ru
 %{loc_add} ru_RU ru_UA
@@ -3300,29 +2834,6 @@ fi
 
 %files -n locales-sa
 %{_localedir}/sa_IN
-
-### sat
-%package -n locales-sat
-Summary: Base files for localization (Santali)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-
-%description -n locales-sat
-These are the base files for Santali language localization.
-You need it to correctly display sort, for sorting order and
-proper representation of dates and numbers according
-to Santali language conventions.
-
-%post -n locales-sat
-%{loc_add} sat_IN
-
-%preun -n locales-sat
-if [ "$1" = "0" ]; then
-	%{loc_del} sat_IN
-fi
-
-%files -n locales-sat
-%{_localedir}/sat_IN
 
 ### sc
 %package -n locales-sc
@@ -3445,7 +2956,7 @@ fi
 ### sk
 %package -n locales-sk
 Summary: Base files for localization (Slovak)
-Summary(sk): Toto su zakladne súbory pre slovenskú lokalizaciu
+#Summary(sk): Toto su zakladne súbory pre slovenskú lokalizaciu
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -3454,13 +2965,6 @@ These are the base files for Slovak language localization; you need
 it to correctly display 8bits Slovak characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Slovak language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-sk -l sk
-Tu sú súbory potrebné pre správnu slovenskú lokalizáciu; potrebujete ich pre
-korektné zobrazovanie slovenských 8bitových znakov a pre správne triedenie a
-reprezentáciu dátumu a čísel podľa konvencií slovenského jazyka.
-%endif
 
 %post -n locales-sk
 %{loc_add} sk_SK
@@ -3477,7 +2981,7 @@ fi
 # Translations from Roman Maurer <roman.maurer@fmf.uni-lj.si>
 %package -n locales-sl
 Summary: Base files for localization (Slovenian)
-Summary(sl): Osnovne datoteke za lokalizacijo (slovenščina)
+#Summary(sl): Osnovne datoteke za lokalizacijo (slovenščina)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -3486,15 +2990,6 @@ These are the base files for Slovenian language localization; you need
 it to correctly display 8bits Slovenian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Slovenian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-sl -l sl
-To so osnovne datoteke za lokalizacijo Linuxa na slovenski
-jezik; potrebujete jih za pravilni prikaz 8-bitnih
-slovenskih znakov in za pravilno urejanje po abecedi ter
-predstavitev datumov in številk glede na pravila
-slovenskega jezika.
-%endif
 
 %post -n locales-sl
 %{loc_add} sl_SI
@@ -3631,7 +3126,7 @@ fi
 # translation by Erik Almqvist <erik.almqvist@vrg.se>
 %package -n locales-sv
 Summary: Base files for localization (Swedish)
-Summary(sv): Detta är huvudfilerna för svenskt språkstöd
+#Summary(sv): Detta är huvudfilerna för svenskt språkstöd
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 
@@ -3640,13 +3135,6 @@ These are the base files for Swedish language localization; you need
 it to correctly display 8bits Swedish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Swedish language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-sv -l sv
-Detta är huvudfilerna för svenskt språkstöd. De behövs för att korrekt visa
-svenska 8 bitars tecken och för korrekt alfabetisk sortering. De gör även
-att datum och nummerformat visas på svenskt vis.
-%endif
 
 %post -n locales-sv
 %{loc_add} sv_FI sv_SE
@@ -3859,21 +3347,13 @@ fi
 Summary: Base files for localization (Turkish)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(tr): Yerelleştirme için temel dosyalar (Türkçe)
+#Summary(tr): Yerelleştirme için temel dosyalar (Türkçe)
 
 %description -n locales-tr
 These are the base files for Turkish language localization; you need
 it to correctly display 8bits Turkish characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Turkish language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-tr -l tr
-Bu dosyalar, Türkçe yerelleştirmesi için gerekli temel bileşenleri içerir.
-8bit türkçe karakterleri görmek, Türk diline uygun olarak alfabe, tarih ve
-sayı gösterimlerini ve sıralamalarını yapabilmek için bu dosyalara
-ihtiyacınız vardır.
-%endif
 
 %post -n locales-tr
 %{loc_add} tr_CY tr_TR
@@ -3985,28 +3465,14 @@ fi
 Summary: Base files for localization (Ukrainian)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(ru): Базовые файлы для Украинской локализации
-Summary(uk): Базові файли для української локалізації
+#Summary(ru): Базовые файлы для Украинской локализации
+#Summary(uk): Базові файли для української локалізації
 
 %description -n locales-uk
 These are the base files for Ukrainian language localization; you need
 it to correctly display 8bits Ukrainian characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Ukrainian language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-uk -l ru
-Базовые файлы для Украинской локализации; нужны для корректного
-представления 8-ми битных Украинских символов, а также для правильной
-сортировки и представления даты и чисел в соответствии со стандартами
-Украинского языка.
-
-%description -n locales-uk -l uk
-Базові файли для української локалізації; необхідні для правильного
-відображення 8-ми бітних символів українського алфавіту і також для
-правильного сортування і подання дати і чисел у відповідності до
-стандартів української мови.
-%endif
 
 %post -n locales-uk
 %{loc_add} uk_UA
@@ -4049,7 +3515,7 @@ fi
 ### uz
 %package -n locales-uz
 Summary: Base files for localization (Uzbek)
-Summary(uz): Lokallashtirishning asosiy fayllari (o'zbekcha)
+#Summary(uz): Lokallashtirishning asosiy fayllari (o'zbekcha)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
 Provides: locales-uz@cyrillic = %{version}-%{release}
@@ -4060,14 +3526,12 @@ it to correctly display 8bits Uzbek characters, and for proper
 alphabetical sorting and representation of dates and numbers
 according to Uzbek language conventions.
 
-%if %{rpm_check_works}
-%description -n locales-uz -l uz
-Ushbu asos fayllar Linuxni o'zbekchaga locallashtirish
-uchun qo'llaniladi; siz bularni 8 bit o'zbek
-harflarini to'g'ri ko'rish va tartiblashda qollanasiz.
-O'zbekistonda joriy bo'lgan vaqt, son va valytani
-belgilash qoidalari ham shu fayllarda joylashgan.
-%endif
+#%#description -n locales-uz -l uz
+#Ushbu asos fayllar Linuxni o'zbekchaga locallashtirish
+#uchun qo'llaniladi; siz bularni 8 bit o'zbek
+#harflarini to'g'ri ko'rish va tartiblashda qollanasiz.
+#O'zbekistonda joriy bo'lgan vaqt, son va valytani
+#belgilash qoidalari ham shu fayllarda joylashgan.
 
 %post -n locales-uz
 %{loc_add} uz_UZ
@@ -4109,22 +3573,13 @@ fi
 Summary: Base files for localization (Vietnamese)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(vi): Các file cơ sở cho định vị tiếng Việt 
+#Summary(vi): Các file cơ sở cho định vị tiếng Việt 
 
 %description -n locales-vi
 These are the base files for Vietnamese language localization; you need
 it to correctly display 8bits Vietnamese characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Vietnamese language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-vi -l vi
-Đây là các file cơ sở cho tiếng Việt.
-Bạn cần những file này để có thể
-biểu diễn chính xác các kí tự tiếng Việt 8 bits,
-để sắp xếp và trình bày ngày tháng và số
-một cách chính xác theo đúng qui ước ngôn ngữ tiếng Việt.
-%endif
 
 %post -n locales-vi
 %{loc_add} vi_VN
@@ -4143,27 +3598,14 @@ fi
 Summary: Base files for localization (Walloon)
 Group: System/Internationalization
 Requires: locales = %{version}-%{release}
-Summary(wa): Maisses fitchîs pol lingaedje walon
-Summary(fr): Fichiers de base pour la localisation en langue wallonne
+#Summary(wa): Maisses fitchîs pol lingaedje walon
+#Summary(fr): Fichiers de base pour la localisation en langue wallonne
 
 %description -n locales-wa
 These are the base files for Walloon language localization; you need
 it to correctly display 8bits Walloon characters, and for proper
 alphabetical sorting and representation of dates and numbers according
 to Walloon language conventions.
-
-%if %{rpm_check_works}
-%description -n locales-wa -l wa
-Vochal les maisses fitchîs pol lingaedje walon. Vos nd avoz dandjî po
-hågner les caracteres walons ecôdés so ût bits, po l' arindjmint
-alfabetike eyèt po rprezinter les dates eyèt les nombes è walon.
-
-%description -n locales-wa -l fr
-Ce paquet contient les définitions de locales en langue walone.
-Il permet aux applications de savoir quels caractères sont affichables et
-donc afficher correctemment les caractères accentués et l'ordre alphabetique;
-il contient aussi les definitions des representations des dates et des nombres.
-%endif
 
 %post -n locales-wa
 %{loc_add} wa_BE
@@ -4331,8 +3773,8 @@ Provides: locales-zh_TW = %{version}-%{release}
 Provides: locales-zh_SG = %{version}-%{release}
 Provides: locales-zh_HK = %{version}-%{release}
 Obsoletes: libwcsmbs wcsmbs-locale
-Summary(zh_CN): 中文地方化的基本档案
-Summary(zh_TW): 中文地方化的基本檔案
+#Summary(zh_CN): 中文地方化的基本档案
+#Summary(zh_TW): 中文地方化的基本檔案
 
 %description -n locales-zh
 These are the base files for Chinese language localization; you need
@@ -4340,18 +3782,6 @@ it to correctly display 8bits and 7bits chinese codes, and for proper
 representation of dates and numbers according to chinese language conventions.
 Set the LANG variable to "zh_CN" to use simplified chinese (GuoBiao encoding)
 or to "zh_TW.Big5" to use traditional characters (Big5 encoding)
-
-%if %{rpm_check_works}
-%description -n locales-zh -l zh_CN
-本档包含了中文地方化(localization)的基本档案; 你需要这些档案才能正确的
-显示中文的日期。将环境变数 "LANG" 设定为 "zh_CN" 可以显示简体中文(国标
-码),设定为 "zh_TW" 则可显示繁体中文(大五码)。 
-
-%description -n locales-zh -l zh_TW
-本檔包含了中文地方化(localization)的基本檔案; 你需要這些檔案才能正確的
-顯示中文的日期。將環境變數 "LANG" 設定為 "zh_CN" 可以顯示簡體中文(國標
-碼),設定為 "zh_TW" 則可顯示繁體中文(大五碼)。 
-%endif
 
 %post -n locales-zh
 %{loc_add} nan_TW@latin zh_CN zh_HK zh_SG zh_TW
@@ -4544,3 +3974,9 @@ for i in `echo ??_??* ???_??*`; do
 	LC_ALL=C perl %{SOURCE6} $i
 done
 popd
+
+
+%changelog
+* Fri Feb 24 2012 Paulo Andrade <pcpa@mandriva.com.br> 2.15-1
++ Revision: 779911
+- Update locales for glibc-2.15.

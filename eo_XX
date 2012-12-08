@@ -1,0 +1,237 @@
+comment_char %
+escape_char  /
+
+% Esperanto language locale for ...
+% Source: from Esperanto-HOWTO author help
+% Address:
+% Contact: Pablo Saratxaga
+% Email: pablo@mandriva.com
+% Tel:
+% Fax:
+% Language: eo
+% Territory: XX
+% Revision: 0.2
+% Date: 2001-01-27
+% Users: general
+% Repertoiremap:
+% Charset: UTF-8
+% Distribution and use is free, also
+% for commercial purposes.
+
+LC_IDENTIFICATION
+title      "Esperanto language locale for ..."
+source     "from Esperanto-HOWTO author help"
+address    ""
+contact    "Pablo Saratxaga"
+email      "pablo@mandriva.com"
+tel        ""
+fax        ""
+language   "Esperanto"
+territory  "Somewhere"
+revision   "0.2"
+date       "2001-01-27"
+%
+category  "eo_XX:2000";LC_IDENTIFICATION
+category  "eo_XX:2000";LC_CTYPE
+category  "eo_XX:2000";LC_COLLATE
+category  "eo_XX:2000";LC_TIME
+category  "eo_XX:2000";LC_NUMERIC
+category  "eo_XX:2000";LC_MONETARY
+category  "eo_XX:2000";LC_MESSAGES
+category  "eo_XX:2000";LC_PAPER
+category  "eo_XX:2000";LC_NAME
+category  "eo_XX:2000";LC_ADDRESS
+category  "eo_XX:2000";LC_TELEPHONE
+category  "eo_XX:2000";LC_MEASUREMENT
+
+END LC_IDENTIFICATION
+
+LC_CTYPE
+copy "i18n"
+translit_start
+include "translit_combining";""
+<U0109> "<U0063><U0078>"
+<U0108> "<U0043><U0058>"
+<U011D> "<U0067><U0078>"
+<U011C> "<U0047><U0058>"
+<U0125> "<U0068><U0078>"
+<U0124> "<U0048><U0058>"
+<U0135> "<U006A><U0078>"
+<U0134> "<U004A><U0058>"
+<U015D> "<U0073><U0078>"
+<U015C> "<U0053><U0058>"
+<U016D> "<U0075><U0078>"
+<U016C> "<U0055><U0058>"
+translit_end
+END LC_CTYPE
+
+LC_COLLATE
+copy "iso14651_t1"
+
+% esperanto alfabetical order is
+% a b c c> d e f g g> h h> i j j> k l m n o p r s s> t u u( v z
+% whith the diacraticised (sp?) letters having their own entry in
+% dictionnaries
+
+collating-symbol <c/>>
+collating-symbol <g/>>
+collating-symbol <h/>>
+collating-symbol <j/>>
+collating-symbol <s/>>
+collating-symbol <u(>
+
+reorder-after <c>
+<c/>>
+reorder-after <g>
+<g/>>
+reorder-after <h>
+<h/>>
+reorder-after <j>
+<j/>>
+reorder-after <s>
+<s/>>
+reorder-after <u>
+<u(>
+
+reorder-after <U0063>
+<U0109> <c/>>;<CIR>;<MIN>;IGNORE
+reorder-after <U0043>
+<U0108> <c/>>;<CIR>;<CAP>;IGNORE
+
+reorder-after <U0067>
+<U011D> <g/>>;<CIR>;<MIN>;IGNORE
+reorder-after <U0047>
+<U011C> <g/>>;<CIR>;<CAP>;IGNORE
+
+reorder-after <U0068>
+<U0125> <h/>>;<CIR>;<MIN>;IGNORE
+reorder-after <U0048>
+<U0124> <h/>>;<CIR>;<CAP>;IGNORE
+
+reorder-after <U006A>
+<U0135> <j/>>;<CIR>;<MIN>;IGNORE
+reorder-after <U004A>
+<U0134> <j/>>;<CIR>;<CAP>;IGNORE
+
+reorder-after <U0073>
+<U015D> <s/>>;<CIR>;<MIN>;IGNORE
+reorder-after <U0053>
+<U015C> <s/>>;<CIR>;<CAP>;IGNORE
+
+reorder-after <U0075>
+<U016D> <u(>;<BRE>;<MIN>;IGNORE
+reorder-after <U0055>
+<U016C> <u(>;<BRE>;<CAP>;IGNORE
+
+reorder-end
+
+END LC_COLLATE
+
+LC_MONETARY
+int_curr_symbol      "<U0045><U0055><U0052><U0020>" % "EUR"
+currency_symbol      "<U20AC>"
+mon_decimal_point    "<U002C>"
+mon_thousands_sep    "<U002E>"
+mon_grouping         3;3
+positive_sign        ""
+negative_sign        "<U002D>"
+int_frac_digits      2
+frac_digits          2
+p_cs_precedes        1
+p_sep_by_space       1
+n_cs_precedes        1
+n_sep_by_space       1
+p_sign_posn          1
+n_sign_posn          1
+END LC_MONETARY
+
+LC_NUMERIC
+decimal_point        "<U002C>"
+thousands_sep        ""
+grouping             0;0
+END LC_NUMERIC
+
+LC_TIME
+abday       "<U0064><U0069><U006D>";"<U006C><U0075><U006E>";/
+            "<U006D><U0061><U0072>";"<U006D><U0065><U0072>";/
+            "<U0135><U0061><U016D>";"<U0076><U0065><U006E>";/
+            "<U0073><U0061><U0062>"
+day         "<U0064><U0069><U006D><U0061><U006E><U0109><U006F>";/
+            "<U006C><U0075><U006E><U0064><U006F>";/
+            "<U006D><U0061><U0072><U0064><U006F>";/
+            "<U006D><U0065><U0072><U006B><U0072><U0065><U0064><U006F>";/
+            "<U0135><U0061><U016D><U0064><U006F>";/
+            "<U0076><U0065><U006E><U0064><U0072><U0065><U0064><U006F>";/
+            "<U0073><U0061><U0062><U0061><U0074><U006F>"
+abmon       "<U004A><U0061><U006E>";"<U0046><U0065><U0062>";/
+            "<U004D><U0061><U0072>";"<U0041><U0070><U0072>";/
+            "<U004D><U0061><U006A>";"<U004A><U0075><U006E>";/
+            "<U004A><U0075><U006C>";"<U0041><U016D><U0067>";/
+            "<U0053><U0065><U0070>";"<U004F><U006B><U0074>";/
+            "<U004E><U006F><U0076>";"<U0044><U0065><U0063>"
+mon         "<U004A><U0061><U006E><U0075><U0061><U0072><U006F>";/
+            "<U0046><U0065><U0062><U0072><U0075><U0061><U0072><U006F>";/
+            "<U004D><U0061><U0072><U0074><U006F>";/
+            "<U0041><U0070><U0072><U0069><U006C><U006F>";/
+            "<U004D><U0061><U006A><U006F>";/
+            "<U004A><U0075><U006E><U0069><U006F>";/
+            "<U004A><U0075><U006C><U0069><U006F>";/
+            "<U0041><U016D><U0067><U0075><U0073><U0074><U006F>";/
+            "<U0053><U0065><U0070><U0074><U0065><U006D><U0062><U0072><U006F>";/
+            "<U004F><U006B><U0074><U006F><U0062><U0072><U006F>";/
+            "<U004E><U006F><U0076><U0065><U006D><U0062><U0072><U006F>";/
+            "<U0044><U0065><U0063><U0065><U006D><U0062><U0072><U006F>"
+d_t_fmt     "<U0025><U0041><U002C><U0020><U006C><U0061><U0020><U0025><U0064><U0061><U0020><U0064><U0065><U0020><U0025><U0042><U0020><U0025><U0059><U003B><U0020><U0025><U0054><U0020><U0025><U005A>"
+d_fmt       "<U0025><U0059><U002D><U0025><U006D><U002D><U0025><U0064>"
+t_fmt       "<U0025><U0054>"
+am_pm       "";""
+t_fmt_ampm  ""
+END LC_TIME
+
+LC_MESSAGES
+% "^[JjYy].*"
+yesexpr	"<U005E><U005B><U004A><U006A><U0059><U0079><U005D><U002E><U002A>"
+% "^[Nn].*"
+noexpr	"<U005E><U005B><U006E><U004E><U005D><U002E><U002A>"
+END LC_MESSAGES
+
+LC_PAPER
+height   297
+width    210
+END LC_PAPER
+
+LC_TELEPHONE
+% "+%c %a %l"
+tel_int_fmt	"<U002B><U0025><U0063><U0020><U0025><U0061><U0020>/
+<U0025><U006C>"
+% "00"
+int_select	"<U0030><U0030>"
+END LC_TELEPHONE
+
+LC_MEASUREMENT
+measurement    1
+END LC_MEASUREMENT
+
+LC_NAME
+% "%d%t%g%t%m%t%f"
+name_fmt    "<U0025><U0064><U0025><U0074><U0025><U0067><U0025><U0074>/
+<U0025><U006D><U0025><U0074><U0025><U0066>"
+name_miss   "<U0073><U002D><U0069><U006E><U006F>"       % "s-ino"
+name_mr     "<U0073><U002D><U0072><U006F>"              % "s-ro"
+name_mrs    "<U0073><U002D><U0069><U006E><U006F>"       % "s-ino"
+name_ms     "<U0073><U002D><U0069><U006E><U006F>"       % "s-ino"
+END LC_NAME
+
+LC_ADDRESS
+% "%f%N%a%N%d%N%b%N%s %h %e %r%N%%z %T%N%c%N"
+postal_fmt    "<U0025><U0066><U0025><U004E><U0025><U0061><U0025><U004E>/
+<U0025><U0064><U0025><U004E><U0025><U0062><U0025><U004E><U0025><U0073>/
+<U0020><U0025><U0068><U0020><U0025><U0065><U0020><U0025><U0072><U0025>/
+<U004E><U0025><U0025><U007A><U0020><U0025><U0054><U0025>/
+<U004E><U0025><U0063><U0025><U004E>"
+% "Esperanto"
+lang_name     "<U0045><U0073><U0070><U0065><U0072><U0061><U006E><U0074><U006F>"
+lang_ab       "<U0065><U006F>" % "eo"
+lang_lib      "<U0065><U006F>" % "eo"
+END LC_ADDRESS
+
