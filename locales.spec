@@ -21,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.15
+%define glibc_ver 2.16
 %define glibc_epoch 6
 %define version   %{glibc_ver}
 # FIXME: please check on next build those we really need
