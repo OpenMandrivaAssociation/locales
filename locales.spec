@@ -109,14 +109,14 @@ Source70:	sz_ET
 # no need to check for dependencies when building, there is no executables here
 AutoReqProv:	no
 # locales are very dependent on eglibc version
-Requires:	glibc = %{eglibc_ver}
+Requires:	glibc = 6:%{eglibc_ver}
 # post scripts use grep, perl, etc.
 Requires(post):	perl-base rpm coreutils
 Requires(postun):perl-base rpm coreutils
 # eglibc >= 2.2.5-6mdk now comes with eglibc-i18ndata package
-BuildRequires:	glibc-i18ndata >= %{eglibc_ver}
+BuildRequires:	glibc-i18ndata >= 6:%{eglibc_ver}
 # usually needed to ensure support for new locales
-BuildRequires:	glibc >= %{eglibc_ver}
+BuildRequires:	glibc >= 6:%{eglibc_ver}
 
 %description
 These are the base files for language localization.
