@@ -1,29 +1,27 @@
 #
 # this spec file builds all the locales into rpm packages.
-# it is separate from the glibc spec, so that it is possible to rebuild
+# it is separate from the eglibc spec, so that it is possible to rebuild
 # the locales for small fix without the need to rebuild the highly critical
-# glibc package.
-# however, locales adn glibc are very tied, so each time a new glibc is
-# built, the locales have to be rebuilt too (on a system with the new glibc
-# installed); and the glibc_ver define changed accordingly.
+# eglibc package.
+# however, locales and eglibc are very tied, so each time a new eglibc is
+# built, the locales have to be rebuilt too (on a system with the new eglibc
+# installed); and the eglibc_ver define changed accordingly.
 #
-# the locales are mainly from the glibc-i18ndata; however, we include
+# the locales are mainly from the eglibc-i18ndata; however, we include
 # also fixes and improvements as well as some new locales; they should
-# be included upstream ideally, so when new glibc is released, it is
+# be included upstream ideally, so when new eglibc is released, it is
 # necessary to check if the separate locale files here are still needed.
 # removing them is enough.
 #
 # we also use an improved iso14651_hack (used for the base collating
-# definition) which improves the one in glibc (by defining collation for
+# definition) which improves the one in eglibc (by defining collation for
 # various extra letters in latin, greek, cyrillic and arabic scripts)
 # and two scripts used by individual locales-*.rpm packages that add/remove
 # the language names from the list of supported languages when adding/removing
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.16
-%define glibc_epoch 6
-%define version   %{glibc_ver}
+%define eglibc_ver 2.16
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -39,7 +37,7 @@
 
 Summary:	Base files for localization
 Name:		locales
-Version:	%{glibc_ver}
+Version:	%{eglibc_ver}
 Release:	1
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
@@ -55,7 +53,7 @@ Source5:	locales-hardlink.pl
 Source6:	locales-softlink.pl
 Source7:	%{name}.rpmlintrc
 
-# this one is on glibc, however there is the politic issue
+# this one is on eglibc, however there is the politic issue
 # of the naming of Taiwan 
 Source15:	zh_TW_2
 # locales data
@@ -67,17 +65,17 @@ Source22:	km_KH
 Source25:	nds_DE@traditional
 Source38:	dz_BT
 
-# Those exist in glibc >= 2.3.2 but the attached ones
+# Those exist in eglibc >= 2.3.2 but the attached ones
 # are more correct/more complete
 
-# all ar_?? locales in glibc 2.3.5 are missing "Yy" and "Nn" in 
-# version in glibc 2.3.5 has wrong yexexpr/noexpr and wrong LC_COLLATE
+# all ar_?? locales in eglibc 2.3.5 are missing "Yy" and "Nn" in 
+# version in eglibc 2.3.5 has wrong yexexpr/noexpr and wrong LC_COLLATE
 Source50:	ar_SA
 # corrected month names
 Source51:	az_AZ
 # LC_COLLATE has one line wrong
 Source52:	bs_BA
-# rewritten to take profit of new glibc reordering possibilities
+# rewritten to take profit of new eglibc reordering possibilities
 Source53:	es_ES
 Source54:	es_US
 Source55:	es@tradicional
@@ -89,7 +87,7 @@ Source58:	sq_AL
 Source59:	tg_TJ
 # tr_TR thet includes "i18n_tr" (generated with a simple regexp replacing)
 Source61:	tr_TR
-# LC_COLLATE for vietnamese is incorrect in glibc, and LC_CTIME seems
+# LC_COLLATE for vietnamese is incorrect in eglibc, and LC_CTIME seems
 # wrong too... 
 Source63:	vi_VN
 # fixes in weekday names
@@ -107,18 +105,18 @@ Source70:	sz_ET
 
 # it is arch dependent in fact
 #BuildArchitectures: noarch
-# to build this package glibc = %{glibc_ver} is needed (for locales definitions)
+# to build this package eglibc = %{eglibc_ver} is needed (for locales definitions)
 # no need to check for dependencies when building, there is no executables here
 AutoReqProv:	no
-# locales are very dependent on glibc version
-Requires:	glibc = %{glibc_epoch}:%{glibc_ver}
+# locales are very dependent on eglibc version
+Requires:	eglibc = %{eglibc_ver}
 # post scripts use grep, perl, etc.
 Requires(post):	perl-base rpm coreutils
 Requires(postun):perl-base rpm coreutils
-# glibc >= 2.2.5-6mdk now comes with glibc-i18ndata package
-BuildRequires:	glibc-i18ndata >= %{glibc_epoch}:%{glibc_ver}
+# eglibc >= 2.2.5-6mdk now comes with eglibc-i18ndata package
+BuildRequires:	eglibc-i18ndata >= %{eglibc_ver}
 # usually needed to ensure support for new locales
-BuildRequires:	glibc >= %{glibc_epoch}:%{glibc_ver}
+BuildRequires:	eglibc >= %{eglibc_ver}
 
 %description
 These are the base files for language localization.
@@ -752,6 +750,29 @@ fi
 %{_localedir}/de_CH*
 %{_localedir}/de_DE*
 %{_localedir}/de_LU*
+
+### doi
+%package -n locales-doi
+Summary: Base files for localization (Dogri)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-doi
+These are the base files for Dogri language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Dogri language conventions.
+
+%post -n locales-doi
+%{loc_add} doi_IN
+
+%preun -n locales-doi
+if [ "$1" = "0" ]; then
+	%{loc_del} doi_IN
+fi
+
+%files -n locales-doi
+%{_localedir}/doi_IN
 
 ### dv
 %package -n locales-dv
@@ -2126,6 +2147,29 @@ fi
 %files -n locales-lv
 %{_localedir}/lv_LV*
 
+### mag
+%package -n locales-mag
+Summary: Base files for localization (Magahi)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-mag
+These are the base files for Magahi language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Magahi language conventions.
+
+%post -n locales-mag
+%{loc_add} mag_IN
+
+%preun -n locales-mag
+if [ "$1" = "0" ]; then
+	%{loc_del} mag_IN
+fi
+
+%files -n locales-mag
+%{_localedir}/mag_IN
+
 ### mai
 %package -n locales-mai
 Summary: Base files for localization (Maithili)
@@ -2287,6 +2331,29 @@ fi
 
 %files -n locales-mn
 %{_localedir}/mn_MN*
+
+### mni
+%package -n locales-mni
+Summary: Base files for localization (Manipuri)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-mni
+These are the base files for Manipuri language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Manipuri language conventions.
+
+%post -n locales-mni
+%{loc_add} mni_IN
+
+%preun -n locales-mni
+if [ "$1" = "0" ]; then
+	%{loc_del} mni_IN
+fi
+
+%files -n locales-mni
+%{_localedir}/mni_IN
 
 ### mr
 %package -n locales-mr
@@ -2834,6 +2901,29 @@ fi
 
 %files -n locales-sa
 %{_localedir}/sa_IN
+
+### sat
+%package -n locales-sat
+Summary: Base files for localization (Santali)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-sat
+These are the base files for Santali language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Santali language conventions.
+
+%post -n locales-sat
+%{loc_add} sat_IN
+
+%preun -n locales-sat
+if [ "$1" = "0" ]; then
+	%{loc_del} sat_IN
+fi
+
+%files -n locales-sat
+%{_localedir}/sat_IN
 
 ### sc
 %package -n locales-sc
@@ -3848,13 +3938,13 @@ done
 	cp %{_sourcedir}/zh_TW_2 zh_TW
 %endif
 
-# copy local locales unavailable in glibc
+# copy local locales unavailable in eglibc
 for loc in eo_XX es@tradicional nds_DE@traditional sw_XX
 do
 	cp %{_sourcedir}/$loc .
 done
 
-# copy modified glibc locales
+# copy modified eglibc locales
 for loc in ar_SA az_AZ bs_BA dz_BT es_ES es_US es_CO km_KH ku_TR ky_KG sq_AL \
            tg_TJ tr_TR vi_VN wa_BE yi_US zh_CN
 do
@@ -3956,7 +4046,7 @@ for i in $LOCALEDIR/en_IE* ; do
 done
 
 #=========================================================
-# XXX: duplicate of nb_NO (remove from glibc?)
+# XXX: duplicate of nb_NO (remove from eglibc?)
 rm -rf $LOCALEDIR/no_NO*
 
 %install
@@ -3977,6 +4067,9 @@ popd
 
 
 %changelog
+* Sun Dec  2 2012 Bernhard Rosenkraenzer <bero@bero.eu> 2.16-1
+- Update locales for eglibc 2.16
+
 * Fri Feb 24 2012 Paulo Andrade <pcpa@mandriva.com.br> 2.15-1
 + Revision: 779911
 - Update locales for glibc-2.15.
