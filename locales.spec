@@ -38,7 +38,7 @@
 Summary:	Base files for localization
 Name:		locales
 Version:	%{eglibc_ver}
-Release:	1
+Release:	2
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
@@ -136,6 +136,7 @@ fi
 %files
 %config(noreplace) /etc/sysconfig/locales
 %dir %{_localedir}
+%dir /usr/lib/locale
 %{_localedir}/ISO*
 %{_localedir}/CP*
 %{_localedir}/UTF*
@@ -4167,6 +4168,8 @@ rm -rf $LOCALEDIR/no_NO*
 %install
 install -m755 %{SOURCE2} -D %{buildroot}%{loc_add}
 install -m755 %{SOURCE3} -D %{buildroot}%{loc_del}
+# (tpg) localedef needs this
+mkdir -p %{buildroot}/usr/lib/locale
 
 install -m644 %{SOURCE4} -D %{buildroot}%{_sysconfdir}/sysconfig/locales
 
