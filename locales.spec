@@ -21,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define eglibc_ver 2.16
+%define eglibc_ver 2.17
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -38,7 +38,7 @@
 Summary:	Base files for localization
 Name:		locales
 Version:	%{eglibc_ver}
-Release:	2
+Release:	1
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
@@ -357,6 +357,29 @@ fi
 
 %files -n locales-ast
 %{_localedir}/ast_ES*
+
+### ayc
+%package -n locales-ayc
+Summary: Base files for localization (Aymara)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-ayc
+These are the base files for Aymara language localization.
+You need it to correctly display sort, for sorting order and
+proper representation of dates and numbers according
+to Aymara language conventions.
+
+%post -n locales-ayc
+%{loc_add} ayc_PE
+
+%preun -n locales-ayc
+if [ "$1" = "0" ]; then
+	%{loc_del} ayc_PE
+fi
+
+%files -n locales-ayc
+%{_localedir}/ayc_PE*
 
 ### az
 %package -n locales-az
@@ -1549,6 +1572,28 @@ fi
 %files -n locales-hy
 %{_localedir}/hy_AM*
 
+### ia
+%package -n locales-ia
+Summary: Base files for localization (Interlingua)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-ia
+These are the base files for Interlingua language localization.
+You need it for sorting order and proper representation of dates and
+numbers according to Interlingua language conventions.
+
+%post -n locales-ia
+%{loc_add} ia_FR
+
+%preun -n locales-ia
+if [ "$1" = "0" ]; then
+	%{loc_del} ia_FR
+fi
+
+%files -n locales-ia
+%{_localedir}/ia_FR*
+
 ### id (formerly in)
 # translations by Mohammad DAMT <mdamt@cakraweb.com>
 %package -n locales-id
@@ -1559,7 +1604,7 @@ Requires: locales = %{version}-%{release}
 
 %description -n locales-id
 These are the base files for Indonesian language localization.
-You need it to correctly display sort, for proper representation
+You need it to correctly display and sort, and for proper representation
 of dates and numbers according to Indonesian language conventions.
 
 %post -n locales-id
@@ -2497,6 +2542,53 @@ fi
 %files -n locales-ne
 %{_localedir}/ne_NP*
 
+### nhn
+%package -n locales-nhn
+Summary: Base files for localization (Nahuatl)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-nhn
+These are the base files for Nahuatl language
+localization; you need it to correctly display 8bits Nahuatl characters,
+and for proper alphabetical sorting and representation of dates and numbers
+according to Nahuatl language conventions.
+
+%post -n locales-nhn
+%{loc_add} nhn_MX
+
+%preun -n locales-nhn
+if [ "$1" = "0" ]; then
+	%{loc_del} nhn_MX
+fi
+
+%files -n locales-nhn
+%{_localedir}/nhn_MX*
+
+### niu
+%package -n locales-niu
+Summary: Base files for localization (Niuean)
+Group: System/Internationalization
+Requires: locales = %{version}-%{release}
+
+%description -n locales-niu
+These are the base files for Niuean language
+localization; you need it to correctly display 8bits Niuean characters,
+and for proper alphabetical sorting and representation of dates and numbers
+according to Niuean language conventions.
+
+%post -n locales-niu
+%{loc_add} niu_NU niu_NZ
+
+%preun -n locales-niu
+if [ "$1" = "0" ]; then
+	%{loc_del} niu_NU niu_NZ
+fi
+
+%files -n locales-niu
+%{_localedir}/niu_NU*
+%{_localedir}/niu_NZ*
+
 ### nl
 %package -n locales-nl
 Summary: Base files for localization (Dutch)
@@ -3262,6 +3354,29 @@ fi
 %{_localedir}/sw_KE*
 %{_localedir}/sw_TZ*
 %{_localedir}/sw_XX*
+
+### szl
+%package	szl
+Summary:	Base files for localization (Silesian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+
+%description	szl
+These are the base files for Silesian language localization; you need
+it to correctly display 8bits Silesian characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Silesian language conventions.
+
+%post		szl
+%{loc_add} szl_PL
+
+%preun		szl
+if [ "$1" = "0" ]; then
+	%{loc_del} szl_PL
+fi
+
+%files		szl
+%{_localedir}/szl_PL*
 
 ### ta
 %package -n locales-ta
