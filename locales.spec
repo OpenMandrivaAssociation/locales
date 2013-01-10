@@ -29,8 +29,8 @@
 %define build_for_PRC 0
 
 # shorthands for the post scripts
-%define loc_add /usr/bin/locale_install.sh
-%define loc_del /usr/bin/locale_uninstall.sh
+%define loc_add %_bindir/locale_install.sh
+%define loc_del %_bindir/locale_uninstall.sh
 
 %define _enable_debug_packages	%{nil}
 %define debug_package		%{nil}
@@ -38,7 +38,7 @@
 Summary:	Base files for localization
 Name:		locales
 Version:	%{eglibc_ver}
-Release:	3
+Release:	4
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
@@ -136,12 +136,12 @@ fi
 %files
 %config(noreplace) /etc/sysconfig/locales
 %dir %{_localedir}
-%dir /usr/lib/locale
+%dir %_prefix/lib/locale
 %{_localedir}/ISO*
 %{_localedir}/CP*
 %{_localedir}/UTF*
 %{_localedir}/KOI*
-/usr/bin/*
+%_bindir/*
 
 
 
@@ -4037,7 +4037,7 @@ do
 done
 
 # for turkic languages (upperwasing/lowercasing of iwithdot/dotlessi)
-cat /usr/share/i18n/locales/i18n | \
+cat %_datadir/i18n/locales/i18n | \
 	sed 's/<U0069>,<U0049>/<U0069>,<U0130>/' | \
 	sed 's/<U0049>,<U0069>/<U0049>,<U0131>/' > i18n_tr
 
@@ -4079,8 +4079,8 @@ for DEF_CHARSET in UTF-8 ISO-8859-1 ISO-8859-2 ISO-8859-3 ISO-8859-4 \
 	 ISO-8859-13 ISO-8859-14 ISO-8859-15 KOI8-R KOI8-U CP1251 
 do
 	# find the charset definition
-    if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET ]; then
-    	if [ ! -r /usr/share/i18n/charmaps/$DEF_CHARSET.gz ]; then
+    if [ ! -r %_datadir/i18n/charmaps/$DEF_CHARSET ]; then
+    	if [ ! -r %_datadir/i18n/charmaps/$DEF_CHARSET.gz ]; then
 			cp %{_sourcedir}/$DEF_CHARSET .
 			DEF_CHARSET=%{_sourcedir}/$DEF_CHARSET
 		fi
@@ -4090,7 +4090,7 @@ do
 done
 
 # fix for Arabic yes/no expr
-for i in /usr/share/i18n/locales/ar_??
+for i in %_datadir/i18n/locales/ar_??
 do
 	if [ ! -r "%{_sourcedir}/`basename $i`" ]; then
 		cat $i | \
@@ -4102,22 +4102,22 @@ done
 
 # fix for locales using monday as first week day
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=3035
-for i in /usr/share/i18n/locales/be_BY /usr/share/i18n/locales/cy_GB \
-	/usr/share/i18n/locales/de_?? /usr/share/i18n/locales/el_GR \
-	/usr/share/i18n/locales/es_CL \
-	/usr/share/i18n/locales/es_MX /usr/share/i18n/locales/fr_?? \
-	/usr/share/i18n/locales/fy_NL /usr/share/i18n/locales/it_?? \
-	/usr/share/i18n/locales/lt_LT /usr/share/i18n/locales/mi_NZ \
-	/usr/share/i18n/locales/nl_BE /usr/share/i18n/locales/nl_NL \
-	/usr/share/i18n/locales/pt_PT /usr/share/i18n/locales/ru_UA \
-	/usr/share/i18n/locales/se_NO /usr/share/i18n/locales/sv_FI \
-	/usr/share/i18n/locales/*_ES vi_VN
+for i in %_datadir/i18n/locales/be_BY %_datadir/i18n/locales/cy_GB \
+	%_datadir/i18n/locales/de_?? %_datadir/i18n/locales/el_GR \
+	%_datadir/i18n/locales/es_CL \
+	%_datadir/i18n/locales/es_MX %_datadir/i18n/locales/fr_?? \
+	%_datadir/i18n/locales/fy_NL %_datadir/i18n/locales/it_?? \
+	%_datadir/i18n/locales/lt_LT %_datadir/i18n/locales/mi_NZ \
+	%_datadir/i18n/locales/nl_BE %_datadir/i18n/locales/nl_NL \
+	%_datadir/i18n/locales/pt_PT %_datadir/i18n/locales/ru_UA \
+	%_datadir/i18n/locales/se_NO %_datadir/i18n/locales/sv_FI \
+	%_datadir/i18n/locales/*_ES vi_VN
 do
 	LOCALENAME=`basename $i`
 	if [ -r %{_sourcedir}/$i ]; then
 		DEF_LOCALE_FILE="%{_sourcedir}/$i"
 	else
-		DEF_LOCALE_FILE="/usr/share/i18n/locales/$LOCALENAME"
+		DEF_LOCALE_FILE="%_datadir/i18n/locales/$LOCALENAME"
 	fi
 	if ! grep '^week\>' $DEF_LOCALE_FILE > /dev/null && \
 	   ! grep '^first_weekday\>' $DEF_LOCALE_FILE > /dev/null && \
@@ -4169,7 +4169,7 @@ rm -rf $LOCALEDIR/no_NO*
 install -m755 %{SOURCE2} -D %{buildroot}%{loc_add}
 install -m755 %{SOURCE3} -D %{buildroot}%{loc_del}
 # (tpg) localedef needs this
-mkdir -p %{buildroot}/usr/lib/locale
+mkdir -p %{buildroot}%_prefix/lib/locale
 
 install -m644 %{SOURCE4} -D %{buildroot}%{_sysconfdir}/sysconfig/locales
 
