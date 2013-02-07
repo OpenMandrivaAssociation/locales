@@ -38,7 +38,7 @@
 Summary:	Base files for localization
 Name:		locales
 Version:	%{eglibc_ver}
-Release:	4
+Release:	5
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
@@ -110,9 +110,9 @@ Source70:	sz_ET
 AutoReqProv:	no
 # locales are very dependent on eglibc version
 Requires:	glibc = 6:%{eglibc_ver}
-# post scripts use grep, perl, etc.
-Requires(post):	perl-base rpm coreutils
-Requires(postun):perl-base rpm coreutils
+# post scripts use grep, sed, etc.
+Requires(post):	grep sed rpm coreutils
+Requires(postun): grep sed rpm coreutils
 # eglibc >= 2.2.5-6mdk now comes with eglibc-i18ndata package
 BuildRequires:	glibc-i18ndata >= 6:%{eglibc_ver}
 # usually needed to ensure support for new locales

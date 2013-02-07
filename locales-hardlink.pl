@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# replace all identique files with hard links.
+# replace all identical files with hard links.
 # script from Alastair McKinstry, 2000-07-03
 
 @files = `find $ARGV[0] -type f -a -not -name "LC_C*" `;

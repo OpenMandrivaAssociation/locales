@@ -80,14 +80,13 @@ for i in "$@"; do
 	# make the installed locale known to rpm (so translations in that
 	# language are installed), and the menu system
 	if [ "$RPM_INSTALL_LANG" != "all" ]; then
-		RPM_INSTALL_LANG=`perl -e 'print join(":",grep { ! $seen{$_} ++ } sort(split(/:/,$ARGV[0])))' "$i:$RPM_INSTALL_LANG"`
+		RPM_INSTALL_LANG=`echo $i:$RPM_INSTALL_LANG |tr ':' '\n' |sort |tr '\n' ':' |sed -e 's,:$,,'`
 	fi
 done
 
 if [ "$OLD_RPM_INSTALL_LANG" != "$RPM_INSTALL_LANG" ]; then
 	# update /etc/rpm/macros file
 	if [ -w /etc/rpm/macros ]; then
-		perl -pe "s/^%_install_langs .*/%_install_langs ${RPM_INSTALL_LANG}/" \
-		     -i /etc/rpm/macros
+		sed -i -e "s/^%_install_langs .*/%_install_langs $RPM_INSTALL_LANGS/" /etc/rpm/macros
 	fi
 fi
