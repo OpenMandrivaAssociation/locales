@@ -29,8 +29,8 @@
 %define build_for_PRC 0
 
 # shorthands for the post scripts
-%define loc_add %_bindir/locale_install.sh
-%define loc_del %_bindir/locale_uninstall.sh
+%define loc_add %{_bindir}/locale_install.sh
+%define loc_del %{_bindir}/locale_uninstall.sh
 
 %define _enable_debug_packages	%{nil}
 %define debug_package		%{nil}
@@ -104,7 +104,7 @@ Source69:	sx_ET
 Source70:	sz_ET
 
 # it is arch dependent in fact
-#BuildArchitectures: noarch
+#BuildArch:	noarch
 # to build this package eglibc = %{eglibc_ver} is needed (for locales definitions)
 # no need to check for dependencies when building, there is no executables here
 AutoReqProv:	no
@@ -112,7 +112,7 @@ AutoReqProv:	no
 Requires:	glibc = 6:%{eglibc_ver}
 # post scripts use grep, sed, etc.
 Requires(post):	grep sed rpm coreutils
-Requires(postun): grep sed rpm coreutils
+Requires(postun):	grep sed rpm coreutils
 # eglibc >= 2.2.5-6mdk now comes with eglibc-i18ndata package
 BuildRequires:	glibc-i18ndata >= 6:%{eglibc_ver}
 # usually needed to ensure support for new locales
@@ -136,12 +136,12 @@ fi
 %files
 %config(noreplace) /etc/sysconfig/locales
 %dir %{_localedir}
-%dir %_prefix/lib/locale
+%dir %{_prefix}/lib/locale
 %{_localedir}/ISO*
 %{_localedir}/CP*
 %{_localedir}/UTF*
 %{_localedir}/KOI*
-%_bindir/*
+%{_bindir}/*
 
 
 
@@ -153,9 +153,9 @@ fi
 
 ### aa
 %package -n locales-aa
-Summary: Base files for localization (Afar)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Afar)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-aa
 These are the base files for Afar language localization; you need
@@ -179,11 +179,11 @@ fi
 ### af
 # translation by Schalk Cronje <schalkc@ntaba.co.za>
 %package -n locales-af
-Summary: Base files for localization (Afrikaans)
+Summary:	Base files for localization (Afrikaans)
 #Summary(af): Hierdie is die basislêers vir Afrikaanse lokalisasie
-Group: System/Internationalization
+Group:		System/Internationalization
 URL: http://www.af.org.za/aflaai/linux-i18n/
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-af
 These are the base files for Afrikaans language localization; you need
@@ -211,18 +211,18 @@ fi
 ### am
 # translation by Daniel Yacob <Yacob@EthiopiaOnline.Net>
 %package -n locales-am
-Summary: Base files for localization (Amharic)
+Summary:	Base files for localization (Amharic)
 #Summary(am): ለlocalization (አማርኛ) መሰረት ፋይሎች
-Group: System/Internationalization
+Group:		System/Internationalization
 URL: http://www.ethiopic.org/
-Requires: locales = %{version}-%{release}
-Provides: locales-byn = %{version}-%{release}
-Provides: locales-gez = %{version}-%{release}
-Provides: locales-sid = %{version}-%{release}
-Provides: locales-ti = %{version}-%{release}
-Provides: locales-tig = %{version}-%{release}
-Provides: locales-om = %{version}-%{release}
-Provides: locales-wal = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
+Provides:	locales-byn = %{version}-%{release}
+Provides:	locales-gez = %{version}-%{release}
+Provides:	locales-sid = %{version}-%{release}
+Provides:	locales-ti = %{version}-%{release}
+Provides:	locales-tig = %{version}-%{release}
+Provides:	locales-om = %{version}-%{release}
+Provides:	locales-wal = %{version}-%{release}
 
 %description -n locales-am
 These are the base files for Amharic language localization; you need
@@ -268,10 +268,10 @@ fi
 ### ar
 # translation by Wajdi Al-Jedaibi <wajdi@acm.org>
 %package -n locales-ar
-Summary: Base files for localization (Arabic)
+Summary:	Base files for localization (Arabic)
 #Summary(ar): هذه هي الملفات اللازمة لإعتماد اللغة العربية في نظام لينكس.
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ar
 These are the base files for Arabic language localization; you need
@@ -315,9 +315,9 @@ fi
 
 ### as
 %package -n locales-as
-Summary: Base files for localization (Assamese)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Assamese)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-as
 These are the base files for Assamese language localization; you need
@@ -338,9 +338,9 @@ fi
 
 ### ast
 %package -n locales-ast
-Summary: Base files for localization (Asturian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Asturian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ast
 These are the base files for Asturian language localization.
@@ -361,9 +361,9 @@ fi
 
 ### ayc
 %package -n locales-ayc
-Summary: Base files for localization (Aymara)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Aymara)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ayc
 These are the base files for Aymara language localization.
@@ -384,9 +384,9 @@ fi
 
 ### az
 %package -n locales-az
-Summary: Base files for localization (Azeri)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Azeri)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-az
 These are the base files for Azeri language localization; you need
@@ -407,9 +407,9 @@ fi
 
 ### be
 %package -n locales-be
-Summary: Base files for localization (Belarussian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Belarussian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-be
 These are the base files for Belarussian language localization; you need
@@ -453,9 +453,9 @@ fi
 
 ### ber
 %package -n locales-ber
-Summary: Base files for localization (Berber)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Berber)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ber
 These are the base files for Berber (Amazigh) language localization; you need
@@ -478,10 +478,10 @@ fi
 ### bg
 # translation: Mariana Kokosharova <kokosharova@dir.bg>
 %package -n locales-bg
-Summary: Base files for localization (Bulgarian)
+Summary:	Base files for localization (Bulgarian)
 #Summary(bg): съдържат основните регионални характеристики на българския език
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-bg
 These are the base files for Bulgarian language localization; you need
@@ -502,9 +502,9 @@ fi
 
 ### bn
 %package -n locales-bn
-Summary: Base files for localization (Bengali)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Bengali)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-bn
 These are the base files for Bengali language localization; you need
@@ -526,9 +526,9 @@ fi
 
 ### bo
 %package -n locales-bo
-Summary: Base files for localization (Tibetan language)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Tibetan language)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-bo
 These are the base files for Tibetan language localization; you need
@@ -551,9 +551,9 @@ fi
 ### br
 # Translation by Jañ-Mai Drapier (jan-mai-drapier@mail.dotcom.fr)
 %package -n locales-br
-Summary: Base files for localization (Breton)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Breton)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(fr): Fichiers de base pour la localisation en langue bretonne
 #Summary(br): Kement-mañ a zo restroù diazez evit broelañ diouzh ar brezhoneg
 
@@ -576,9 +576,9 @@ fi
 
 ### bs
 %package -n locales-bs
-Summary: Base files for localization (Bosnian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Bosnian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-bs
 These are the base files for Bosnian language localization; you need
@@ -599,9 +599,9 @@ fi
 
 ### ca
 %package -n locales-ca
-Summary: Base files for localization (Catalan)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Catalan)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(ca): Arxius bàsics per a l'adaptació al català
 #Summary(es): Archivos de base para la localización en idioma catalán
 #Summary(fr): Fichiers de base pour la localisation en langue catalane
@@ -628,9 +628,9 @@ fi
 
 ### crh
 %package -n locales-crh
-Summary: Base files for localization (Crimean Tatar)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Crimean Tatar)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-crh
 These are the base files for Crimean Tatar language localization.
@@ -652,9 +652,9 @@ fi
 ### cs
 # translation by <pavel@SnowWhite.inet.cz>
 %package -n locales-cs
-Summary: Base files for localization (Czech)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Czech)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(cs): Základní soubory pro lokalizaci (čeština)
 
 %description -n locales-cs
@@ -676,9 +676,9 @@ fi
 
 ### cv
 %package -n locales-cv
-Summary: Base files for localization (Chuvash)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Chuvash)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-cv
 These are the base files for Chuvash language localization; you need
@@ -699,10 +699,10 @@ fi
 
 ### cy
 %package -n locales-cy
-Summary: Base files for localization (Welsh)
+Summary:	Base files for localization (Welsh)
 #Summary(cy): Dyma'r ffeiliau sylfaenol i'r lleoliaeth Cymraeg
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-cy
 These are the base files for Welsh language localization; you need
@@ -724,10 +724,10 @@ fi
 ### da
 # danish translation by Erik Martino <martino@daimi.au.dk>
 %package -n locales-da
-Summary: Base files for localization (Danish)
+Summary:	Base files for localization (Danish)
 #Summary(da): Her er de basale filer for dansk sprog tilpasning
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-da
 These are the base files for Danish language localization; you need
@@ -748,9 +748,9 @@ fi
 
 ### de
 %package -n locales-de
-Summary: Base files for localization (German)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (German)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(fr): Fichiers de base pour la localisation en langue allemande
 #Summary(de): Basisdateien für die Lokalisierung (deutsch)
 
@@ -777,9 +777,9 @@ fi
 
 ### doi
 %package -n locales-doi
-Summary: Base files for localization (Dogri)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Dogri)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-doi
 These are the base files for Dogri language localization.
@@ -800,9 +800,9 @@ fi
 
 ### dv
 %package -n locales-dv
-Summary: Base files for localization (Dhivehi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Dhivehi)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-dv
 These are the base files for Dhivehi language localization.
@@ -823,9 +823,9 @@ fi
 
 ### dz
 %package -n locales-dz
-Summary: Base files for localization (Dzongkha)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Dzongkha)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-dz
 These are the base files for Dzongkha language localization; you need
@@ -847,11 +847,11 @@ fi
 ### el
 # translations from "Theodore J. Soldatos" <theodore@eexi.gr>
 %package -n locales-el
-Summary: Base files for localization (Greek)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Obsoletes: locales-gr
-Provides: locales-gr = %{version}-%{release}
+Summary:	Base files for localization (Greek)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Obsoletes:	locales-gr
+Provides:	locales-gr = %{version}-%{release}
 #Summary(el): Βασικά αρχεία τοπικών ρυθμίσεων (Ελληνικά)
 
 %description -n locales-el
@@ -874,13 +874,13 @@ fi
 
 ### en
 %package -n locales-en
-Summary: Base files for localization (English)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-en_GB = %{version}-%{release}
-Provides: locales-en_IE = %{version}-%{release}
-Provides: locales-en_CA = %{version}-%{release}
-Provides: locales-en_US = %{version}-%{release}
+Summary:	Base files for localization (English)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Provides:	locales-en_GB = %{version}-%{release}
+Provides:	locales-en_IE = %{version}-%{release}
+Provides:	locales-en_CA = %{version}-%{release}
+Provides:	locales-en_US = %{version}-%{release}
 
 %description -n locales-en
 These are the base files for English language localization.
@@ -919,9 +919,9 @@ fi
 ### eo
 # translation by diestel@rzaix340.rz.uni-leipzig.de (Wolfram Diestel)
 %package -n locales-eo
-Summary: Base files for localization (Esperanto)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Esperanto)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(eo): Bazaj dosieroj por lokaĵo (Esperanto)
 
 %description -n locales-eo
@@ -943,11 +943,11 @@ fi
 
 ### es
 %package -n locales-es
-Summary: Base files for localization (Spanish)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Spanish)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(es): Ficheros de base para la localización (castellano)
-Provides: locales-an = %{version}-%{release}
+Provides:	locales-an = %{version}-%{release}
 
 %description -n locales-es
 These are the base files for Spanish language localization; you need
@@ -1002,10 +1002,10 @@ fi
 ### et
 # translation from: Ekke Einberg <ekke@data.ee>
 %package -n locales-et
-Summary: Base files for localization (Estonian)
+Summary:	Base files for localization (Estonian)
 #Summary(et): Siin on vajalikud failid Linuxi eestindamiseks
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-et
 These are the base files for Estonian language localization; you need
@@ -1026,9 +1026,9 @@ fi
 
 ### eu
 %package -n locales-eu
-Summary: Base files for localization (Basque)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Basque)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(eu): Euskarazko egokitzapenerako oinarrizko artxiboak
 #Summary(es): Archivos de base para la localización en euskara
 #Summary(fr): Fichiers de base pour la localisation en euskara (langue basque)
@@ -1053,10 +1053,10 @@ fi
 
 ### fa
 %package -n locales-fa
-Summary: Base files for localization (Farsi)
+Summary:	Base files for localization (Farsi)
 #Summary(fa): پرونده‌های اساسی محلی‌سازی (فارسی)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-fa
 These are the base files for Farsi language localization; you need
@@ -1082,10 +1082,10 @@ fi
 ### fi
 # translations by Jarkko Vaaraniemi <jvaarani@ees2.oulu.fi>
 %package -n locales-fi
-Summary: Base files for localization (Finnish)
+Summary:	Base files for localization (Finnish)
 #Summary(fi): Tässä on perustiedot Linuxin suomentamiseen.
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-fi
 These are the base files for Finnish language localization; you need
@@ -1129,10 +1129,10 @@ fi
 
 ### fo
 %package -n locales-fo
-Summary: Base files for localization (Faroese)
+Summary:	Base files for localization (Faroese)
 #Summary(fo): Hetta eru fílurnar tær tørvar til eina tillaging til føroyskt mál
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-fo
 These are the base files for Faroese language localization; you need
@@ -1153,9 +1153,9 @@ fi
 
 ### fr
 %package -n locales-fr
-Summary: Base files for localization (French)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (French)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(fr): Fichiers de base pour la localisation (français)
 #Summary(de): Basisdateien für die Lokalisierung (Französisch)
 
@@ -1182,9 +1182,9 @@ fi
 
 ### fur
 %package -n locales-fur
-Summary: Base files for localization (Friulan)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Friulan)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-fur
 These are the base files for Friulan language localization; you need
@@ -1205,9 +1205,9 @@ fi
 
 ### fy
 %package -n locales-fy
-Summary: Base files for localization (Frisian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Frisian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-fy
 These are the base files for Frisian language localization; you need
@@ -1229,10 +1229,10 @@ fi
 
 ### ga
 %package -n locales-ga
-Summary: Base files for localization (Irish)
+Summary:	Base files for localization (Irish)
 #Summary(ga): Bunchomaid do leagan áitiúil (Gaeilge)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ga
 These are the base files for Irish Gaelic language localization; you need
@@ -1255,10 +1255,10 @@ fi
 # translation by Caoimhin O Donnaile [caoimhin@SMO.UHI.AC.UK]
 # and Cecil Ward [cecil.ward@FREE4ALL.CO.UK]
 %package -n locales-gd
-Summary: Base files for localization (Scottish Gaelic)
+Summary:	Base files for localization (Scottish Gaelic)
 #Summary(gd): Faidhlichean bunaiteach airson localization (Gaidhlig na h-Alba)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-gd
 These are the base files for Scottish Gaelic language localization; you need
@@ -1280,9 +1280,9 @@ fi
 ### gl
 # translation from Emilio <nigrann@sandra.ctv.es>
 %package -n locales-gl
-Summary: Base files for localization (Galician)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Galician)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(gl): Arquivos da base para definición de locais para o galego.
 #Summary(es): Archivos de base para la localización en idioma gallego
 
@@ -1305,9 +1305,9 @@ fi
 
 ### gu
 %package -n locales-gu
-Summary: Base files for localization (Gujarati)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Gujarati)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-gu
 These are the base files for Gujarati language localization; you need
@@ -1329,10 +1329,10 @@ fi
 ### gv
 # translation by Brian Stowell <bstowell@MAILSERVICE.MCB.NET>
 %package -n locales-gv
-Summary: Base files for localization (Manx Gaelic)
+Summary:	Base files for localization (Manx Gaelic)
 #Summary(gv): Coadanyn undinagh son ynnydaghey (Gaelg)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-gv
 These are the base files for Manx Gaelic language localization; you need
@@ -1353,10 +1353,10 @@ fi
 
 ### ha
 %package -n locales-ha
-Summary: Base files for localization (Hausa)
-Group: System/Internationalization
+Summary:	Base files for localization (Hausa)
+Group:		System/Internationalization
 #Icon: bulle-ha.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ha
 These are the base files for Hausa language localization; you need
@@ -1377,10 +1377,10 @@ fi
 
 ### he (formerly iw)
 %package -n locales-he
-Summary: Base files for localization (Hebrew)
+Summary:	Base files for localization (Hebrew)
 #Summary(he): המקום מכיל עמדות ללופויזציה בעברית 
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-he
 These are the base files for Hebrew language localization; you need
@@ -1405,9 +1405,9 @@ fi
 
 ### hi
 %package -n locales-hi
-Summary: Base files for localization (Hindi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Hindi)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-hi
 These are the base files for Hindi language localization; you need
@@ -1431,9 +1431,9 @@ fi
 
 ### hne
 %package -n locales-hne
-Summary: Base files for localization (Chhattisgarhi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Chhattisgarhi)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-hne
 These are the base files for Chhattisgarhi language localization.
@@ -1455,9 +1455,9 @@ fi
 ### hr
 # translations by Vedran Rodic <vrodic@udig.hr>
 %package -n locales-hr
-Summary: Base files for localization (Croatian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Croatian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(hr): Osnovne datoteke za lokalizaciju (Hrvatski)
 
 %description -n locales-hr
@@ -1479,10 +1479,10 @@ fi
 
 ### hsb
 %package -n locales-hsb
-Summary: Base files for localization (Upper Sorbian)
-Group: System/Internationalization
+Summary:	Base files for localization (Upper Sorbian)
+Group:		System/Internationalization
 #Icon: bulle-hsb.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-hsb
 These are the base files for Upper Sorbian language localization.
@@ -1503,9 +1503,9 @@ fi
 
 ### ht
 %package -n locales-ht
-Summary: Base files for localization (Breyol)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Breyol)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ht
 These are the base files for Breyol language localization.
@@ -1526,9 +1526,9 @@ fi
 
 ### hu
 %package -n locales-hu
-Summary: Base files for localization (Hungarian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Hungarian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(hu): Szükséges fájlok a magyarításhoz
 
 %description -n locales-hu
@@ -1551,9 +1551,9 @@ fi
 ### hy
 # translations by Eugene Sevinian <sevinian@crdlx2.yerphi.am>
 %package -n locales-hy
-Summary: Base files for localization (Armenian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Armenian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(hy): Ամփոփում. Հայացման հիմնական փաթեթները (ֆայլերը)
 
 %description -n locales-hy
@@ -1575,9 +1575,9 @@ fi
 
 ### ia
 %package -n locales-ia
-Summary: Base files for localization (Interlingua)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Interlingua)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ia
 These are the base files for Interlingua language localization.
@@ -1598,9 +1598,9 @@ fi
 ### id (formerly in)
 # translations by Mohammad DAMT <mdamt@cakraweb.com>
 %package -n locales-id
-Summary: Base files for localization (Indonesian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Indonesian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(id): File Utama untuk lokalisasi (dalam Bahasa Indonesia)
 
 %description -n locales-id
@@ -1621,10 +1621,10 @@ fi
 
 ### ig
 %package -n locales-ig
-Summary: Base files for localization (Igbo)
-Group: System/Internationalization
+Summary:	Base files for localization (Igbo)
+Group:		System/Internationalization
 #Icon: bulle-ig.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ig
 These are the base files for Igbo language localization; you need
@@ -1645,9 +1645,9 @@ fi
 
 ### ik
 %package -n locales-ik
-Summary: Base files for localization (Inupiaq)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Inupiaq)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ik
 These are the base files for Inupiaq language localization; you need
@@ -1669,9 +1669,9 @@ fi
 ### is
 # Gudmundur Erlingsson <gudmuner@lexis.hi.is>
 %package -n locales-is
-Summary: Base files for localization (Icelandic)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Icelandic)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(is): Hér eru grunnskrár fyrir íslenska staðfærslu.
 
 %description -n locales-is
@@ -1693,10 +1693,10 @@ fi
 
 ### it
 %package -n locales-it
-Summary: Base files for localization (Italian)
+Summary:	Base files for localization (Italian)
 #Summary(it): I files di base per l'adattamento della lingua italiana
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-it
 These are the base files for Italian language localization; you need
@@ -1718,9 +1718,9 @@ fi
 
 ### iu
 %package -n locales-iu
-Summary: Base files for localization (Inuktitut)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Inuktitut)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-iu
 These are the base files for Inuktitut language localization; you need
@@ -1742,11 +1742,11 @@ fi
 ### ja
 # translation by "Evan D.A. Geisinger" <evan.geisinger@etak.com>
 %package -n locales-ja
-Summary: Base files for localization (Japanese)
+Summary:	Base files for localization (Japanese)
 #Summary(ja): これは日本語ロカライゼーション用基礎ファイル集です。
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Obsoletes: libwcsmbs
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Obsoletes:	libwcsmbs
 
 %description -n locales-ja
 These are the base files for Japanese language localization; you need
@@ -1766,9 +1766,9 @@ fi
 
 ### ka
 %package -n locales-ka
-Summary: Base files for localization (Georgian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Georgian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(ka): საბაზო ფაილები ქართულის ლოკალიზებისათვის.
 
 %description -n locales-ka
@@ -1790,10 +1790,10 @@ fi
 
 ### kk
 %package -n locales-kk
-Summary: Base files for localization (Kazakh)
-Group: System/Internationalization
+Summary:	Base files for localization (Kazakh)
+Group:		System/Internationalization
 #Icon: bulle-kk.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-kk
 These are the base files for Kazakh language localization; you need
@@ -1814,9 +1814,9 @@ fi
 
 ### kl
 %package -n locales-kl
-Summary: Base files for localization (Greenlandic)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Greenlandic)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-kl
 These are the base files for Greenlandic language localization; you need
@@ -1837,9 +1837,9 @@ fi
 
 ### km
 %package -n locales-km
-Summary: Base files for localization (Khmer)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Khmer)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-km
 These are the base files for Khmer language localization; you need
@@ -1860,9 +1860,9 @@ fi
 
 ### kn
 %package -n locales-kn
-Summary: Base files for localization (Kannada)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Kannada)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-kn
 These are the base files for Kannada language localization; you need
@@ -1884,11 +1884,11 @@ fi
 ### ko
 # translation by Soo-Jin Lee <NothingSpecial@rocketmail.com>
 %package -n locales-ko
-Summary: Base files for localization (Korean)
+Summary:	Base files for localization (Korean)
 #Summary(ko): 이것들은 한국어에만 국한된 기초화일들이다
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Obsoletes: libwcsmbs
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Obsoletes:	libwcsmbs
 
 %description -n locales-ko
 These are the base files for Korean language localization; you need
@@ -1908,10 +1908,10 @@ fi
 
 ### kok
 %package -n locales-kok
-Summary: Base files for localization (Konkani)
-Group: System/Internationalization
+Summary:	Base files for localization (Konkani)
+Group:		System/Internationalization
 #Icon: bulle-kk.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-kok
 These are the base files for Konkani language localization; you need
@@ -1932,9 +1932,9 @@ fi
 
 ### ks
 %package -n locales-ks
-Summary: Base files for localization (Kashmiri)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Kashmiri)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ks
 These are the base files for Kashmiri language localization.
@@ -1956,10 +1956,10 @@ fi
 
 ### ku
 %package -n locales-ku
-Summary: Base files for localization (Kurdish)
+Summary:	Base files for localization (Kurdish)
 #Summary(ku): Rûpel-tâmar ji bo naskirinâ cîh (Kurdi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ku
 These are the base files for Kurdish language localization; you need
@@ -1982,10 +1982,10 @@ fi
 # translations by Andrew Climo-Thompson <andrew@clas.demon.co.uk>
 # Laurie Climo <lj.climo@ukonline.co.uk> & Marion Gunn <mgunn@ucd.ie>
 %package -n locales-kw
-Summary: Base files for localization (Cornish)
+Summary:	Base files for localization (Cornish)
 #Summary(kw): Fylennow sel dhe gernewekhe
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-kw
 These are the base files for Cornish language localization; you need
@@ -2006,9 +2006,9 @@ fi
 
 ### ky
 %package -n locales-ky
-Summary: Base files for localization (Kyrgyz)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Kyrgyz)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ky
 These are the base files for Kyrgyz language localization; you need
@@ -2052,10 +2052,10 @@ fi
 
 ### lg
 %package -n locales-lg
-Summary: Base files for localization (Luganda)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-lug = %{version}-%{release}
+Summary:	Base files for localization (Luganda)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Provides:	locales-lug = %{version}-%{release}
 
 %description -n locales-lg
 These are the base files for Luganda (Ganda) language localization; you need
@@ -2076,9 +2076,9 @@ fi
 
 ### li
 %package -n locales-li
-Summary: Base files for localization (Limburguish)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Limburguish)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-li
 These are the base files for Limburguish language localization; you need
@@ -2123,9 +2123,9 @@ fi
 
 ### lo
 %package -n locales-lo
-Summary: Base files for localization (Laotian) [INCOMPLETE]
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Laotian) [INCOMPLETE]
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-lo
 These are the base files for Laotian language localization; you need
@@ -2146,10 +2146,10 @@ fi
 
 ### lt
 %package -n locales-lt
-Summary: Base files for localization (Lithuanian)
+Summary:	Base files for localization (Lithuanian)
 #Summary(lt): Failai skirti lokalės lituanizacijai
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-lt
 These are the base files for Lithuanian language localization; you need
@@ -2171,10 +2171,10 @@ fi
 ### lv
 # translation done by Vitauts Stochka <vit@dpu.lv>
 %package -n locales-lv
-Summary: Base files for localization (Latvian)
+Summary:	Base files for localization (Latvian)
 #Summary(lv): Lokalizācijas pamatfaili (Latviešu)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-lv
 These are the base files for Latvian language localization; you need
@@ -2195,9 +2195,9 @@ fi
 
 ### mag
 %package -n locales-mag
-Summary: Base files for localization (Magahi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Magahi)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mag
 These are the base files for Magahi language localization.
@@ -2218,9 +2218,9 @@ fi
 
 ### mai
 %package -n locales-mai
-Summary: Base files for localization (Maithili)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Maithili)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mai
 These are the base files for Maithili language localization.
@@ -2241,10 +2241,10 @@ fi
 
 ### mg
 %package -n locales-mg
-Summary: Base files for localization (Malagasy)
-Group: System/Internationalization
+Summary:	Base files for localization (Malagasy)
+Group:		System/Internationalization
 #Icon: bulle-mg.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mg
 These are the base files for Malagasy language localization.
@@ -2290,10 +2290,10 @@ fi
 ### mi
 # Maori translation provided by Gasson <gasson@clear.net.nz>
 %package -n locales-mi
-Summary: Base files for localization (Maori)
+Summary:	Base files for localization (Maori)
 #Summary(mi): Ko ngā kōnae papa mō te whakaā-rohe (Māori)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mi
 These are the base files for Maori language localization; you need it for
@@ -2314,9 +2314,9 @@ fi
 
 ### mk
 %package -n locales-mk
-Summary: Base files for localization (Macedonian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Macedonian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mk
 These are the base files for Macedonian language localization; you need it for
@@ -2336,9 +2336,9 @@ fi
 
 ### ml
 %package -n locales-ml
-Summary: Base files for localization (Malayalam)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Malayalam)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ml
 These are the base files for Malayalam language localization; you need it for
@@ -2358,9 +2358,9 @@ fi
 
 ### mn
 %package -n locales-mn
-Summary: Base files for localization (Mongolian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Mongolian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mn
 These are the base files for Mongolian language localization; you need it for
@@ -2380,9 +2380,9 @@ fi
 
 ### mni
 %package -n locales-mni
-Summary: Base files for localization (Manipuri)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Manipuri)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mni
 These are the base files for Manipuri language localization.
@@ -2403,9 +2403,9 @@ fi
 
 ### mr
 %package -n locales-mr
-Summary: Base files for localization (Marathi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Marathi)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mr
 These are the base files for Marathi language localization; you need
@@ -2426,9 +2426,9 @@ fi
 
 ### ms
 %package -n locales-ms
-Summary: Base files for localization (Malay)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Malay)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ms
 These are the base files for Malay language localization; you need it for
@@ -2449,10 +2449,10 @@ fi
 ### mt
 # translation by Ramon Casha <rcasha@waldonet.net.mt>
 %package -n locales-mt
-Summary: Base files for localization (Maltese)
+Summary:	Base files for localization (Maltese)
 #Summary(mt): Files ewlenin għat-traduzzjoni (Maltin)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-mt
 These are the base files for Maltese language localization; you need
@@ -2473,9 +2473,9 @@ fi
 
 ### my
 %package -n locales-my
-Summary: Base files for localization (Burmese)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Burmese)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-my
 These are the base files for Burmese language localization.
@@ -2496,11 +2496,11 @@ fi
 
 ### nds
 %package -n locales-nds
-Summary: Base files for localization (Lower Saxon)
+Summary:	Base files for localization (Lower Saxon)
 #Summary(de): Basisdateien für die Lokalisierung (Plautdietsch)
 #Summary(nds): Grundspikjaloden fe' Sproaktoopaussinj (Plautdietsch)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-nds
 These are the base files for Lower Saxon language
@@ -2522,9 +2522,9 @@ fi
 
 ### ne
 %package -n locales-ne
-Summary: Base files for localization (Nepali)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Nepali)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ne
 These are the base files for Nepali language localization; you need
@@ -2545,9 +2545,9 @@ fi
 
 ### nhn
 %package -n locales-nhn
-Summary: Base files for localization (Nahuatl)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Nahuatl)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-nhn
 These are the base files for Nahuatl language
@@ -2568,9 +2568,9 @@ fi
 
 ### niu
 %package -n locales-niu
-Summary: Base files for localization (Niuean)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Niuean)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-niu
 These are the base files for Niuean language
@@ -2592,9 +2592,9 @@ fi
 
 ### nl
 %package -n locales-nl
-Summary: Base files for localization (Dutch)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Dutch)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(fr): Fichiers de base pour la localisation en langue néerlandaise
 #Summary(nl): Dit zijn de basisbestanden nodig voor de Nederlandse taal
 
@@ -2620,12 +2620,12 @@ fi
 ### no
 # translations by peter@datadok.no
 %package -n locales-no
-Summary: Base files for localization (Norwegian)
+Summary:	Base files for localization (Norwegian)
 #Summary(nb): Dette er basisfilene for lokalisering til norsk språk
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-nn = %{version}-%{release}
-Provides: locales-nb = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Provides:	locales-nn = %{version}-%{release}
+Provides:	locales-nb = %{version}-%{release}
 
 %description -n locales-no
 These are the base files for Norwegian language localization; you need
@@ -2653,9 +2653,9 @@ fi
 
 ### nr
 %package -n locales-nr
-Summary: Base files for localization (Ndebele)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Ndebele)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-nr
 These are the base files for Ndebele language localization; you need
@@ -2676,10 +2676,10 @@ fi
 
 ### nso
 %package -n locales-nso
-Summary: Base files for localization (Northern Sotho)
-Group: System/Internationalization
+Summary:	Base files for localization (Northern Sotho)
+Group:		System/Internationalization
 #Icon: bulle-nso.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-nso
 These are the base files for Northern Sotho language localization; you need
@@ -2700,9 +2700,9 @@ fi
 
 ### oc
 %package -n locales-oc
-Summary: Base files for localization (Occitan)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Occitan)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(oc): fichièrs de basa per localisar (occitan)
 
 %description -n locales-oc
@@ -2724,9 +2724,9 @@ fi
 
 ### or
 %package -n locales-or
-Summary: Base files for localization (Oriya)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Oriya)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-or
 These are the base files for Oriya language localization.
@@ -2770,9 +2770,9 @@ fi
 
 ### pa
 %package -n locales-pa
-Summary: Base files for localization (Punjabi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Punjabi)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-pa
 These are the base files for Punjabi localization; you need it to correctly
@@ -2794,11 +2794,11 @@ fi
 
 ### pap
 %package -n locales-pap
-Summary: Base files for localization (Papiamento)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Obsoletes: locales-pp
-Provides: locales-pp = %{version}-%{release}
+Summary:	Base files for localization (Papiamento)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Obsoletes:	locales-pp
+Provides:	locales-pp = %{version}-%{release}
 
 %description -n locales-pap
 These are the base files for Papiamento language localization; you need
@@ -2843,9 +2843,9 @@ fi
 
 ### ps
 %package -n locales-ps
-Summary: Base files for localization (Pashto)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Pashto)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ps
 These are the base files for Pashto language localization.
@@ -2866,12 +2866,12 @@ fi
 
 ### pt
 %package -n locales-pt
-Summary: Base files for localization (Portuguese)
+Summary:	Base files for localization (Portuguese)
 #Summary(pt): Estes são os arquivos básicos para a localização (Português)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-pt_BR = %{version}-%{release}
-Provides: locales-pt_PT = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Provides:	locales-pt_BR = %{version}-%{release}
+Provides:	locales-pt_PT = %{version}-%{release}
 
 %description -n locales-pt
 These are the base files for Portuguese language localization; you need
@@ -2901,10 +2901,10 @@ fi
 ### ro
 # translation from "Mihai" <mihai@ambra.ro>
 %package -n locales-ro
-Summary: Base files for localization (Romanian)
+Summary:	Base files for localization (Romanian)
 #Summary(ro): Acestea sînt fisierele pentru române localizarea
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ro
 These are the base files for Romanian language localization; you need
@@ -2925,9 +2925,9 @@ fi
 
 ### ru
 %package -n locales-ru
-Summary: Base files for localization (Russian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Russian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(ru): Основные файлы региональных установок (для России)
 
 %description -n locales-ru
@@ -2950,10 +2950,10 @@ fi
 
 ### rw
 %package -n locales-rw
-Summary: Base files for localization (Kinyarwanda)
-Group: System/Internationalization
+Summary:	Base files for localization (Kinyarwanda)
+Group:		System/Internationalization
 #Icon: bulle-rw.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-rw
 These are the base files for Kinyarwanda language localization; you need
@@ -2974,9 +2974,9 @@ fi
 
 ### sa
 %package -n locales-sa
-Summary: Base files for localization (Sanskrit)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Sanskrit)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sa
 These are the base files for Sanskrit language localization.
@@ -2997,9 +2997,9 @@ fi
 
 ### sat
 %package -n locales-sat
-Summary: Base files for localization (Santali)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Santali)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sat
 These are the base files for Santali language localization.
@@ -3020,9 +3020,9 @@ fi
 
 ### sc
 %package -n locales-sc
-Summary: Base files for localization (Sardinian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Sardinian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sc
 These are the base files for Sardinian language localization; you need
@@ -3043,9 +3043,9 @@ fi
 
 ### sd
 %package -n locales-sd
-Summary: Base files for localization (Sindhi)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Sindhi)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sd
 These are the base files for Sindhi language localization.
@@ -3067,10 +3067,10 @@ fi
 
 ### se
 %package -n locales-se
-Summary: Base files for localization (Saami)
-Group: System/Internationalization
+Summary:	Base files for localization (Saami)
+Group:		System/Internationalization
 #Icon: bulle-se.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-se
 These are the base files for Saami language localization; you need
@@ -3091,9 +3091,9 @@ fi
 
 ### shs
 %package -n locales-shs
-Summary: Base files for localization (Secwepemctsin)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Secwepemctsin)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-shs
 These are the base files for Secwepemctsin language localization.
@@ -3114,10 +3114,10 @@ fi
 
 ### si
 %package -n locales-si
-Summary: Base files for localization (Sinhala)
-Group: System/Internationalization
+Summary:	Base files for localization (Sinhala)
+Group:		System/Internationalization
 #Icon: bulle-si.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-si
 These are the base files for Sinhala language localization; you need
@@ -3138,10 +3138,10 @@ fi
 
 ### sk
 %package -n locales-sk
-Summary: Base files for localization (Slovak)
+Summary:	Base files for localization (Slovak)
 #Summary(sk): Toto su zakladne súbory pre slovenskú lokalizaciu
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sk
 These are the base files for Slovak language localization; you need
@@ -3163,10 +3163,10 @@ fi
 ### sl
 # Translations from Roman Maurer <roman.maurer@fmf.uni-lj.si>
 %package -n locales-sl
-Summary: Base files for localization (Slovenian)
+Summary:	Base files for localization (Slovenian)
 #Summary(sl): Osnovne datoteke za lokalizacijo (slovenščina)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sl
 These are the base files for Slovenian language localization; you need
@@ -3211,9 +3211,9 @@ fi
 
 ### so
 %package -n locales-so
-Summary: Base files for localization (Somali)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Somali)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-so
 These are the base files for Somali language localization; you need
@@ -3237,9 +3237,9 @@ fi
 
 ### sq
 %package -n locales-sq
-Summary: Base files for localization (Albanian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Albanian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sq
 These are the base files for Albanian language localization; you need
@@ -3261,9 +3261,9 @@ fi
 
 ### ss
 %package -n locales-ss
-Summary: Base files for localization (Swati)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Swati)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ss
 These are the base files for Swati language localization; you need
@@ -3284,9 +3284,9 @@ fi
 
 ### st
 %package -n locales-st
-Summary: Base files for localization (Sotho)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Sotho)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-st
 These are the base files for Sotho language localization; you need
@@ -3308,10 +3308,10 @@ fi
 ### sv
 # translation by Erik Almqvist <erik.almqvist@vrg.se>
 %package -n locales-sv
-Summary: Base files for localization (Swedish)
+Summary:	Base files for localization (Swedish)
 #Summary(sv): Detta är huvudfilerna för svenskt språkstöd
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-sv
 These are the base files for Swedish language localization; you need
@@ -3381,9 +3381,9 @@ fi
 
 ### ta
 %package -n locales-ta
-Summary: Base files for localization (Tamil)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Tamil)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 URL: http://www.tamil.net/tscii/
 
 %description -n locales-ta
@@ -3406,9 +3406,9 @@ fi
 
 ### te
 %package -n locales-te
-Summary: Base files for localization (Telugu)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Telugu)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-te
 These are the base files for Telugu language localization; you need
@@ -3429,9 +3429,9 @@ fi
 
 ### tg
 %package -n locales-tg
-Summary: Base files for localization (Tajik)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Tajik)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-tg
 These are the base files for Tajik language localization; you need
@@ -3475,9 +3475,9 @@ fi
 
 ### tk
 %package -n locales-tk
-Summary: Base files for localization (Turkmen)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Turkmen)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-tk
 These are the base files for Turkmen language localization; you need
@@ -3499,12 +3499,12 @@ fi
 ### fil
 # note: previously named "locales-ph"
 %package -n locales-tl
-Summary: Base files for localization (Pilipino)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-ph = %{version}-%{release}
-Provides: locales-fil = %{version}-%{release}
-Obsoletes: locales-ph
+Summary:	Base files for localization (Pilipino)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Provides:	locales-ph = %{version}-%{release}
+Provides:	locales-fil = %{version}-%{release}
+Obsoletes:	locales-ph
 
 %description -n locales-tl
 These are the base files for Pilipino (official language of the Philipines)
@@ -3526,9 +3526,9 @@ fi
 
 ### tn
 %package -n locales-tn
-Summary: Base files for localization (Tswana)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Tswana)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-tn
 These are the base files for Tswana language localization; you need
@@ -3550,9 +3550,9 @@ fi
 ### tr
 # translation from Gorkem Cetin <e077245@narwhal.cc.metu.edu.tr>
 %package -n locales-tr
-Summary: Base files for localization (Turkish)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Turkish)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(tr): Yerelleştirme için temel dosyalar (Türkçe)
 
 %description -n locales-tr
@@ -3575,9 +3575,9 @@ fi
 
 ### ts
 %package -n locales-ts
-Summary: Base files for localization (Tsonga)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Tsonga)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ts
 These are the base files for Tsonga language localization; you need
@@ -3598,9 +3598,9 @@ fi
 
 ### tt
 %package -n locales-tt
-Summary: Base files for localization (Tatar)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Tatar)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-tt
 These are the base files for Tatar language localization; you need
@@ -3621,10 +3621,10 @@ fi
 
 ### ug
 %package -n locales-ug
-Summary: Base files for localization (Uyghur)
-Group: System/Internationalization
+Summary:	Base files for localization (Uyghur)
+Group:		System/Internationalization
 #Icon: bulle-ug.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ug
 These are the base files for Uyghur language localization; you need
@@ -3645,9 +3645,9 @@ fi
 
 ### unm
 %package -n locales-unm
-Summary: Base files for localization (Unami)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Unami)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-unm
 These are the base files for Unami language localization; you need
@@ -3668,9 +3668,9 @@ fi
 
 ### uk
 %package -n locales-uk
-Summary: Base files for localization (Ukrainian)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Ukrainian)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(ru): Базовые файлы для Украинской локализации
 #Summary(uk): Базові файли для української локалізації
 
@@ -3693,9 +3693,9 @@ fi
 
 ### ur
 %package -n locales-ur
-Summary: Base files for localization (Urdu)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Urdu)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ur
 These are the base files for Urdu language localization; you need
@@ -3720,11 +3720,11 @@ fi
 
 ### uz
 %package -n locales-uz
-Summary: Base files for localization (Uzbek)
+Summary:	Base files for localization (Uzbek)
 #Summary(uz): Lokallashtirishning asosiy fayllari (o'zbekcha)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-uz@cyrillic = %{version}-%{release}
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Provides:	locales-uz@cyrillic = %{version}-%{release}
 
 %description -n locales-uz
 These are the base files for Uzbek language localization; you need
@@ -3752,9 +3752,9 @@ fi
 
 ### ve
 %package -n locales-ve
-Summary: Base files for localization (Venda)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Venda)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-ve
 These are the base files for Venda language localization; you need
@@ -3776,9 +3776,9 @@ fi
 ### vi
 # translations by <DaiQuy.nguyen@ulg.ac.be>
 %package -n locales-vi
-Summary: Base files for localization (Vietnamese)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Vietnamese)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(vi): Các file cơ sở cho định vị tiếng Việt 
 
 %description -n locales-vi
@@ -3801,9 +3801,9 @@ fi
 ### wa
 # translations from Lorint Hendschel <LorintHendschel@skynet.be>
 %package -n locales-wa
-Summary: Base files for localization (Walloon)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Walloon)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 #Summary(wa): Maisses fitchîs pol lingaedje walon
 #Summary(fr): Fichiers de base pour la localisation en langue wallonne
 
@@ -3849,9 +3849,9 @@ fi
 
 ### wo
 %package -n locales-wo
-Summary: Base files for localization (Wolof)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Wolof)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-wo
 These are the base files for Wolof language localization.
@@ -3872,9 +3872,9 @@ fi
 
 ### xh
 %package -n locales-xh
-Summary: Base files for localization (Xhosa)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Xhosa)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-xh
 These are the base files for Xhosa language localization; you need
@@ -3895,9 +3895,9 @@ fi
 
 ### yi
 %package -n locales-yi
-Summary: Base files for localization (Yiddish)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Yiddish)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 URL: http://www.uyip.org/
 
 %description -n locales-yi
@@ -3922,10 +3922,10 @@ fi
 
 ### yo
 %package -n locales-yo
-Summary: Base files for localization (Yoruba)
-Group: System/Internationalization
+Summary:	Base files for localization (Yoruba)
+Group:		System/Internationalization
 #Icon: bulle-yo.xpm
-Requires: locales = %{version}-%{release}
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-yo
 These are the base files for Yoruba language localization; you need
@@ -3971,14 +3971,14 @@ fi
 # translation (zh_TW) from <informer@linux1.cgu.edu.tw>
 # zh_CN converted from zh_TW.Big5 with b5togb; corrections welcome.
 %package -n locales-zh
-Summary: Base files for localization (Chinese)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
-Provides: locales-zh_CN = %{version}-%{release}
-Provides: locales-zh_TW = %{version}-%{release}
-Provides: locales-zh_SG = %{version}-%{release}
-Provides: locales-zh_HK = %{version}-%{release}
-Obsoletes: libwcsmbs wcsmbs-locale
+Summary:	Base files for localization (Chinese)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
+Provides:	locales-zh_CN = %{version}-%{release}
+Provides:	locales-zh_TW = %{version}-%{release}
+Provides:	locales-zh_SG = %{version}-%{release}
+Provides:	locales-zh_HK = %{version}-%{release}
+Obsoletes:	libwcsmbs wcsmbs-locale
 #Summary(zh_CN): 中文地方化的基本档案
 #Summary(zh_TW): 中文地方化的基本檔案
 
@@ -4006,9 +4006,9 @@ fi
 
 ### zu
 %package -n locales-zu
-Summary: Base files for localization (Zulu)
-Group: System/Internationalization
-Requires: locales = %{version}-%{release}
+Summary:	Base files for localization (Zulu)
+Group:		System/Internationalization
+Requires:	locales = %{version}-%{release}
 
 %description -n locales-zu
 These are the base files for Zulu language localization; you need
@@ -4037,7 +4037,7 @@ do
 done
 
 # for turkic languages (upperwasing/lowercasing of iwithdot/dotlessi)
-cat %_datadir/i18n/locales/i18n | \
+cat %{_datadir}/i18n/locales/i18n | \
 	sed 's/<U0069>,<U0049>/<U0069>,<U0130>/' | \
 	sed 's/<U0049>,<U0069>/<U0049>,<U0131>/' > i18n_tr
 
@@ -4079,8 +4079,8 @@ for DEF_CHARSET in UTF-8 ISO-8859-1 ISO-8859-2 ISO-8859-3 ISO-8859-4 \
 	 ISO-8859-13 ISO-8859-14 ISO-8859-15 KOI8-R KOI8-U CP1251 
 do
 	# find the charset definition
-    if [ ! -r %_datadir/i18n/charmaps/$DEF_CHARSET ]; then
-    	if [ ! -r %_datadir/i18n/charmaps/$DEF_CHARSET.gz ]; then
+    if [ ! -r %{_datadir}/i18n/charmaps/$DEF_CHARSET ]; then
+    	if [ ! -r %{_datadir}/i18n/charmaps/$DEF_CHARSET.gz ]; then
 			cp %{_sourcedir}/$DEF_CHARSET .
 			DEF_CHARSET=%{_sourcedir}/$DEF_CHARSET
 		fi
@@ -4090,7 +4090,7 @@ do
 done
 
 # fix for Arabic yes/no expr
-for i in %_datadir/i18n/locales/ar_??
+for i in %{_datadir}/i18n/locales/ar_??
 do
 	if [ ! -r "%{_sourcedir}/`basename $i`" ]; then
 		cat $i | \
@@ -4102,22 +4102,22 @@ done
 
 # fix for locales using monday as first week day
 # http://sources.redhat.com/bugzilla/show_bug.cgi?id=3035
-for i in %_datadir/i18n/locales/be_BY %_datadir/i18n/locales/cy_GB \
-	%_datadir/i18n/locales/de_?? %_datadir/i18n/locales/el_GR \
-	%_datadir/i18n/locales/es_CL \
-	%_datadir/i18n/locales/es_MX %_datadir/i18n/locales/fr_?? \
-	%_datadir/i18n/locales/fy_NL %_datadir/i18n/locales/it_?? \
-	%_datadir/i18n/locales/lt_LT %_datadir/i18n/locales/mi_NZ \
-	%_datadir/i18n/locales/nl_BE %_datadir/i18n/locales/nl_NL \
-	%_datadir/i18n/locales/pt_PT %_datadir/i18n/locales/ru_UA \
-	%_datadir/i18n/locales/se_NO %_datadir/i18n/locales/sv_FI \
-	%_datadir/i18n/locales/*_ES vi_VN
+for i in %{_datadir}/i18n/locales/be_BY %{_datadir}/i18n/locales/cy_GB \
+	%{_datadir}/i18n/locales/de_?? %{_datadir}/i18n/locales/el_GR \
+	%{_datadir}/i18n/locales/es_CL \
+	%{_datadir}/i18n/locales/es_MX %{_datadir}/i18n/locales/fr_?? \
+	%{_datadir}/i18n/locales/fy_NL %{_datadir}/i18n/locales/it_?? \
+	%{_datadir}/i18n/locales/lt_LT %{_datadir}/i18n/locales/mi_NZ \
+	%{_datadir}/i18n/locales/nl_BE %{_datadir}/i18n/locales/nl_NL \
+	%{_datadir}/i18n/locales/pt_PT %{_datadir}/i18n/locales/ru_UA \
+	%{_datadir}/i18n/locales/se_NO %{_datadir}/i18n/locales/sv_FI \
+	%{_datadir}/i18n/locales/*_ES vi_VN
 do
 	LOCALENAME=`basename $i`
 	if [ -r %{_sourcedir}/$i ]; then
 		DEF_LOCALE_FILE="%{_sourcedir}/$i"
 	else
-		DEF_LOCALE_FILE="%_datadir/i18n/locales/$LOCALENAME"
+		DEF_LOCALE_FILE="%{_datadir}/i18n/locales/$LOCALENAME"
 	fi
 	if ! grep '^week\>' $DEF_LOCALE_FILE > /dev/null && \
 	   ! grep '^first_weekday\>' $DEF_LOCALE_FILE > /dev/null && \
@@ -4169,7 +4169,7 @@ rm -rf $LOCALEDIR/no_NO*
 install -m755 %{SOURCE2} -D %{buildroot}%{loc_add}
 install -m755 %{SOURCE3} -D %{buildroot}%{loc_del}
 # (tpg) localedef needs this
-mkdir -p %{buildroot}%_prefix/lib/locale
+mkdir -p %{buildroot}%{_prefix}/lib/locale
 
 install -m644 %{SOURCE4} -D %{buildroot}%{_sysconfdir}/sysconfig/locales
 
@@ -4183,11 +4183,3 @@ for i in `echo ??_??* ???_??*`; do
 done
 popd
 
-
-%changelog
-* Sun Dec  2 2012 Bernhard Rosenkraenzer <bero@bero.eu> 2.16-1
-- Update locales for eglibc 2.16
-
-* Fri Feb 24 2012 Paulo Andrade <pcpa@mandriva.com.br> 2.15-1
-+ Revision: 779911
-- Update locales for glibc-2.15.
