@@ -1,27 +1,27 @@
 #
 # this spec file builds all the locales into rpm packages.
-# it is separate from the eglibc spec, so that it is possible to rebuild
+# it is separate from the glibc spec, so that it is possible to rebuild
 # the locales for small fix without the need to rebuild the highly critical
-# eglibc package.
-# however, locales and eglibc are very tied, so each time a new eglibc is
-# built, the locales have to be rebuilt too (on a system with the new eglibc
-# installed); and the eglibc_ver define changed accordingly.
+# glibc package.
+# however, locales and glibc are very tied, so each time a new glibc is
+# built, the locales have to be rebuilt too (on a system with the new glibc
+# installed); and the glibc_ver define changed accordingly.
 #
-# the locales are mainly from the eglibc-i18ndata; however, we include
+# the locales are mainly from the glibc-i18ndata; however, we include
 # also fixes and improvements as well as some new locales; they should
-# be included upstream ideally, so when new eglibc is released, it is
+# be included upstream ideally, so when new glibc is released, it is
 # necessary to check if the separate locale files here are still needed.
 # removing them is enough.
 #
 # we also use an improved iso14651_hack (used for the base collating
-# definition) which improves the one in eglibc (by defining collation for
+# definition) which improves the one in glibc (by defining collation for
 # various extra letters in latin, greek, cyrillic and arabic scripts)
 # and two scripts used by individual locales-*.rpm packages that add/remove
 # the language names from the list of supported languages when adding/removing
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define eglibc_ver 2.17
+%define glibc_ver 2.18
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -37,8 +37,8 @@
 
 Summary:	Base files for localization
 Name:		locales
-Version:	%{eglibc_ver}
-Release:	7
+Version:	%{glibc_ver}
+Release:	1
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
@@ -53,7 +53,7 @@ Source5:	locales-hardlink.pl
 Source6:	locales-softlink.pl
 Source7:	%{name}.rpmlintrc
 
-# this one is on eglibc, however there is the politic issue
+# this one is on glibc, however there is the politic issue
 # of the naming of Taiwan 
 Source15:	zh_TW_2
 # locales data
@@ -65,17 +65,17 @@ Source22:	km_KH
 Source25:	nds_DE@traditional
 Source38:	dz_BT
 
-# Those exist in eglibc >= 2.3.2 but the attached ones
+# Those exist in glibc >= 2.3.2 but the attached ones
 # are more correct/more complete
 
-# all ar_?? locales in eglibc 2.3.5 are missing "Yy" and "Nn" in 
-# version in eglibc 2.3.5 has wrong yexexpr/noexpr and wrong LC_COLLATE
+# all ar_?? locales in glibc 2.3.5 are missing "Yy" and "Nn" in 
+# version in glibc 2.3.5 has wrong yexexpr/noexpr and wrong LC_COLLATE
 Source50:	ar_SA
 # corrected month names
 Source51:	az_AZ
 # LC_COLLATE has one line wrong
 Source52:	bs_BA
-# rewritten to take profit of new eglibc reordering possibilities
+# rewritten to take profit of new glibc reordering possibilities
 Source53:	es_ES
 Source54:	es_US
 Source55:	es@tradicional
@@ -87,7 +87,7 @@ Source58:	sq_AL
 Source59:	tg_TJ
 # tr_TR thet includes "i18n_tr" (generated with a simple regexp replacing)
 Source61:	tr_TR
-# LC_COLLATE for vietnamese is incorrect in eglibc, and LC_CTIME seems
+# LC_COLLATE for vietnamese is incorrect in glibc, and LC_CTIME seems
 # wrong too... 
 Source63:	vi_VN
 # fixes in weekday names
@@ -105,18 +105,18 @@ Source70:	sz_ET
 
 # it is arch dependent in fact
 #BuildArch:	noarch
-# to build this package eglibc = %{eglibc_ver} is needed (for locales definitions)
+# to build this package glibc = %{glibc_ver} is needed (for locales definitions)
 # no need to check for dependencies when building, there is no executables here
 AutoReqProv:	no
-# locales are very dependent on eglibc version
-Requires:	glibc >= 6:%{eglibc_ver}
+# locales are very dependent on glibc version
+Requires:	glibc = 6:%{glibc_ver}
 # post scripts use grep, sed, etc.
 Requires(post):	grep sed rpm coreutils
 Requires(postun):	grep sed rpm coreutils
-# eglibc >= 2.2.5-6mdk now comes with eglibc-i18ndata package
-BuildRequires:	glibc-i18ndata >= 6:%{eglibc_ver}
+# glibc >= 2.2.5-6mdk now comes with glibc-i18ndata package
+BuildRequires:	glibc-i18ndata = 6:%{glibc_ver}
 # usually needed to ensure support for new locales
-BuildRequires:	glibc >= 6:%{eglibc_ver}
+BuildRequires:	glibc = 6:%{glibc_ver}
 
 %description
 These are the base files for language localization.
@@ -4054,13 +4054,13 @@ done
 	cp %{_sourcedir}/zh_TW_2 zh_TW
 %endif
 
-# copy local locales unavailable in eglibc
+# copy local locales unavailable in glibc
 for loc in eo_XX es@tradicional nds_DE@traditional sw_XX
 do
 	cp %{_sourcedir}/$loc .
 done
 
-# copy modified eglibc locales
+# copy modified glibc locales
 for loc in ar_SA az_AZ bs_BA dz_BT es_ES es_US es_CO km_KH ku_TR ky_KG sq_AL \
            tg_TJ tr_TR vi_VN wa_BE yi_US zh_CN
 do
@@ -4162,7 +4162,7 @@ for i in $LOCALEDIR/en_IE* ; do
 done
 
 #=========================================================
-# XXX: duplicate of nb_NO (remove from eglibc?)
+# XXX: duplicate of nb_NO (remove from glibc?)
 rm -rf $LOCALEDIR/no_NO*
 
 %install
