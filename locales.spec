@@ -38,7 +38,7 @@
 Summary:	Base files for localization
 Name:		locales
 Version:	%{glibc_ver}
-Release:	4
+Release:	5
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
