@@ -21,7 +21,7 @@
 # the package.
 # All the rest of the sources are new or fixed locale files
 #
-%define glibc_ver 2.18
+%define glibc_ver 2.18.90
 # FIXME: please check on next build those we really need
 %define _unpackaged_files_terminate_build 1
 
@@ -38,7 +38,7 @@
 Summary:	Base files for localization
 Name:		locales
 Version:	%{glibc_ver}
-Release:	5
+Release:	1
 License:	LGPLv2+ and LGPLv2+ with exceptions and GPLv2+
 Group:		System/Internationalization
 Source0:	Makefile
@@ -265,6 +265,52 @@ fi
 # Walaita
 %{_localedir}/wal_ET*
 
+### ak
+%package ak
+Summary:	Base files for Akan (Ghana)
+Group:		System/Internationalization
+Requires:	locales = %{EVRD}
+
+%description ak
+These are the base files for Akan language localization; you need
+it to correctly display 8bits Akan characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Akan language conventions.
+
+%post ak
+%{loc_add} ak_GH
+
+%preun ak
+if [ "$1" = "0" ]; then
+	%{loc_del} ak_GH
+fi
+
+%files ak
+%{_localedir}/ak_GH
+
+### anp
+%package anp
+Summary:	Base files for Angika (India)
+Group:		System/Internationalization
+Requires:	locales = %{EVRD}
+
+%description anp
+These are the base files for Angika language localization; you need
+it to correctly display 8bits Angika characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Angika language conventions.
+
+%post anp
+%{loc_add} anp_IN
+
+%preun anp
+if [ "$1" = "0" ]; then
+	%{loc_del} anp_IN
+fi
+
+%files anp
+%{_localedir}/anp_IN
+
 ### ar
 # translation by Wajdi Al-Jedaibi <wajdi@acm.org>
 %package -n locales-ar
@@ -285,12 +331,12 @@ to do that.
 
 %post -n locales-ar
 %{loc_add} ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB ar_LY ar_MA \
-           ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
+           ar_OM ar_QA ar_SA ar_SD ar_SS ar_SY ar_TN ar_YE
 
 %preun -n locales-ar
 if [ "$1" = "0" ]; then
 	%{loc_del} ar_AE ar_BH ar_DZ ar_EG ar_IN ar_IQ ar_JO ar_KW ar_LB ar_LY \
-	           ar_MA ar_OM ar_QA ar_SA ar_SD ar_SY ar_TN ar_YE
+	           ar_MA ar_OM ar_QA ar_SA ar_SD ar_SS ar_SY ar_TN ar_YE
 fi
 
 %files -n locales-ar
@@ -309,6 +355,7 @@ fi
 %{_localedir}/ar_QA*
 %{_localedir}/ar_SA*
 %{_localedir}/ar_SD*
+%{_localedir}/ar_SS*
 %{_localedir}/ar_SY*
 %{_localedir}/ar_TN*
 %{_localedir}/ar_YE*
@@ -2807,15 +2854,17 @@ alphabetical sorting and representation of dates and numbers according
 to Papiamento language conventions.
 
 %post -n locales-pap
-%{loc_add} pap_AN
+%{loc_add} pap_AN pap_AW pap_CW
 
 %preun -n locales-pap
 if [ "$1" = "0" ]; then
-	%{loc_del} pap_AN
+	%{loc_del} pap_AN pap_AW pap_CW
 fi
 
 %files -n locales-pap
 %{_localedir}/pap_AN*
+%{_localedir}/pap_AW*
+%{_localedir}/pap_CW*
 
 ### pl
 %package	pl
@@ -2897,6 +2946,29 @@ fi
 %files -n locales-pt
 %{_localedir}/pt_BR*
 %{_localedir}/pt_PT*
+
+### quz
+%package quz
+Summary:	Base files for localization (Cusco Quechua)
+Group:		System/Internationalization
+Requires:	locales = %{EVRD}
+
+%description quz
+These are the base files for Cusco Quechua (Peru) language localization; you
+need it to correctly display 8bits Cusco Quechua characters, and for proper
+alphabetical sorting and representation of dates and numbers according
+to Cusco Quechua language conventions.
+
+%post quz
+%{loc_add} quz_PE
+
+%preun quz
+if [ "$1" = "0" ]; then
+	%{loc_del} quz_PE
+fi
+
+%files quz
+%{_localedir}/quz_PE*
 
 ### ro
 # translation from "Mihai" <mihai@ambra.ro>
@@ -3473,6 +3545,29 @@ fi
 %files		th
 %{_localedir}/th_TH*
 
+### the
+%package the
+Summary:	Base files for localization (Tharu/Tharuhati)
+Group:		System/Internationalization
+Requires:	locales = %{EVRD}
+
+%description the
+These are the base files for Tharu/Tharuhati (Nepali) language localization;
+you need it to correctly display 8bits Tharu/Tharuhati characters, and for
+proper alphabetical sorting and representation of dates and numbers according
+to Tharu/Tharuhati language conventions.
+
+%post the
+%{loc_add} the_NP
+
+%preun the
+if [ "$1" = "0" ]; then
+	%{loc_del} the_NP
+fi
+
+%files the
+%{_localedir}/the_NP*
+
 ### tk
 %package -n locales-tk
 Summary:	Base files for localization (Turkmen)
@@ -3990,19 +4085,23 @@ Set the LANG variable to "zh_CN" to use simplified chinese (GuoBiao encoding)
 or to "zh_TW.Big5" to use traditional characters (Big5 encoding)
 
 %post -n locales-zh
-%{loc_add} nan_TW@latin zh_CN zh_HK zh_SG zh_TW
+%{loc_add} nan_TW@latin zh_CN zh_HK zh_SG zh_TW cmn_TW hak_TW lzh_TW nan_TW
 
 %preun -n locales-zh
 if [ "$1" = "0" ]; then
-	%{loc_del} nan_TW@latin zh_CN zh_HK zh_SG zh_TW
+	%{loc_del} nan_TW@latin zh_CN zh_HK zh_SG zh_TW cmn_TW hak_TW lzh_TW nan_TW
 fi
 
 %files -n locales-zh
+%{_localedir}/nan_TW
 %{_localedir}/nan_TW@latin
 %{_localedir}/zh_CN*
 %{_localedir}/zh_HK*
 %{_localedir}/zh_SG*
 %{_localedir}/zh_TW*
+%{_localedir}/cmn_TW*
+%{_localedir}/hak_TW*
+%{_localedir}/lzh_TW*
 
 ### zu
 %package -n locales-zu
