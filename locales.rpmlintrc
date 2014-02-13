@@ -1,3 +1,0 @@
-addFilter("E: use-of-RPM_SOURCE_DIR")
-# Seems to be caused by non-UTF-8 git commit messages from early on
-addFilter("E: tag-not-utf8")
